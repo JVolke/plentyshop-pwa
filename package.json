@@ -34,7 +34,9 @@
     "@vee-validate/yup": "^4.12.6",
     "country-flag-icons": "^1.5.11",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "nvm": "0.0.4",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
@@ -51,9 +53,11 @@
     "commitizen": "^4.3.0",
     "concurrently": "^8.2.2",
     "cypress-iframe": "^1.0.1",
+    "eslint-plugin-unicorn": "^53.0.0",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
+    "node": "22.1",
     "nuxt": "^3.11.2",
     "nuxt-viewport": "^2.1.4",
     "prettier": "^3.2.5",
