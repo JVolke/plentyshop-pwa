@@ -10,15 +10,28 @@
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
 - Artikelbewertung
 - Anpassung des Produktnamens in den Dokumentationsdateien.
+- Schnellkasse-Funktionalität hinzugefügt.
+- Menge zum Produktnamen der Schnellkasse hinzugefügt.
+- Übersetzungen von Cookiebar
 
 ### Behoben
 
+- Hydration und intlify Warnungen wurden behoben.
+- Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
-- Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Fehler beim Filtern im SSR in der Kategorieansicht behoben
 - Die Sichtbarkeit des Namen vom Login Button
+- Die Middleware unterstützt jetzt IPv6-Adressen
+- Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
+- Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
+- Rückgabebild entfernt.
+- Verbesserte mobile Ansicht der Cookie-Leiste.
+- Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
+- Problem mit der Verschiebung des Wagenlader-Layouts behoben.
+- Leeres Wunschlistenbild entfernt.
 
 ### Geändert
 
