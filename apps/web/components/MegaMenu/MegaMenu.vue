@@ -134,6 +134,7 @@
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
+// Test
           <ul v-if="activeMenu" class="mt-2 mb-6">
             <li v-if="activeMenu.id !== 0">
               <SfListItem
