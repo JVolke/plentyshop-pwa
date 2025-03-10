@@ -59,7 +59,7 @@
                 />
               </UiButton>
             </NuxtLink>
-
+<!-- Angepasst für Krause und Sohn -->
             <div
               v-if="
                 isOpen &&
