@@ -17,12 +17,12 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: process.env.STORENAME || 'PlentyONE Shop',
-    fallbackCurrency: 'GBP',
+    fallbackCurrency: 'EUR',
   },
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
-  css: ['~/assets/style.scss'],
+  css: ['~/assets/style.scss', '~/assets/_variables.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
@@ -61,8 +61,8 @@ export default defineNuxtConfig({
       isHero: true,
       font: process.env.NUXT_PUBLIC_FONT || 'Red Hat Text',
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
-      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#e14000',
-      secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#d58667',
+      primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
+      secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
     },
   },
   modules: [
