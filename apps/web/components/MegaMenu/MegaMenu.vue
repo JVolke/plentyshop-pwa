@@ -83,7 +83,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="typography-text-sm mb-2"
+                      class="typography-text-sm mb-2 font-bold"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
