@@ -76,7 +76,7 @@
           </div>
 
           <ProductAttributes :product="product" />
-          <BundleOrderItems v-if="product.bundleComponents" :product="product" />
+          <!-- BundleOrderItems v-if="product.bundleComponents" :product="product" /  Paketbestandteile -->
           <OrderProperties :product="product" />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
@@ -114,6 +114,7 @@
               </SfTooltip>
             </div>
 
+            <ShippingTimer />
             <div class="mt-4 typography-text-xs flex gap-1">
               <span>{{ t('asterisk') }}</span>
               <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
@@ -131,7 +132,6 @@
             </div>
             <template v-if="showPayPalButtons">
               <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-              <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>
           </div>
         </section>
@@ -146,6 +146,7 @@ import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, S
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
+import ShippingTimer from '~/components/ui/ShippingTimer/ShippingTimer.vue';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 

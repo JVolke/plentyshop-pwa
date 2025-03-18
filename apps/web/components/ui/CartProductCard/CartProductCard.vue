@@ -66,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
+      <!-- div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
             v-if="productBundleGetters.isItemBundleSalable(item)"
@@ -85,7 +85,7 @@
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
         </div>
-      </div>
+      </div -->
 
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
