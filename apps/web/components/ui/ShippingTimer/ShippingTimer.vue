@@ -3,8 +3,9 @@
     <div class="p-2  typography-text-sm flex flex-col flex-auto">
       <div>
         <p>
-          Lieferung am {{ zielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}
-          bei einer Bestellung innerhalb der nächsten {{ countdownText }}
+          Lieferung am {{ zielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) }} -
+          {{ zielDatumEnde.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}
+          bei einer Bestellung innerhalb der nächsten {{ countdownText }} <i>Gilt nur für Lieferung innerhalb von Deutschland (Inseln ausgenommen)</i>
         </p>
       </div>
     </div>
@@ -16,13 +17,15 @@ import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
 const zielBestellZeitStunde = 14;
 const zielBestellZeitMinute = 0;
-const lieferZeitTage = 2;
+const lieferZeitTage = 1;
 
 const zielDatum = ref(new Date());
+const zielDatumEnde = ref(new Date()); // Neues Enddatum für den Zeitraum
 const countdownText = ref('');
 const keinVersandTag = ref(false);
 const naechsterVersandTag = ref(new Date());
 const intervalId = ref<ReturnType<typeof setInterval> | number>(0);
+
 
 // Feiertagsliste (Beispiel)
 const feiertage = ref([
@@ -90,39 +93,34 @@ function aktualisiereCountdown() {
 
     if (jetztStunde < zielBestellZeitStunde || (jetztStunde === zielBestellZeitStunde && jetztMinute < zielBestellZeitMinute)) {
       zielDatum.value = berechneZielDatum(jetzt, lieferZeitTage);
-      countdownText.value = `bis ${zielBestellZeitStunde}:${zielBestellZeitMinute} Uhr`;
     } else {
-      let naechsterTag = new Date(jetzt);
-      naechsterTag.setDate(jetzt.getDate() + 1);
-      naechsterTag = berechneNaechstenVersandTag(naechsterTag);
-      let naechsterVersandStart = berechneNaechstenVersandTag(new Date(jetzt));
-      zielDatum.value = berechneZielDatum(naechsterVersandStart, lieferZeitTage);
-
-      const naechsterTag14Uhr = new Date(jetzt);
-      naechsterTag14Uhr.setDate(jetzt.getDate() + 1);
-      naechsterTag14Uhr.setHours(zielBestellZeitStunde, zielBestellZeitMinute, 0, 0);
-
-      const verbleibendeZeit = naechsterTag14Uhr.getTime() - jetzt.getTime();
-      const stunden = Math.floor(verbleibendeZeit / (1000 * 60 * 60));
-      const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60));
-
-      countdownText.value = `${stunden}:${minuten < 10 ? '0' : ''}${minuten} Stunden`;
+      let naechsterTag = berechneNaechstenVersandTag(new Date(jetzt.setDate(jetzt.getDate() + 1)));
+      zielDatum.value = berechneZielDatum(naechsterTag, lieferZeitTage);
     }
   } else {
     keinVersandTag.value = true;
-
     let naechsterVersandStart = berechneNaechstenVersandTag(new Date(jetzt));
-    zielDatum.value = berechneZielDatum(naechsterVersandStart, lieferZeitTage)
-
-    const naechsterVersandTag14Uhr = new Date(naechsterVersandTag.value);
-    naechsterVersandTag14Uhr.setHours(zielBestellZeitStunde, zielBestellZeitMinute, 0, 0);
-
-    const verbleibendeZeit = naechsterVersandTag14Uhr.getTime() - jetzt.getTime();
-    const stunden = Math.floor(verbleibendeZeit / (1000 * 60 * 60));
-    const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60));
-
-    countdownText.value = `${stunden}:${minuten < 10 ? '0' : ''}${minuten} Stunden`;
+    zielDatum.value = berechneZielDatum(naechsterVersandStart, lieferZeitTage);
   }
+
+  // Neues Enddatum für den Lieferzeitraum berechnen
+  zielDatumEnde.value = new Date(zielDatum.value);
+  zielDatumEnde.value.setDate(zielDatumEnde.value.getDate() + 1);
+
+  // Sicherstellen, dass das Enddatum ein gültiger Versandtag ist
+  while (!istVersandTag(zielDatumEnde.value)) {
+    zielDatumEnde.value.setDate(zielDatumEnde.value.getDate() + 1);
+  }
+
+  // Countdown korrekt berechnen
+  const bestellFrist = new Date(jetzt);
+  bestellFrist.setHours(zielBestellZeitStunde, zielBestellZeitMinute, 0, 0);
+
+  const verbleibendeZeit = bestellFrist.getTime() - jetzt.getTime();
+  const stunden = Math.floor(verbleibendeZeit / (1000 * 60 * 60));
+  const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60));
+
+  countdownText.value = `${stunden} Stunden ${minuten < 10 ? '0' : ''}${minuten} Minuten`;
 }
 
 onMounted(() => {
