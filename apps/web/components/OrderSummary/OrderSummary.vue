@@ -14,6 +14,7 @@
           :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
           class="flex justify-between typography-text-base w-full"
         >
+
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
             {{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}
@@ -66,6 +67,12 @@
         <h2 data-testid="total">{{ n(totals.total, 'currency') }}</h2>
       </div>
       <UiDivider class="w-auto mb-4" />
+
+      <MinimumShipping
+        :mindestbestellwert="200"
+        :aktuellerBestellwert="totals.subTotal"
+      />
+
       <slot />
     </div>
   </div>
@@ -74,6 +81,7 @@
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
+import MinimumShipping from '~/components/MinimumShipping/MinimumShipping.vue'; // Pfad zur neuen Komponente
 
 const props = defineProps<OrderSummaryPropsType>();
 const { t, n } = useI18n();

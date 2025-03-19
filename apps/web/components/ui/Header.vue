@@ -1,5 +1,5 @@
 <template>
-  <MegaMenu :categories="categoryTree">
+  <MegaMenuKrauseSohn :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
@@ -140,7 +140,7 @@
         <SfIconSearch />
       </UiButton>
     </div>
-  </MegaMenu>
+  </MegaMenuKrauseSohn>
   <LanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"

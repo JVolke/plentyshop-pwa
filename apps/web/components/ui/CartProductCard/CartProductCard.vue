@@ -30,7 +30,7 @@
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
 
-      <div v-if="!cartItem.variation?.bundleComponents">
+      <div>
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
             v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -41,9 +41,17 @@
         </div>
         <div class="my-2">
           <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+            <li>
+              <span class="font-semibold mr-1">Artikelnummer:</span>
+              <span>{{ cartItem.variation!.variation!.number }}</span>
+            </li>
             <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
               <span class="mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
+            </li>
+            <li>
+              <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
+              <span>{{ cartItem.variation!.item!.manufacturer.externalName }}</span>
             </li>
           </ul>
           <div

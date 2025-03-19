@@ -83,7 +83,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="typography-text-sm mb-2"
+                      class="typography-text-sm mb-2 font-bold"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -134,7 +134,6 @@
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
-// Test
           <ul v-if="activeMenu" class="mt-2 mb-6">
             <li v-if="activeMenu.id !== 0">
               <SfListItem
