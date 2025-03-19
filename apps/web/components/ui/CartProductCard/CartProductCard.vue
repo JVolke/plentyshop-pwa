@@ -49,10 +49,10 @@
               <span class="mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
             </li>
-            <li>
+            <!-- li>
               <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
               <span>{{ cartItem.variation!.item!.manufacturer.externalName }}</span>
-            </li>
+            </li -->
           </ul>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
