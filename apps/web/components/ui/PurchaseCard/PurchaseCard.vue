@@ -116,7 +116,7 @@
               </SfTooltip>
             </div>
 
-            <ShippingTimer />
+            <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1"/>
             <div class="mt-4 typography-text-xs flex gap-1">
               <span>{{ t('asterisk') }}</span>
               <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>

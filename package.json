@@ -32,6 +32,7 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
+    "@nuxt/fonts": "0.11.0",
     "@plentymarkets/shop-api": "^0.94.1",
     "@plentymarkets/shop-core": "^1.2.2",
     "@plentymarkets/shop-module-gtag": "^1.1.1",
@@ -45,12 +46,15 @@
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2",
-    "vue-multiselect": "^3.2.0"
+    "tsup": "8.4.0",
+    "vitepress": "0.1.1",
+    "vue-multiselect": "^3.2.0",
+    "vuepress": "1.9.10"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
-    "@lhci/cli": "^0.14.0",
+    "@lhci/cli": "^0.10.0",
     "@nuxt/test-utils": "^3.15.4",
     "@nuxtjs/i18n": "9.1.5",
     "@nuxtjs/turnstile": "^0.8.0",
@@ -65,7 +69,7 @@
     "happy-dom": "^15.11.7",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.5.0",
     "nuxt": "^3.16.0",
     "nuxt-security": "2.1.5",
     "nuxt-viewport": "^2.1.5",
