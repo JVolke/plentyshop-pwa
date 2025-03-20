@@ -3,9 +3,9 @@
     <div class="p-2  typography-text-sm flex flex-col flex-auto">
       <div>
         <p>
-          Lieferung am {{ zielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) }} -
+          Lieferung {{ zielDatum.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' }) }} -
           {{ zielDatumEnde.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) }}
-          bei einer Bestellung innerhalb der nächsten {{ countdownText }} <i>Gilt nur für Lieferung innerhalb von Deutschland (Inseln ausgenommen)</i>
+          bei einer Bestellung innerhalb der nächsten {{ countdownText }}. <i>Gilt nur für Lieferung innerhalb von Deutschland (Inseln ausgenommen)</i>
         </p>
       </div>
     </div>

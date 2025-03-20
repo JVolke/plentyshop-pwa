@@ -1,7 +1,7 @@
 <template>
   <div v-if="haveBadges" data-testid="badges">
     <ul>
-      <template v-if="tagsEnabled && productTags.length > 0">
+      <template v-if="tagsEnabled && productTags.length > 0 && !inCategory">
         <SfListItem
           v-for="(tag, index) in productTags"
           :key="index"

@@ -116,7 +116,6 @@
               </SfTooltip>
             </div>
 
-            <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1"/>
             <div class="mt-4 typography-text-xs flex gap-1">
               <span>{{ t('asterisk') }}</span>
               <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
@@ -132,6 +131,8 @@
                 </template>
               </i18n-t>
             </div>
+            <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1"/>
+
             <template v-if="showPayPalButtons">
               <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
             </template>

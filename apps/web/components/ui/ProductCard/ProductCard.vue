@@ -1,12 +1,6 @@
 <template>
   <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col" data-testid="product-card">
     <div class="relative overflow-hidden">
-      <UiBadges
-        :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
-        :product="product"
-        :use-availability="isFromWishlist"
-      />
-
       <SfLink
         :tag="NuxtLink"
         rel="preload"
@@ -45,14 +39,14 @@
         <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-      <div
+      <!-- div
         v-if="productGetters.getShortDescription(product)"
         class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
         <span class="line-clamp-3">
           {{ productGetters.getShortDescription(product) }}
         </span>
-      </div>
+      </div -->
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
