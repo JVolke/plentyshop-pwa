@@ -15,7 +15,7 @@
         :items-per-page="Number(productsPerPage)"
       >
         <template #sidebar>
-          <CategoryTree :category="productsCatalog.category" />
+          <!-- CategoryTree :category="productsCatalog.category" /-->
           <CategorySorting />
           <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
           <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />

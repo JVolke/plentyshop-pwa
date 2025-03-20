@@ -4,4 +4,5 @@ export type BadgesProps = {
   product: Product;
   useTags?: boolean;
   useAvailability?: boolean;
+  inCategory?: boolean;
 };

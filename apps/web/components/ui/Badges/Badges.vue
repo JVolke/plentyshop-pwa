@@ -19,9 +19,18 @@
       </template>
 
       <SfListItem
-        v-if="availabilityEnabled && productGetters.getAvailabilityName(product)"
+        v-if="availabilityEnabled && productGetters.getAvailabilityName(product) && !inCategory"
         size="sm"
         class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid mt-2"
+        :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
+        :style="availabilityStyles"
+      >
+        {{ productGetters.getAvailabilityName(product) }}
+      </SfListItem>
+      <SfListItem
+        v-if="availabilityEnabled && productGetters.getAvailabilityName(product) && inCategory"
+        size="sm"
+        class="text-xs font-medium select-none rounded-md !cursor-text !px-2 grid mt-2"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
         :style="availabilityStyles"
       >
@@ -38,7 +47,7 @@ import type { BadgesProps } from '~/components/ui/Badges/types';
 
 const localePath = useLocalePath();
 
-const { product, useTags = true, useAvailability = false } = defineProps<BadgesProps>();
+const { product, useTags = true, useAvailability = false, inCategory = false } = defineProps<BadgesProps>();
 const productTags = ref([] as ProductTag[]);
 const availabilityStyles = ref({});
 
