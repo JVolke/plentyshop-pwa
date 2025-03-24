@@ -5,7 +5,7 @@
 </div>
 </template>
 <script setup lang="ts">
-import type { CategoryPageImageHeaderProps } from "~/components/CategoryPageHeaderImage/types";
+import type { CategoryPageImageHeaderProps } from "~/modules/runtime/components/CategoryPageHeaderImage/types";
 
 const { title = "", image = "https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/Kategorie-Banner/Deko-Banner-Desktop.webp" } = defineProps<CategoryPageImageHeaderProps>();
 

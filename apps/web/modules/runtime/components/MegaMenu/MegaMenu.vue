@@ -59,7 +59,7 @@
                 />
               </UiButton>
             </NuxtLink>
-<!-- Angepasst für Krause und Sohn -->
+            <!-- Angepasst für Krause und Sohn -->
             <div
               v-if="
                 isOpen &&
@@ -71,7 +71,7 @@
               :key="activeMenu.id"
               ref="megaMenuReference"
               :style="style"
-              class="hidden md:grid columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
+              class="hidden md:inline-block columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
               tabindex="0"
               @mouseleave="close()"
               @keydown.esc="focusTrigger(index)"
@@ -83,7 +83,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="typography-text-sm mb-2"
+                      class="typography-text-sm mb-2 font-bold"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -134,7 +134,6 @@
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
-// Test
           <ul v-if="activeMenu" class="mt-2 mb-6">
             <li v-if="activeMenu.id !== 0">
               <SfListItem
