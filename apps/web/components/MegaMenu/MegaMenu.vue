@@ -71,7 +71,7 @@
               :key="activeMenu.id"
               ref="megaMenuReference"
               :style="style"
-              class="hidden md:grid columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
+              class="hidden md:inline-block columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
               tabindex="0"
               @mouseleave="close()"
               @keydown.esc="focusTrigger(index)"
