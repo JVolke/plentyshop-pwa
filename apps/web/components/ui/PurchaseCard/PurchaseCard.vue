@@ -149,7 +149,6 @@ import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, S
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
-import ShippingTimer from '~/components/ui/ShippingTimer/ShippingTimer.vue';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 

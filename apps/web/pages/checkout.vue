@@ -42,11 +42,6 @@
                 type="Checkout"
                 @validation-callback="handleReadyToBuy"
               />
-              <PayPalPayLaterBanner
-                placement="payment"
-                :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
-                :commit="true"
-              />
             </div>
             <PayPalCreditCardBuyButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"

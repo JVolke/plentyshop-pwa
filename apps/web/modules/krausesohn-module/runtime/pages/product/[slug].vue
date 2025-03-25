@@ -31,7 +31,9 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <BlocksProductRecommendedProducts :text="{}" :category-id="productGetters.getCategoryIds(product)[0]" />
+          <ProductSlider v-if="crossSellingItems" :items="crossSellingItems.products" title="Dazu passt:"></ProductSlider>
+          <ProductSlider v-if="crossSellingItems2" :items="crossSellingItems2.products" title="Ähnliche Artikel:"></ProductSlider>
+
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -72,6 +74,20 @@ setPageMeta(productName.value, icon);
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams);
+
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
+const { fetchProducts: fetchCrossSelling2, data: crossSellingItems2 } = useProducts('crossSelling' + productId + 'Accessory');
+
+fetchCrossSelling({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Similar'
+});
+fetchCrossSelling2({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Accessory'
+});
 
 if (Object.keys(product.value).length === 0) {
   throw new Response(null, {

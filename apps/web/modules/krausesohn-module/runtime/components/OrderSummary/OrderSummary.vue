@@ -68,6 +68,12 @@
       </div>
       <UiDivider class="w-auto mb-4" />
 
+      <MinimumShipping
+        :mindestbestellwert="200"
+        :aktuellerBestellwert="totals.subTotal"
+        :shipping-profile="11"
+      />
+
       <slot />
     </div>
   </div>
@@ -75,7 +81,7 @@
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-api';
-import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
+import type { OrderSummaryPropsType } from './types';
 
 const props = defineProps<OrderSummaryPropsType>();
 const { t, n } = useI18n();
