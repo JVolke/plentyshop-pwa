@@ -70,6 +70,18 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
+      matomo: {
+        url: process.env.MATOMO_URL || '',
+        id: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
+        enabled: process.env.MATOMO_ENABLED === 'true',
+        debug: process.env.MATOMO_DEBUG === 'true',
+        disableCookies: process.env.MATOMO_DISABLE_COOKIES === 'true',
+        requireConsent: process.env.MATOMO_REQUIRE_CONSENT === 'true',
+        trackPageView: true,
+        trackSiteSearch: false,
+        trackEcommerce: false,
+        showGrossPrices: true,
+      },
     },
   },
   modules: [
@@ -88,7 +100,20 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
+    '~/modules/matomo'
   ],
+  matomo: {
+    url: process.env.MATOMO_URL || '',
+    id: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
+    enabled: process.env.MATOMO_ENABLED === 'true',
+    debug: process.env.MATOMO_DEBUG === 'true',
+    disableCookies: process.env.MATOMO_DISABLE_COOKIES === 'true',
+    requireConsent: process.env.MATOMO_REQUIRE_CONSENT === 'true',
+    trackPageView: true,
+    trackSiteSearch: false,
+    trackEcommerce: false,
+    showGrossPrices: true,
+  },
   alokai: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
