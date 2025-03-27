@@ -49,7 +49,7 @@
               <span class="mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
             </li>
-            <li>
+            <li v-if="cartItem.variation">
               <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
               <span>{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
             </li>
@@ -229,6 +229,10 @@ const cartItemImage = computed(() => {
 const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+const manufacturerName = computed(
+  () => manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation ?? ({} as Product)))
+)
 
 const basePriceSingleValue = computed(
   () =>
