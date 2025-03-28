@@ -31,9 +31,8 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductSlider v-if="crossSellingItems" :items="crossSellingItems.products" title="Dazu passt:"></ProductSlider>
-          <ProductSlider v-if="crossSellingItems2" :items="crossSellingItems2.products" title="Ähnliche Artikel:"></ProductSlider>
-
+          <ProductSlider v-if="crossSellingItems" :items="crossSellingItems.products" title="Dazu passt:" />
+          <ProductSlider v-if="crossSellingItems2" :items="crossSellingItems2.products" title="Ähnliche Artikel:" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>

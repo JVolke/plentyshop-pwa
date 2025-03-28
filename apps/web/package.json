@@ -64,7 +64,7 @@
     "nuxt": "^3.16.0",
     "sass": "^1.77.6",
     "tsx": "^4.19.0",
-    "typedoc": "^0.27.9",
+    "typedoc": "^0.28.1",
     "typedoc-plugin-markdown": "^4.4.2",
     "typedoc-vitepress-theme": "1.1.2",
     "vitepress": "^0.1.1",
