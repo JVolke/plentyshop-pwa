@@ -49,7 +49,7 @@ export default defineNuxtModule({
     nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'UiCartProductCard');
       if (comp) {
-        comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
+        comp.filePath = resolve('./runtime/components/CardProductCard/UiCardProductCard.vue');
       }
     });
 
