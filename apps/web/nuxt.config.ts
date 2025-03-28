@@ -27,8 +27,11 @@ export default defineNuxtConfig({
         allow: ['../../..'], // relative to the current nuxt.config.ts
       },
     },
+    optimizeDeps: {
+      include: ['dotenv'],
+    },
   },
-  css: ['~/assets/style.scss', '~/assets/payment-font.scss'],
+  css: ['~/assets/style.scss'],
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
@@ -42,6 +45,9 @@ export default defineNuxtConfig({
     '/_nuxt-plenty/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/_nuxt-plenty/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
+  image: {
+    provider: 'none',
+  },
   site: {
     url: '',
   },
@@ -50,6 +56,7 @@ export default defineNuxtConfig({
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
+      isDev: process.env.NODE_ENV === 'development',
       cookieGroups: cookieConfig,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true',
@@ -58,7 +65,7 @@ export default defineNuxtConfig({
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
-      headerLogo: process.env.LOGO || 'logo.svg',
+      headerLogo: process.env.LOGO || '/_nuxt-plenty/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
       shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       enableGuestLogin: process.env?.ENABLE_GUEST_LOGIN === 'true',
@@ -70,23 +77,11 @@ export default defineNuxtConfig({
       blockSize: process.env.NUXT_PUBLIC_BLOCK_SIZE || 'm',
       primaryColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       secondaryColor: process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d',
-      matomo: {
-        url: process.env.MATOMO_URL || '',
-        id: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
-        enabled: process.env.MATOMO_ENABLED === 'true',
-        debug: process.env.MATOMO_DEBUG === 'true',
-        disableCookies: process.env.MATOMO_DISABLE_COOKIES === 'true',
-        requireConsent: process.env.MATOMO_REQUIRE_CONSENT === 'true',
-        trackPageView: true,
-        trackSiteSearch: false,
-        trackEcommerce: false,
-        showGrossPrices: true,
-      },
     },
   },
   modules: [
-    '@plentymarkets/shop-module-gtag',
     '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
@@ -99,27 +94,9 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '@vue-storefront/nuxt',
-    '~/modules/matomo'
   ],
-  matomo: {
-    url: process.env.MATOMO_URL || '',
-    id: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
-    enabled: process.env.MATOMO_ENABLED === 'true',
-    debug: process.env.MATOMO_DEBUG === 'true',
-    disableCookies: process.env.MATOMO_DISABLE_COOKIES === 'true',
-    requireConsent: process.env.MATOMO_REQUIRE_CONSENT === 'true',
-    trackPageView: true,
-    trackSiteSearch: false,
-    trackEcommerce: false,
-    showGrossPrices: true,
-  },
-  alokai: {
-    middleware: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      cdnCacheBustingId: 'no-cache-busting-id-set',
-      ssrApiUrl: '',
-    },
+  shopCore: {
+    apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
   },
   fonts: {
     defaults: {
@@ -127,19 +104,6 @@ export default defineNuxtConfig({
     },
     assets: {
       prefix: '/_nuxt-plenty/fonts/',
-    },
-  },
-  image: {
-    screens: {
-      '4xl': 1920,
-      '3xl': 1536,
-      '2xl': 1366,
-      xl: 1280,
-      lg: 1024,
-      md: 768,
-      sm: 640,
-      xs: 376,
-      '2xs': 360,
     },
   },
   i18n: nuxtI18nOptions,
