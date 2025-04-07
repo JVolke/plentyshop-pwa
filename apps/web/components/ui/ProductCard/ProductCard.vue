@@ -1,6 +1,13 @@
 <template>
   <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col" data-testid="product-card">
     <div class="relative overflow-hidden">
+      <UiBadges
+        :use-tags="useTagsOnCategoryPage"
+        :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
+        :product="product"
+        :use-availability="isFromWishlist"
+      />
+
       <SfLink
         :tag="NuxtLink"
         rel="preload"
@@ -39,14 +46,12 @@
         <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-      <!-- div
+      <div
         v-if="productGetters.getShortDescription(product)"
         class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
-        <span class="line-clamp-3">
-          {{ productGetters.getShortDescription(product) }}
-        </span>
-      </div -->
+        <div class="line-clamp-3" v-html="productGetters.getShortDescription(product)" />
+      </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
@@ -63,9 +68,23 @@
           {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
-      <UiBadges class="my-2 w-full text-center" :product="product" :use-availability="true" :in-category="true" />
-
-      <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="fit">
+      <UiButton
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
+        size="sm"
+        class="min-w-[80px] w-fit"
+        data-testid="add-to-basket-short"
+        :disabled="loading"
+        @click="addWithLoader(Number(productGetters.getId(product)))"
+      >
+        <template v-if="!loading" #prefix>
+          <SfIconShoppingCart size="sm" />
+        </template>
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+        <span v-else>
+          {{ t('addToCartShort') }}
+        </span>
+      </UiButton>
+      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
       </UiButton>
     </div>
@@ -100,16 +119,18 @@ const {
   isFromSlider = false,
 } = defineProps<ProductCardProps>();
 
-const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product);
 const { send } = useNotification();
 const loading = ref(false);
+const config = useRuntimeConfig();
+const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+const productPath = computed(() =>
+  localePath(`/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`),
+);
+
 const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth;
