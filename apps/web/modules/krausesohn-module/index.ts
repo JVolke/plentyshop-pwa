@@ -17,6 +17,10 @@ export default defineNuxtModule({
       name: 'CategoryPageHeaderImage',
       filePath: resolve('./runtime/components/CategoryPageHeaderImage/CategoryPageHeaderImage.vue'),
     });
+    addComponent({
+      name: 'CategoryDescription',
+      filePath: resolve('./runtime/components/CategoryDescription/CategoryDescription.vue'),
+    });
 
     nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'MegaMenu');
@@ -40,6 +44,13 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'CategoryPageContent');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/CategoryPageContent/CategoryPageContent.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'OrderSummary');
       if (comp) {
         comp.filePath = resolve('./runtime/components/OrderSummary/OrderSummary.vue');
@@ -52,12 +63,26 @@ export default defineNuxtModule({
         comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
       }
     });
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'UiProductCard');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/ProductCard/ProductCard.vue');
+      }
+    });
 
     /** Override ProductPages */
     extendPages((pages: NuxtPage[]) => {
       const overridePage = pages.find((p) => p.name === 'product-slug');
       if (overridePage) {
         overridePage.file = resolve('./runtime/pages/product/[slug].vue');
+      }
+    });
+
+    /** Override CategoryPage */
+    extendPages((pages: NuxtPage[]) => {
+      const overridePage = pages.find((p) => p.name === 'slug');
+      if (overridePage) {
+        overridePage.file = resolve('./runtime/pages/[...slug].vue');
       }
     });
 

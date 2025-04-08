@@ -8,7 +8,7 @@ export const useMatomo = () => {
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
 
   const trackPageView = (documentTitle?: string, customUrl?: string) => {
-    if (process.client && window._paq && config?.enabled && matomoConsentGiven.value) {
+    if (import.meta.client && window._paq && config?.enabled && matomoConsentGiven.value) {
       if (customUrl) {
         window._paq.push(['setCustomUrl', customUrl]);
       } else {
@@ -24,7 +24,7 @@ export const useMatomo = () => {
   };
 
   const trackSearch = (keyword: string, category?: string) => {
-    if (process.client && window._paq && config?.enabled && config?.trackSiteSearch && matomoConsentGiven.value) {
+    if (import.meta.client && window._paq && config?.enabled && config?.trackSiteSearch && matomoConsentGiven.value) {
       window._paq.push(['trackSiteSearch', keyword, category]);
     }
   };
@@ -39,7 +39,7 @@ export const useMatomoEcommerce = () => {
   const config = useRuntimeConfig().public.matomo;
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
 
-  if (!process.client || !window._paq || !config?.enabled || !config?.trackEcommerce || !matomoConsentGiven.value) {
+  if (!import.meta.client || !window._paq || !config?.enabled || !config?.trackEcommerce || !matomoConsentGiven.value) {
     return {
       addEcommerceItem: () => {},
       removeEcommerceItem: () => {},

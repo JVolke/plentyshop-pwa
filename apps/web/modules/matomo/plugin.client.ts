@@ -86,30 +86,29 @@ export default defineNuxtPlugin(() => {
 
   const { on } = usePlentyEvent()
   // Matomo Event Tracking based on Plenty Events
-  /*
+
   on('frontend:orderCreated', (order) => {
     if (matomoConsentGiven.value && window._paq && order.order && order.totals) {
       const totalVat = order.totals.vats.reduce((acc: number, vat: { value: number }) => acc + vat.value, 0);
       window._paq.push(['trackEcommerceOrder',
         orderGetters.getId(order), // orderId
         config.showGrossPrices ? order.totals.totalGross : order.totals.totalNet, // grandTotal
-        order.order.orderItems.map(item => config.showGrossPrices ? item.price.gross : item.price.net).reduce((sum, price) => sum + price, 0), // subtotal (sum of item prices)
+        order.order.orderItems.map((item) => config.showGrossPrices ? orderGetters.getItemPrice(item) : orderGetters.getItemNetPrice(item)).reduce((sum, price) => sum + price, 0), // subtotal (sum of item prices)
         config.showGrossPrices ? order.totals.shippingGross : order.totals.shippingNet, // shippingCost
         totalVat, // taxAmount
         false // discountAmount (not easily available here, might need adjustment)
       ]);
-      order.order.orderItems.forEach(item => {
+      order.order.orderItems.forEach((item) => {
         window._paq.push(['addEcommerceItem',
           orderGetters.getItemVariationId(item), // itemSKU
           orderGetters.getItemName(item), // itemName
-          orderGetters.getItemPrice(item),
           '', // itemCategory (not easily available here)
-          config.showGrossPrices ? item.price.gross : item.price.net, // price
+          orderGetters.getItemNetPrice(item),
           orderGetters.getItemQty(item) // quantity
         ]);
       });
     }
-  });*/
+  });
 
 
   on('frontend:addToCart', (data) => {
