@@ -1,9 +1,12 @@
-import { defineNuxtModule, addComponent, createResolver, extendPages } from '@nuxt/kit';
+import { defineNuxtModule, addComponent, createResolver, extendPages, addPlugin } from '@nuxt/kit';
 import type { NuxtPage } from '@nuxt/schema'
 
 export default defineNuxtModule({
   setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
+
+
+
     // Komponente hinzufügen
     addComponent({
       name: 'ShippingTimer',
@@ -20,6 +23,10 @@ export default defineNuxtModule({
     addComponent({
       name: 'CategoryDescription',
       filePath: resolve('./runtime/components/CategoryDescription/CategoryDescription.vue'),
+    });
+    addComponent({
+      name: 'ShopAuskunft',
+      filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunft.vue'),
     });
 
     nuxt.hook('components:extend', (components) => {
@@ -58,6 +65,13 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'UiFooter');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/Footer/Footer.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'UiCartProductCard');
       if (comp) {
         comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
@@ -86,5 +100,26 @@ export default defineNuxtModule({
       }
     });
 
+    /** Override Guest Login */
+    extendPages((pages: NuxtPage[]) => {
+      const overridePage = pages.find((p) => p.name === 'guest-login');
+      if (overridePage) {
+        overridePage.file = resolve('./runtime/pages/guest/login.vue');
+      }
+    });
+
+    nuxt.hook('i18n:registerModule', (register) => {
+      register({
+        langDir: resolve('./runtime/lang'),
+        locales: [
+          {
+            code: 'de',
+            file: 'de.json',
+          },
+        ],
+      })
+    })
+
+    addPlugin(resolve('./runtime/plugins/externalScript'));
   },
 });

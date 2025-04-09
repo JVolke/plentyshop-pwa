@@ -1,0 +1,25 @@
+{
+  "krausesohn": {
+    "test": "Test"
+  },
+  "categories": {
+    "legal": {
+      "subcategories": {
+        "batteryInfo": "Batteriehinweis",
+        "paymentInfo": "Zahlungsarten",
+        "shippingInfo": "Versand",
+        "faqInfo": "Häufig gestellte Fragen",
+        "cookiesInfo": "Cookies"
+      }
+    },
+    "additional": {
+      "label": "Informationen",
+      "subcategories": {
+        "sizesInfo": "Kostüm Größen",
+        "retoureInfo": "Rücksendungen / Retouren",
+        "couponsInfo": "Gutscheine",
+        "winInfo": "Gewinnspiel"
+      }
+    }
+  }
+}

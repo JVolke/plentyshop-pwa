@@ -16,7 +16,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: process.env.STORENAME || 'PlentyONE Shop',
-    fallbackCurrency: 'GBP',
+    fallbackCurrency: 'EUR',
   },
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],

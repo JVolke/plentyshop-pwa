@@ -1,5 +1,6 @@
 <template>
   <NuxtLayout
+    v-if="productsCatalog?.products.length > 0"
     name="default"
     :breadcrumbs="breadcrumbs"
     class="relative"
@@ -24,6 +25,19 @@
           <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
         </template>
       </CategoryPageContent>
+    </template>
+  </NuxtLayout>
+  <NuxtLayout
+    v-else
+    name="default"
+    class="relative"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+  >
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <template v-else>
+      <narrow-container class="mb-20 px-4 md:px-0">
+        <CategoryDescription :category="productsCatalog.category"/>
+      </narrow-container>
     </template>
   </NuxtLayout>
 </template>

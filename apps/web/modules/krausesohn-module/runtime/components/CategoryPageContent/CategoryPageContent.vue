@@ -1,6 +1,6 @@
 <template>
-  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <CategoryPageHeaderImage :title="title"></CategoryPageHeaderImage>
+  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout" >
+    <CategoryPageHeaderImage :title="title" />
     <div class="md:flex gap-6" data-testid="category-page-content">
       <CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
@@ -90,7 +90,6 @@
     </div>
     <slot name="content" />
   </NarrowContainer>
-
 </template>
 
 <script setup lang="ts">
