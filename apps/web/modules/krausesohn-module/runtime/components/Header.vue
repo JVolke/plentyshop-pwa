@@ -200,6 +200,7 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
+import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();

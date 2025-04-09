@@ -32,7 +32,7 @@
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
           <ProductSlider v-if="crossSellingItems" :items="crossSellingItems.products" title="Dazu passt:" />
-          <ProductSlider v-if="crossSellingItems2" :items="crossSellingItems2.products" title="Ähnliche Artikel:" />
+          <ProductSlider v-if="crossSellingItemsAccessory" :items="crossSellingItemsAccessory.products" title="Ähnliche Artikel:" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -75,14 +75,16 @@ const countsProductReviews = computed(() => reviewGetters.getReviewCounts(produc
 await fetchProduct(productParams);
 
 const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
-const { fetchProducts: fetchCrossSelling2, data: crossSellingItems2 } = useProducts('crossSelling' + productId + 'Accessory');
 
 fetchCrossSelling({
   itemId: productGetters.getItemId(product.value),
   type: 'cross_selling',
   crossSellingRelation: 'Similar'
 });
-fetchCrossSelling2({
+
+const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts('crossSelling' + productId + 'Accessory');
+
+fetchCrossSellingAccessory({
   itemId: productGetters.getItemId(product.value),
   type: 'cross_selling',
   crossSellingRelation: 'Accessory'

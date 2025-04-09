@@ -10,7 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       script: [
         {
           src: "https://widget.shopauskunft.de/assets/widget.js",
-          type: "text/javascript"
+          async: true,
         }
       ]
     })
