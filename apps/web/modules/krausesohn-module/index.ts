@@ -44,7 +44,7 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'Header');
+      const comp = components.find((c) => c.pascalName === 'UiHeader');
       if (comp) {
         comp.filePath = resolve('./runtime/components/Header.vue');
       }
@@ -61,6 +61,27 @@ export default defineNuxtModule({
       const comp = components.find((c) => c.pascalName === 'OrderSummary');
       if (comp) {
         comp.filePath = resolve('./runtime/components/OrderSummary/OrderSummary.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'VariationProperties');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/VariationProperties/VariationProperties.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'ProductAccordion');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/ProductAccordion/ProductAccordion.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'UiPurchaseCard');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/PurchaseCard/PurchaseCard.vue');
       }
     });
 
@@ -120,6 +141,6 @@ export default defineNuxtModule({
       })
     })
 
-    addPlugin(resolve('./runtime/plugins/externalScript'));
+    // addPlugin(resolve('./runtime/plugins/externalScript.client'));
   },
 });

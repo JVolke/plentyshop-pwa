@@ -9,8 +9,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     useHead({
       script: [
         {
-          src: "https://widget.shopauskunft.de/assets/widget.js",
-          async: true,
+          id: "shopauskunft",
+          src: "http://widget.shopauskunft.de/assets/widget.js",
         }
       ]
     })
