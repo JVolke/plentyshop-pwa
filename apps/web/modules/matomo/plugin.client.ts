@@ -8,7 +8,7 @@ import {
   useRouter,
   usePlentyEvent
 } from '#imports';
-import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
+import { cartGetters, orderGetters, productGetters } from '@plentymarkets/shop-api';
 
 import matomoScriptContent from '~/modules/matomo/runtime/matomo.js?raw';
 
@@ -124,19 +124,13 @@ export default defineNuxtPlugin(() => {
     }
   });
 
-  /**
+
   on('frontend:removeFromCart', (data) => {
     if (matomoConsentGiven.value && window._paq) {
+      window._paq.push(['removeEcommerceItem', data.deleteItemParams.cartItemId]);
       window._paq.push(['trackEcommerceCartUpdate', cartGetters.getTotals(data.cart)]);
-      window._paq.push(['addEcommerceItem',
-        cartGetters.getVariationId(data.deleteItemParams), // itemSKU
-        cartGetters.getItemName(data.deleteItemParams), // itemName
-        '', // itemCategory (not easily available here)
-        cartGetters.getItemPrice(data.deleteItemParams), // price
-        data.deleteItemParamsParams // quantity
-      ]);
     }
-  });*/
+  });
 
   on('frontend:beginCheckout', (data) => {
     if (matomoConsentGiven.value && window._paq) {
@@ -152,6 +146,15 @@ export default defineNuxtPlugin(() => {
       });
       window._paq.push(['trackEcommerceCartUpdate', config.showGrossPrices ? data.basketAmount : data.basketAmountNet]);
     }
+  });
+
+  on('frontend:productLoaded', ( data) => {
+    window._paq.push(['trackEcommerceProductView',
+      productGetters.getVariationId(data.product),
+      productGetters.getName(data.product),
+      '',
+      productGetters.getPrice(data.product)
+    ]);
   });
 
   on('frontend:addToWishlist', (data) => {
