@@ -1,6 +1,23 @@
 # Changelog PlentyONE Shop
 
-# v1.x.x (yyyy-mm-dd)
+# v1.xx.x (xxxx-xx-xx)
+
+### 🩹 Fixed
+
+- Updated the category menu markup by removing a button element nested within an anchor tag.
+- Fixed nuxt runtime error.
+- Turnstile validation error in the contact form if turnstile is not configured.
+
+### Developer notes
+
+- Implemented `'frontend:productLoaded': { product: Product };` event which is triggered when a product gets loaded on the product page.
+- Updated `frontend:removeFromCart` event to include deleted cartItem.
+
+# v1.13.1 (2025-04-07) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.13.0...v1.13.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### 🩹 Fixed
+
+- A bug which crashed the build process.
 
 ### New
 
@@ -13,6 +30,9 @@
 - (dev) Added form for delete page
 - (dev) Fix correct children data for Seo settings
 - (dev) Added manange pages button in editor toolbar.
+- (dev) State management and save for edit categories toolbar
+- (dev) Added editable page for category
+- (dev) Added delete category logic
 
 ### 👷 Changed
 
@@ -24,7 +44,7 @@
 - (dev) Fix Page Selector closes when clicking outside the box.
 - (dev) Fix Page Selector closes on second button click.
 
-# v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.12.2" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+# v1.13.0 (2025-04-07)<a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.12.1...v1.13.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
