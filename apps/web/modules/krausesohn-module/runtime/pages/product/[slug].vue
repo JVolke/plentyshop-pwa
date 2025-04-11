@@ -72,7 +72,11 @@ setPageMeta(productName.value, icon);
 
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-await fetchProduct(productParams);
+await fetchProduct(productParams).then(() => {
+  usePlentyEvent().emit('frontend:productLoaded', {
+    product: product.value,
+  });
+});
 
 const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
 
