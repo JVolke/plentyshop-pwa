@@ -28,6 +28,10 @@ export default defineNuxtModule({
       name: 'ShopAuskunft',
       filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunft.vue'),
     });
+    addComponent({
+      name: 'ShopAuskunftRBA',
+      filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunftRBA.vue'),
+    });
 
     nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'MegaMenu');
@@ -99,9 +103,15 @@ export default defineNuxtModule({
       }
     });
     nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'UiProductCard');
+      const comp = components.find((c) => c.pascalName === 'UiCartProductCard');
       if (comp) {
-        comp.filePath = resolve('./runtime/components/ProductCard/ProductCard.vue');
+        comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
+      }
+    });
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'ConfirmationPageContent');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/ConfirmationPageContent/ConfirmationPageContent.vue');
       }
     });
 
@@ -141,6 +151,6 @@ export default defineNuxtModule({
       })
     })
 
-    // addPlugin(resolve('./runtime/plugins/externalScript.client'));
+    //addPlugin(resolve('./runtime/plugins/shopauskunft.client'));
   },
 });

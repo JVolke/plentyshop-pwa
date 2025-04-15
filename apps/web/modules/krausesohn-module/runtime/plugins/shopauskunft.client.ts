@@ -1,10 +1,12 @@
-import { defineNuxtPlugin, useRouter } from '#app';
+// plugins/load-shopauskunft-after-widget.client.ts
+import { defineNuxtPlugin, ref, watch, onMounted } from "#imports";
 
 export default defineNuxtPlugin(() => {
-  const router = useRouter();
   const scriptId = 'shopauskunft-global';
   const scriptUrl = 'https://widget.shopauskunft.de/assets/widget.js';
-  const forbiddenRoutes = ['/checkout']; // Routen, auf denen das Widget geladen werden soll
+  const targetElementSelector = '.shopauskunft-widget';
+
+  const isWidgetPresent = ref(false);
 
   const loadScript = () => {
     if (typeof document !== 'undefined' && !document.getElementById(scriptId)) {
@@ -12,8 +14,7 @@ export default defineNuxtPlugin(() => {
       script.id = scriptId;
       script.src = scriptUrl;
       script.onload = () => {
-        console.log('Shopauskunft-Skript global geladen.');
-        // Ggf. globale Initialisierungsfunktionen hier aufrufen
+        console.log('Shopauskunft-Skript geladen, da .shopauskunft-widget vorhanden war.');
       };
       script.onerror = (error) => {
         console.error('Fehler beim Laden des Shopauskunft-Skripts:', error);
@@ -22,32 +23,39 @@ export default defineNuxtPlugin(() => {
     }
   };
 
-  const removeScript = () => {
-    if (typeof document !== 'undefined') {
-      const scriptTag = document.getElementById(scriptId);
-      if (scriptTag) {
-        document.head.removeChild(scriptTag);
-        console.log('Shopauskunft-Skript global entfernt.');
+  const checkWidget = () => {
+    if (typeof document !== 'undefined' && document.querySelector(targetElementSelector)) {
+      isWidgetPresent.value = true;
+    }
+  };
+
+  onMounted(() => {
+    // Initialprüfung beim Mounten der App (clientseitig)
+    checkWidget();
+
+    // Beobachten Sie Änderungen im DOM (optional, falls das Widget dynamisch geladen wird)
+    // const observer = new MutationObserver(checkWidget);
+    // observer.observe(document.body, { subtree: true, childList: true });
+
+    // Laden Sie das Skript, sobald das Widget-Element vorhanden ist
+    watch(isWidgetPresent, (newValue: boolean) => {
+      if (newValue) {
+        loadScript();
+        // Wenn der Observer verwendet wird, kann er hier gestoppt werden (optional)
+        // if (observer) {
+        //   observer.disconnect();
+        // }
       }
-    }
-  };
-
-  // Funktion zum Überprüfen, ob das Skript geladen werden soll
-  const shouldLoadScript = (path: string) => {
-    return forbiddenRoutes.includes(path);
-  };
-
-  // Initiales Laden beim Mounten der App (clientseitig)
-  if (!shouldLoadScript(router.currentRoute.value.path)) {
-    loadScript();
-  }
-
-  // Auf Routenänderungen reagieren
-  router.afterEach((to) => {
-    if (shouldLoadScript(to.path)) {
-      loadScript();
-    } else {
-      removeScript();
-    }
+    });
   });
+
+  // Alternative: Einfach einmalig nach einer Verzögerung prüfen (weniger reaktiv)
+  // onMounted(() => {
+  //   setTimeout(() => {
+  //     checkWidget();
+  //     if (isWidgetPresent.value) {
+  //       loadScript();
+  //     }
+  //   }, 500); // Beispielhafte Verzögerung
+  // });
 });
