@@ -102,16 +102,18 @@ export default defineNuxtModule({
         comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
       }
     });
-    nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'UiCartProductCard');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');
-      }
-    });
+
     nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'ConfirmationPageContent');
       if (comp) {
         comp.filePath = resolve('./runtime/components/ConfirmationPageContent/ConfirmationPageContent.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'CheckoutGeneralTerms');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/CheckoutGeneralTerms/CheckoutGeneralTerms.vue');
       }
     });
 
@@ -136,6 +138,16 @@ export default defineNuxtModule({
       const overridePage = pages.find((p) => p.name === 'guest-login');
       if (overridePage) {
         overridePage.file = resolve('./runtime/pages/guest/login.vue');
+      }
+    });
+
+    /**
+     * Override Checkout
+     * */
+    extendPages((pages: NuxtPage[]) => {
+      const overridePage = pages.find((p) => p.name === 'checkout');
+      if (overridePage) {
+        overridePage.file = resolve('./runtime/pages/checkout.vue');
       }
     });
 

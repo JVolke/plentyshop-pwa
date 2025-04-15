@@ -31,8 +31,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
-
 const { isClicked, clickedBlockIndex, isTablet, blockHasData, tabletEdit, changeBlockPosition } = useBlockManager();
 
 const { t } = useI18n();
