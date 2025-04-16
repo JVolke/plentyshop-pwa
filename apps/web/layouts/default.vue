@@ -15,11 +15,15 @@
     </NuxtLazyHydrate>
 
     <QuickCheckout v-if="isOpen" :product="product" />
+    <client-only>
+          <ShopAuskunft/>
+    </client-only>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
+import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
