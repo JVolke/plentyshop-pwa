@@ -43,7 +43,7 @@ const feiertage = ref([
 ]);
 
 function istFeiertag(datum: Date): boolean {
-  return feiertage.value.some(feiertag =>
+  return feiertage.value.some((feiertag) =>
     feiertag.getDate() === datum.getDate() &&
     feiertag.getMonth() === datum.getMonth() &&
     feiertag.getFullYear() === datum.getFullYear()
@@ -51,7 +51,7 @@ function istFeiertag(datum: Date): boolean {
 }
 
 function berechneZielDatum(startDatum: Date, tageHinzufügen: number): Date {
-  let lieferDatum = new Date(startDatum);
+  const lieferDatum = new Date(startDatum);
   let lieferTageZaehler = 0;
 
   while (lieferTageZaehler < tageHinzufügen) {

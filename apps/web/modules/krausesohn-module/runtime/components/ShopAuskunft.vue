@@ -16,6 +16,11 @@ import { loadShopauskunftWidget } from '../utils/loadShopauskunft';
 
 const route = useRoute();
 const showWidget = ref(false);
+const config = useRuntimeConfig().public;
+const showConfigurationDrawer = config.showConfigurationDrawer;
+const pwaCookie = useCookie('pwa');
+const isPreview = ref(false);
+isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 
 // Seiten, auf denen das Widget **nicht** angezeigt werden soll
 const hiddenRoutes = ['/checkout', '/login', '/confirmation']; // oder RegExp verwenden
@@ -25,7 +30,7 @@ const isHidden = computed(() => hiddenRoutes.includes(route.path));
 
 watch(route, async () => {
   // neu prüfen bei Navigation
-  if (!isHidden.value) {
+  if (!isHidden.value && !isPreview) {
     showWidget.value = true;
     await nextTick();
     await loadShopauskunftWidget();

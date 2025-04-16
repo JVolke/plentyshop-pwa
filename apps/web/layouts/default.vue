@@ -15,9 +15,6 @@
     </NuxtLazyHydrate>
 
     <QuickCheckout v-if="isOpen" :product="product" />
-    <client-only>
-          <ShopAuskunft/>
-    </client-only>
   </div>
 </template>
 
