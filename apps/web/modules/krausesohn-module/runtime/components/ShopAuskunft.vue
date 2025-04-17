@@ -30,7 +30,7 @@ const isHidden = computed(() => hiddenRoutes.includes(route.path));
 
 watch(route, async () => {
   // neu prüfen bei Navigation
-  if (!isHidden.value && !isPreview) {
+  if (!isHidden.value && !isPreview.value) {
     showWidget.value = true;
     await nextTick();
     await loadShopauskunftWidget();
@@ -40,7 +40,7 @@ watch(route, async () => {
 }, { immediate: true });
 
 onMounted(async () => {
-  if (!isHidden.value) {
+  if (!isHidden.value && !isPreview.value) {
     showWidget.value = true;
     await nextTick();
     await loadShopauskunftWidget();
