@@ -45,18 +45,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
     },
-    matomo: {
-      url: useRuntimeConfig().public.matomo.url,
-      id: useRuntimeConfig().public.matomo.id,
-      enabled: useRuntimeConfig().public.matomo.enabled,
-      debug: useRuntimeConfig().public.matomo.debug,
-      disableCookies: useRuntimeConfig().public.matomo.disableCookies,
-      requireConsent: useRuntimeConfig().public.matomo.requireConsent,
-      trackPageView: useRuntimeConfig().public.matomo.trackPageView,
-      trackSiteSearch: useRuntimeConfig().public.matomo.trackSiteSearch,
-      trackEcommerce: useRuntimeConfig().public.matomo.trackEcommerce,
-      showGrossPrices: useRuntimeConfig().public.matomo.showGrossPrices,
-    },
+    matomoUrl: useRuntimeConfig().public.matomoUrl,
+    matomoId: useRuntimeConfig().public.matomoId,
+    matomoEnabled: useRuntimeConfig().public.matomoEnabled,
+    matomoDebug: useRuntimeConfig().public.matomoDebug,
+    matomoDisableCookies: useRuntimeConfig().public.matomoDisableCookies,
+    matomoRequireConsent: useRuntimeConfig().public.matomoRequireConsent,
+    matomoTrackPageView: useRuntimeConfig().public.matomoTrackPageView,
+    matomoTrackSiteSearch: useRuntimeConfig().public.matomoTrackSiteSearch,
+    matomoTrackEcommerce: useRuntimeConfig().public.matomoTrackEcommerce,
+    matomoShowGrossPrices: useRuntimeConfig().public.matomoShowGrossPrices,
   }));
 
   /**
@@ -171,44 +169,44 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: state.value.secondaryColor,
       },
       {
-        key: 'matomo.url', // Verwende die Punktnotation, falls die API das erwartet
-        value: state.value.matomo.url,
+        key: 'matomoUrl', // Verwende die Punktnotation, falls die API das erwartet
+        value: state.value.matomoUrl,
       },
       {
-        key: 'matomo.id',
-        value: String(state.value.matomo.id),
+        key: 'matomoId',
+        value: String(state.value.matomoId),
       },
       {
-        key: 'matomo.enabled',
-        value: String(state.value.matomo.enabled),
+        key: 'matomoEnabled',
+        value: String(state.value.matomoEnabled),
       },
       {
-        key: 'matomo.debug',
-        value: String(state.value.matomo.debug),
+        key: 'matomoDebug',
+        value: String(state.value.matomoDebug),
       },
       {
-        key: 'matomo.disableCookies',
-        value: String(state.value.matomo.disableCookies),
+        key: 'matomoDisableCookies',
+        value: String(state.value.matomoDisableCookies),
       },
       {
-        key: 'matomo.requireConsent',
-        value: String(state.value.matomo.requireConsent),
+        key: 'matomoRequireConsent',
+        value: String(state.value.matomoRequireConsent),
       },
       {
-        key: 'matomo.trackPageView',
-        value: String(state.value.matomo.trackPageView),
+        key: 'matomoTrackPageView',
+        value: String(state.value.matomoTrackPageView),
       },
       {
-        key: 'matomo.trackSiteSearch',
-        value: String(state.value.matomo.trackSiteSearch),
+        key: 'matomoTrackSiteSearch',
+        value: String(state.value.matomoTrackSiteSearch),
       },
       {
-        key: 'matomo.trackEcommerce',
-        value: String(state.value.matomo.trackEcommerce),
+        key: 'matomoTrackEcommerce',
+        value: String(state.value.matomoTrackEcommerce),
       },
       {
-        key: 'matomo.showGrossPrices',
-        value: String(state.value.matomo.showGrossPrices),
+        key: 'matomoShowGrossPrices',
+        value: String(state.value.matomoShowGrossPrices),
       },
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -225,18 +223,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: state.value.secondaryColor,
     };
 
-    state.value.matomo = {
-        url: state.value.matomo.url,
-        id: state.value.matomo.id,
-        enabled: state.value.matomo.enabled,
-        debug: state.value.matomo.debug,
-        disableCookies: state.value.matomo.disableCookies,
-        requireConsent: state.value.matomo.requireConsent,
-        trackPageView: state.value.matomo.trackPageView,
-        trackSiteSearch: state.value.matomo.trackSiteSearch,
-        trackEcommerce: state.value.matomo.trackEcommerce,
-        showGrossPrices: state.value.matomo.showGrossPrices,
-    }
 
     state.value.loading = false;
     return true;

@@ -2,17 +2,17 @@
 import { useNuxtApp, useRuntimeConfig, useRoute } from '#imports';
 
 export const useMatomo = () => {
-  const config = useRuntimeConfig().public.matomo;
+  const config = useRuntimeConfig().public;
   const route = useRoute();
   const { $matomoEcommerce } = useNuxtApp();
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
 
   const trackPageView = (documentTitle?: string, customUrl?: string) => {
-    if (import.meta.client && window._paq && config?.enabled && matomoConsentGiven.value) {
+    if (import.meta.client && window._paq && config?.matomoEnabled && matomoConsentGiven.value) {
       if (customUrl) {
         window._paq.push(['setCustomUrl', customUrl]);
       } else {
-        window._paq.push(['setCustomUrl', config.url + route.fullPath]);
+        window._paq.push(['setCustomUrl', config.matomoUrl + route.fullPath]);
       }
       if (documentTitle) {
         window._paq.push(['setDocumentTitle', documentTitle]);
@@ -24,7 +24,7 @@ export const useMatomo = () => {
   };
 
   const trackSearch = (keyword: string, category?: string) => {
-    if (import.meta.client && window._paq && config?.enabled && config?.trackSiteSearch && matomoConsentGiven.value) {
+    if (import.meta.client && window._paq && config?.matomoEnabled && config?.matomoTrackSiteSearch && matomoConsentGiven.value) {
       window._paq.push(['trackSiteSearch', keyword, category]);
     }
   };
@@ -36,10 +36,10 @@ export const useMatomo = () => {
 };
 
 export const useMatomoEcommerce = () => {
-  const config = useRuntimeConfig().public.matomo;
+  const config = useRuntimeConfig().public;
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
 
-  if (!import.meta.client || !window._paq || !config?.enabled || !config?.trackEcommerce || !matomoConsentGiven.value) {
+  if (!import.meta.client || !window._paq || !config?.matomoEnabled || !config?.matomoTrackEcommerce || !matomoConsentGiven.value) {
     return {
       addEcommerceItem: () => {},
       removeEcommerceItem: () => {},

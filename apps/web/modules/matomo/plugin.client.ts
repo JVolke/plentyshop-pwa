@@ -21,24 +21,24 @@ declare global {
 }
 
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig().public.matomo;
+  const config = useRuntimeConfig().public;
   const { consent: cookieConsent } = useCookieConsent('matomo_consent'); // Verwenden Sie einen passenden CookieName
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => cookieConsent.value);
   const { add: registerCookie } = useRegisterCookie();
   const router = useRouter();
   const cookieGroup = 'CookieBar.marketing.label';
 
-  if (!config.url || !config.id || !process.client) {
+  if (!config.matomoUrl || !config.matomoId || !import.meta.client) {
     return;
   }
 
   window._paq = window._paq || [];
 
-  if (config.debug) {
+  if (config.matomoDebug) {
     window._paq.push(['enableJSErrorTracking']);
   }
 
-  if (config.disableCookies) {
+  if (config.matomoDisableCookies) {
     window._paq.push(['disableCookies']);
   }
 
@@ -57,8 +57,8 @@ export default defineNuxtPlugin(() => {
 
   watch(matomoConsentGiven, (consentGiven) => {
     if (consentGiven) {
-      window._paq.push(['setTrackerUrl', `${config.url}/matomo.php`]);
-      window._paq.push(['setSiteId', config.id]);
+      window._paq.push(['setTrackerUrl', `${config.matomoUrl}/matomo.php`]);
+      window._paq.push(['setSiteId', config.matomoId]);
       window._paq.push(['setExcludedQueryParams', ['ReferrerID']]);
       window._paq.push(['enableLinkTracking']);
 
@@ -68,7 +68,7 @@ export default defineNuxtPlugin(() => {
       document.head.appendChild(script);
     } else {
       // Optional: Entfernen Sie das Skript, falls Consent widerrufen wird
-      const existingScript = document.querySelector(`script[src="${config.url}/matomo.js"]`);
+      const existingScript = document.querySelector(`script[src="${config.matomoUrl}/matomo.js"]`);
       if (existingScript) {
         existingScript?.remove();
       }
@@ -92,9 +92,9 @@ export default defineNuxtPlugin(() => {
       const totalVat = order.totals.vats.reduce((acc: number, vat: { value: number }) => acc + vat.value, 0);
       window._paq.push(['trackEcommerceOrder',
         orderGetters.getId(order), // orderId
-        config.showGrossPrices ? order.totals.totalGross : order.totals.totalNet, // grandTotal
+        config.matomoShowGrossPrices ? order.totals.totalGross : order.totals.totalNet, // grandTotal
         order.order.orderItems.map((item) => config.showGrossPrices ? orderGetters.getItemPrice(item) : orderGetters.getItemNetPrice(item)).reduce((sum, price) => sum + price, 0), // subtotal (sum of item prices)
-        config.showGrossPrices ? order.totals.shippingGross : order.totals.shippingNet, // shippingCost
+        config.matomoShowGrossPrices ? order.totals.shippingGross : order.totals.shippingNet, // shippingCost
         totalVat, // taxAmount
         false // discountAmount (not easily available here, might need adjustment)
       ]);
@@ -144,7 +144,7 @@ export default defineNuxtPlugin(() => {
           cartGetters.getItemQty(item)
         ]);
       });
-      window._paq.push(['trackEcommerceCartUpdate', config.showGrossPrices ? data.basketAmount : data.basketAmountNet]);
+      window._paq.push(['trackEcommerceCartUpdate', config.matomoShowGrossPrices ? data.basketAmount : data.basketAmountNet]);
     }
   });
 

@@ -7,7 +7,9 @@ export type DrawerView =
   | 'SeoView'
   | 'PagesView'
   | 'blocksSettings'
+  | 'MatomoSettings'
   | null;
+
 export type SettingsType = 'general-settings' | 'seo-settings' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {
@@ -17,18 +19,6 @@ export type ConfigurationSettings = {
   secondaryColor: string;
 };
 
-export type MatomoConfigurationSettings = {
-  url: string;
-  id: number;
-  enabled: boolean;
-  debug: boolean;
-  disableCookies: boolean;
-  requireConsent: boolean;
-  trackPageView: boolean;
-  trackSiteSearch: boolean;
-  trackEcommerce: boolean;
-  showGrossPrices: boolean;
-};
 
 export interface UseSiteConfigurationState {
   data: [];
@@ -49,7 +39,16 @@ export interface UseSiteConfigurationState {
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
-  matomo: MatomoConfigurationSettings;
+  matomoUrl: string;
+  matomoId: number;
+  matomoEnabled: boolean;
+  matomoDebug: boolean;
+  matomoDisableCookies: boolean;
+  matomoRequireConsent: boolean;
+  matomoTrackPageView: boolean;
+  matomoTrackSiteSearch: boolean;
+  matomoTrackEcommerce: boolean;
+  matomoShowGrossPrices: boolean;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -82,7 +81,16 @@ export interface UseSiteConfiguration {
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
-  matomo: Readonly<Ref<UseSiteConfigurationState['matomo']>>;
+  matomoUrl: Readonly<Ref<UseSiteConfigurationState['matomoUrl']>>;
+  matomoId: Readonly<Ref<UseSiteConfigurationState['matomoId']>>;
+  matomoEnabled: Readonly<Ref<UseSiteConfigurationState['matomoEnabled']>>;
+  matomoDebug: Readonly<Ref<UseSiteConfigurationState['matomoDebug']>>;
+  matomoDisableCookies: Readonly<Ref<UseSiteConfigurationState['matomoDisableCookies']>>;
+  matomoRequireConsent: Readonly<Ref<UseSiteConfigurationState['matomoRequireConsent']>>;
+  matomoTrackPageView: Readonly<Ref<UseSiteConfigurationState['matomoTrackPageView']>>;
+  matomoTrackSiteSearch: Readonly<Ref<UseSiteConfigurationState['matomoTrackSiteSearch']>>;
+  matomoTrackEcommerce: Readonly<Ref<UseSiteConfigurationState['matomoTrackEcommerce']>>;
+  matomoShowGrossPrices: Readonly<Ref<UseSiteConfigurationState['matomoShowGrossPrices']>>;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

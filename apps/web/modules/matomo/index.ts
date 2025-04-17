@@ -39,24 +39,19 @@ export default defineNuxtModule<ModuleOptions>({
     // Installiere optionale Module (angenommen, E-Commerce-Funktionen sind relevant)
     await installModule('@plentymarkets/shop-core').catch(() => {});
 
-    // Add module options to public runtime config
-    nuxt.options.runtimeConfig.public.matomo = defu(
-      nuxt.options.runtimeConfig.public.matomo,
-      options,
-    );
 
-    nuxt.options.runtimeConfig.public.matomo.url = process.env.MATOMO_URL as string;
-    nuxt.options.runtimeConfig.public.matomo.id = process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0;
-    nuxt.options.runtimeConfig.public.matomo.enabled = process.env?.MATOMO_ENABLED === '1';
-    nuxt.options.runtimeConfig.public.matomo.debug = process.env?.MATOMO_DEBUG === '1';
-    nuxt.options.runtimeConfig.public.matomo.disableCookies = process.env?.MATOMO_DISABLE_COOKIES === '1';
-    nuxt.options.runtimeConfig.public.matomo.requireConsent = process.env?.MATOMO_REQUIRE_CONSENT === '1';
-    nuxt.options.runtimeConfig.public.matomo.trackPageView = process.env?.MATOMO_TRACK_PAGE_VIEW !== '0';
-    nuxt.options.runtimeConfig.public.matomo.trackSiteSearch = process.env?.MATOMO_TRACK_SITE_SEARCH !== '0';
-    nuxt.options.runtimeConfig.public.matomo.trackEcommerce = process.env?.MATOMO_TRACK_ECOMMERCE !== '0';
-    nuxt.options.runtimeConfig.public.matomo.showGrossPrices = process.env?.MATOMO_SHOW_GROSS_PRICES === '1';
+    nuxt.options.runtimeConfig.public.matomoUrl = process.env.MATOMO_URL as string;
+    nuxt.options.runtimeConfig.public.matomoId = process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0;
+    nuxt.options.runtimeConfig.public.matomoEnabled = process.env?.MATOMO_ENABLED === '1';
+    nuxt.options.runtimeConfig.public.matomoDebug = process.env?.MATOMO_DEBUG === '1';
+    nuxt.options.runtimeConfig.public.matomoDisableCookies = process.env?.MATOMO_DISABLE_COOKIES === '1';
+    nuxt.options.runtimeConfig.public.matomoRequireConsent = process.env?.MATOMO_REQUIRE_CONSENT === '1';
+    nuxt.options.runtimeConfig.public.matomoTrackPageView = process.env?.MATOMO_TRACK_PAGE_VIEW !== '0';
+    nuxt.options.runtimeConfig.public.matomoTrackSiteSearch = process.env?.MATOMO_TRACK_SITE_SEARCH !== '0';
+    nuxt.options.runtimeConfig.public.matomoTrackEcommerce = process.env?.MATOMO_TRACK_ECOMMERCE !== '0';
+    nuxt.options.runtimeConfig.public.matomoShowGrossPrices = process.env?.MATOMO_SHOW_GROSS_PRICES === '1';
 
-    if (!nuxt.options.runtimeConfig.public.matomo.url || !nuxt.options.runtimeConfig.public.matomo.id || !nuxt.options.runtimeConfig.public.matomo.enabled) {
+    if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
       return;
     }
 
@@ -65,8 +60,8 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolve('runtime'));
 
     addComponent({
-      name: 'MatomoSettingsDrawer',
-      filePath: resolve('./runtime/components/MatomoSettingsDrawer.vue'),
+      name: 'MatomoSettings',
+      filePath: resolve('./runtime/components/MatomoSettings.vue'),
     });
 
     // Füge das Plugin hinzu
