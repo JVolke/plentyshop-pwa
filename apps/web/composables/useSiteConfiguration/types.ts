@@ -17,6 +17,19 @@ export type ConfigurationSettings = {
   secondaryColor: string;
 };
 
+export type MatomoConfigurationSettings = {
+  url: string;
+  id: number;
+  enabled: boolean;
+  debug: boolean;
+  disableCookies: boolean;
+  requireConsent: boolean;
+  trackPageView: boolean;
+  trackSiteSearch: boolean;
+  trackEcommerce: boolean;
+  showGrossPrices: boolean;
+};
+
 export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
@@ -36,6 +49,7 @@ export interface UseSiteConfigurationState {
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
+  matomo: MatomoConfigurationSettings;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -68,6 +82,7 @@ export interface UseSiteConfiguration {
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
+  matomo: Readonly<Ref<UseSiteConfigurationState['matomo']>>;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

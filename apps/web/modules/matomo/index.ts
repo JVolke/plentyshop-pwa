@@ -1,5 +1,5 @@
 // modules/matomo/index.ts
-import { addPlugin, createResolver, defineNuxtModule, installModule, useRuntimeConfig } from '@nuxt/kit';
+import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule, useRuntimeConfig } from '@nuxt/kit';
 import { defu } from 'defu';
 
 export interface ModuleOptions {
@@ -63,6 +63,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'));
+
+    addComponent({
+      name: 'MatomoSettingsDrawer',
+      filePath: resolve('./runtime/components/MatomoSettingsDrawer.vue'),
+    });
+
     // Füge das Plugin hinzu
     addPlugin({
       src: resolve('plugin.client'),

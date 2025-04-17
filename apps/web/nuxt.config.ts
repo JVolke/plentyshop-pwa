@@ -91,18 +91,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  matomo: {
-    url: process.env.MATOMO_URL || '',
-    id: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
-    enabled: process.env.MATOMO_ENABLED === 'true',
-    debug: process.env.MATOMO_DEBUG === 'true',
-    disableCookies: process.env.MATOMO_DISABLE_COOKIES === 'true',
-    requireConsent: process.env.MATOMO_REQUIRE_CONSENT === 'true',
-    trackPageView: true,
-    trackSiteSearch: false,
-    trackEcommerce: false,
-    showGrossPrices: true,
-  },
   modules: [
     '@plentymarkets/shop-core',
     '@plentymarkets/shop-module-gtag',

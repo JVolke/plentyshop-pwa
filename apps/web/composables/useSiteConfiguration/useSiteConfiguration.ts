@@ -45,6 +45,18 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
     },
+    matomo: {
+      url: useRuntimeConfig().public.matomo.url,
+      id: useRuntimeConfig().public.matomo.id,
+      enabled: useRuntimeConfig().public.matomo.enabled,
+      debug: useRuntimeConfig().public.matomo.debug,
+      disableCookies: useRuntimeConfig().public.matomo.disableCookies,
+      requireConsent: useRuntimeConfig().public.matomo.requireConsent,
+      trackPageView: useRuntimeConfig().public.matomo.trackPageView,
+      trackSiteSearch: useRuntimeConfig().public.matomo.trackSiteSearch,
+      trackEcommerce: useRuntimeConfig().public.matomo.trackEcommerce,
+      showGrossPrices: useRuntimeConfig().public.matomo.showGrossPrices,
+    },
   }));
 
   /**
@@ -158,6 +170,46 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'secondaryColor',
         value: state.value.secondaryColor,
       },
+      {
+        key: 'matomo.url', // Verwende die Punktnotation, falls die API das erwartet
+        value: state.value.matomo.url,
+      },
+      {
+        key: 'matomo.id',
+        value: String(state.value.matomo.id),
+      },
+      {
+        key: 'matomo.enabled',
+        value: String(state.value.matomo.enabled),
+      },
+      {
+        key: 'matomo.debug',
+        value: String(state.value.matomo.debug),
+      },
+      {
+        key: 'matomo.disableCookies',
+        value: String(state.value.matomo.disableCookies),
+      },
+      {
+        key: 'matomo.requireConsent',
+        value: String(state.value.matomo.requireConsent),
+      },
+      {
+        key: 'matomo.trackPageView',
+        value: String(state.value.matomo.trackPageView),
+      },
+      {
+        key: 'matomo.trackSiteSearch',
+        value: String(state.value.matomo.trackSiteSearch),
+      },
+      {
+        key: 'matomo.trackEcommerce',
+        value: String(state.value.matomo.trackEcommerce),
+      },
+      {
+        key: 'matomo.showGrossPrices',
+        value: String(state.value.matomo.showGrossPrices),
+      },
     ];
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
@@ -172,6 +224,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
     };
+
+    state.value.matomo = {
+        url: state.value.matomo.url,
+        id: state.value.matomo.id,
+        enabled: state.value.matomo.enabled,
+        debug: state.value.matomo.debug,
+        disableCookies: state.value.matomo.disableCookies,
+        requireConsent: state.value.matomo.requireConsent,
+        trackPageView: state.value.matomo.trackPageView,
+        trackSiteSearch: state.value.matomo.trackSiteSearch,
+        trackEcommerce: state.value.matomo.trackEcommerce,
+        showGrossPrices: state.value.matomo.showGrossPrices,
+    }
 
     state.value.loading = false;
     return true;
