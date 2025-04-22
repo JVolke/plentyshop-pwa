@@ -51,9 +51,9 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.matomoTrackEcommerce = process.env?.MATOMO_TRACK_ECOMMERCE !== '0';
     nuxt.options.runtimeConfig.public.matomoShowGrossPrices = process.env?.MATOMO_SHOW_GROSS_PRICES === '1';
 
-    if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
+    /**if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
       return;
-    }
+    }*
 
 
     // Transpile runtime
