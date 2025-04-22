@@ -53,7 +53,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     /**if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
       return;
-    }*
+    }*/
 
 
     // Transpile runtime
