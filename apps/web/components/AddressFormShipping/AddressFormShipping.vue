@@ -133,6 +133,18 @@
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
+    <label>
+      <UiFormLabel>{{ $t('krausesohn.telefoneNumber') }} {{ $t('form.required') }}</UiFormLabel>
+      <SfInput
+        v-model="phoneNumber"
+        name="phoneNumber"
+        autocomplete="tel"
+        v-bind="phoneNumberAttributes"
+        :invalid="Boolean(errors['phoneNumber'])"
+      />
+      <ErrorMessage as="span" name="phoneNumber" class="flex text-negative-700 text-sm mt-2" />
+    </label>
+
     <div
       v-if="!restrictedAddresses || showAddressSaveButton"
       class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
@@ -207,6 +219,7 @@ const [city, cityAttributes] = defineField('city');
 const [zipCode, zipCodeAttributes] = defineField('zipCode');
 const [companyName, companyNameAttributes] = defineField('companyName');
 const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
+const [phoneNumber, phoneNumberAttributes] = defineField('phoneNumber');
 
 const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
 

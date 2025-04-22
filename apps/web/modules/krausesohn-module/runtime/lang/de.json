@@ -1,6 +1,7 @@
 {
   "krausesohn": {
-    "termsInfo": "Es gelten unsere {terms}, unser {cancellationRights} und unsere {privacyPolicy}. Mit dem Klick auf Kaufen nehmen Sie diese zur Kenntnis."
+    "termsInfo": "Es gelten unsere {terms}, unser {cancellationRights} und unsere {privacyPolicy}. Mit dem Klick auf Kaufen nehmen Sie diese zur Kenntnis.",
+    "telefoneNumber": "Telefonnummer"
   },
   "categories": {
     "legal": {

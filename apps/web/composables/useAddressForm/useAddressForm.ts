@@ -57,6 +57,7 @@ export const useAddressForm = (type: AddressType) => {
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      phoneNumber: string().optional().default(''),
       state: string().default('').optional(),
       zipCode: string().required($i18n.t('errorMessages.requiredField')).min(5),
       primary: boolean().default(false),

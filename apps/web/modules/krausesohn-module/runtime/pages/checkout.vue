@@ -37,42 +37,7 @@
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutGeneralTerms />
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <div v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableBuyButton"
-                type="Checkout"
-                @validation-callback="handleReadyToBuy"
-              />
-            </div>
-            <PayPalCreditCardBuyButton
-              v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
-              :disabled="disableBuyButton || paypalCardDialog"
-              @click="openPayPalCardDialog"
-            />
-            <PayPalApplePayButton
-              v-else-if="selectedPaymentId === paypalApplePayPaymentId"
-              :style="disableBuyButton ? 'pointer-events: none;' : ''"
-              @button-clicked="handleReadyToBuy"
-            />
-            <PayPalGooglePayButton
-              v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
-              :style="disableBuyButton ? 'pointer-events: none;' : ''"
-              @button-clicked="handleReadyToBuy"
-            />
-            <UiButton
-              v-else
-              type="submit"
-              :disabled="disableBuyButton"
-              size="lg"
-              data-testid="place-order-button"
-              class="w-full mb-4 md:mb-0 cursor-pointer"
-              @click="order"
-            >
-              <template v-if="createOrderLoading">
-                <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-              </template>
-              <template v-else>{{ t('buy') }}</template>
-            </UiButton>
+            <PaymentButtons />
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
@@ -93,7 +58,6 @@
 <script setup lang="ts">
 import { AddressType, cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import {
   PayPalApplePayKey,
@@ -194,25 +158,6 @@ const disableBuyButton = computed(
     processingOrder.value,
 );
 
-const paypalPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
-});
-
-const paypalCreditCardPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
-});
-
-const paypalGooglePayPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
-});
-
-const paypalApplePayPaymentId = computed(() => {
-  if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
-});
 
 const readyToBuy = () => {
   if ((!isAuthorized.value && !isGuest.value) || (isGuest.value && !validGuestEmail.value)) {
@@ -233,11 +178,6 @@ const readyToBuy = () => {
   return validateTerms();
 };
 
-const openPayPalCardDialog = async () => {
-  if (!readyToBuy()) return;
-
-  paypalCardDialog.value = true;
-};
 
 const handleRegularOrder = async () => {
   const data = await createOrder({
@@ -252,11 +192,7 @@ const handleRegularOrder = async () => {
   }
 };
 
-const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
-  if (callback) {
-    callback(readyToBuy());
-  }
-};
+
 
 const order = async () => {
   if (!readyToBuy()) return;

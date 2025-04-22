@@ -61,23 +61,7 @@
           {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
-      <UiButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
-        size="sm"
-        class="min-w-[80px] w-fit"
-        data-testid="add-to-basket-short"
-        :disabled="loading"
-        @click="addWithLoader(Number(productGetters.getId(product)))"
-      >
-        <template v-if="!loading" #prefix>
-          <SfIconShoppingCart size="sm" />
-        </template>
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <span v-else>
-          {{ t('addToCartShort') }}
-        </span>
-      </UiButton>
-      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+      <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
       </UiButton>
     </div>
