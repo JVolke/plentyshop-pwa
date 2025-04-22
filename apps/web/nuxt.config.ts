@@ -3,6 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
+import { paths } from './utils/paths';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -91,6 +92,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@plentymarkets/shop-core',
+    '@plentymarkets/shop-module-mollie',
     '@plentymarkets/shop-module-gtag',
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -108,6 +110,11 @@ export default defineNuxtConfig({
   ],
   shopCore: {
     apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+  },
+  shopModuleMollie: {
+    checkoutUrl: paths.checkout,
+    liveMode: !process.env.MOLLIE_TEST_MODE,
+    confirmationUrl: paths.confirmation,
   },
   fonts: {
     defaults: {
@@ -214,8 +221,8 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'plentyshop PWA',
-      short_name: 'plentyshopPWA',
+      name: 'PlentyONE Shop',
+      short_name: 'PlentyONEShop',
       theme_color: '#0C7992',
       icons: [
         {
@@ -236,7 +243,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-
     registerWebManifestInRouteRules: true,
   },
 });
