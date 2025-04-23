@@ -17,6 +17,8 @@ export type ConfigurationSettings = {
   selectedFont: SelectedFont;
   primaryColor: string;
   secondaryColor: string;
+  matomoUrl: string;
+  matomoId: number;
 };
 
 

@@ -43,6 +43,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      matomoUrl: useRuntimeConfig().public.matomoUrl,
+      matomoId: useRuntimeConfig().public.matomoId
     },
     matomoUrl: useRuntimeConfig().public.matomoUrl,
     matomoId: useRuntimeConfig().public.matomoId,
@@ -143,8 +145,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
-      state.value.matomoUrl !== state.value.matomoUrl ||
-      state.value.matomoId !== state.value.matomoId ||
+      state.value.matomoUrl !== state.value.initialData.matomoUrl ||
+      state.value.matomoId !== state.value.initialData.matomoId ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
@@ -222,6 +224,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      matomoUrl: state.value.matomoUrl,
+      matomoId: state.value.matomoId
     };
 
 
