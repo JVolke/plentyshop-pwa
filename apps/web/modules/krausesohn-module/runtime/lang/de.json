@@ -21,6 +21,12 @@
         "couponsInfo": "Gutscheine",
         "winInfo": "Gewinnspiel"
       }
+    },
+    "CookieBar": {
+      "moduleMatomo": {
+        "provider": "Krause & Sohn GmbH",
+        "status": "Der Cookie wird zur Analyse des Nutzungsverhaltens genutzt."
+      }
     }
   }
 }
