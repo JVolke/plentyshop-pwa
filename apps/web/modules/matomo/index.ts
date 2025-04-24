@@ -59,6 +59,18 @@ export default defineNuxtModule<ModuleOptions>({
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'));
 
+    nuxt.hook('i18n:registerModule', (register) => {
+      register({
+        langDir: resolve('./runtime/lang'),
+        locales: [
+          {
+            code: 'de',
+            file: 'de.json',
+          },
+        ],
+      })
+    })
+
     addComponent({
       name: 'MatomoSettings',
       filePath: resolve('./runtime/components/MatomoSettings.vue'),

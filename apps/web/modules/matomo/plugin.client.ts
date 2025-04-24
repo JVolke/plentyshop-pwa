@@ -187,7 +187,7 @@ export default defineNuxtPlugin(() => {
       name: 'matomo_consent', // Verwenden Sie denselben CookieName wie oben
       Provider: 'CookieBar.moduleMatomo.provider', // Passenden Provider definieren
       Status: 'CookieBar.moduleMatomo.status', // Passenden Status definieren
-      PrivacyPolicy: 'https://matomo.org/privacy-policy/', // Link zur Matomo-Datenschutzerklärung
+      PrivacyPolicy: 'https://www.krause-sohn.de/privacy-policy', // Link zur Matomo-Datenschutzerklärung
       Lifespan: '2 Jahre', // Typische Lebensdauer von Matomo-Cookies
       cookieNames: ['/_pk_id/', '_pk_ses/', 'mtm_consent', 'mtm_consent_removed'],
       accepted: false,
