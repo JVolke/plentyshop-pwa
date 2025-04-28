@@ -16,10 +16,10 @@
     "additional": {
       "label": "Informationen",
       "subcategories": {
-        "sizesInfo": "Kostüm Größen",
-        "retoureInfo": "Rücksendungen / Retouren",
-        "couponsInfo": "Gutscheine",
-        "winInfo": "Gewinnspiel"
+        "dispose": "Feuerwerk Entsorgen",
+        "effekts": "Feuerwerk Effektlexikon",
+        "safety": "Sicherheit",
+        "burn": "Waldbrandstufe"
       }
     },
     "CookieBar": {

@@ -24,19 +24,19 @@ export const categories = [
       },
       {
         key: 'batteryInfo',
-        link: "/info/batteriehinweis",
+        link: "/1/batteriehinweis",
       },
       {
         key: 'paymentInfo',
-        link: "/webshop/zahlungsarten",
+        link: "/1/zahlungsarten",
       },
       {
         key: 'shippingInfo',
-        link: "/webshop/versand",
+        link: "/1/versand",
       },
       {
         key: 'faqInfo',
-        link: "/bestellvorgang/hilfe-und-haeufige-fragen",
+        link: "/1/hilfe-und-haeufige-fragen",
       },
       {
         key: 'cookiesInfo',
@@ -48,20 +48,20 @@ export const categories = [
     key: 'additional',
     subcategories: [
       {
-      key: 'sizesInfo',
-      link: "/kostuem-groessen"
+      key: 'dispose',
+      link: "/1/feuerwerk-entsorgen"
       },
       {
-        key: 'retoureInfo',
-        link: "/info/ruecksendungen-retouren"
+        key: 'effekts',
+        link: "/1/feuerwerk-effektlexikon"
       },
       {
-        key: 'couponsInfo',
-        link: "/info/gutscheine"
+        key: 'safety',
+        link: "/1/sicherheit"
       },
       {
-        key: 'winInfo',
-        link: "/gewinnspiel"
+        key: 'burn',
+        link: "/1/waldbrandstufe"
       },
     ],
   },
