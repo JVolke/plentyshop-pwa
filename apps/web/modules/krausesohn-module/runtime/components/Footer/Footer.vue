@@ -34,7 +34,7 @@
     <div class="bg-neutral-900" data-testid="section-bottom">
       <div class="justify-center px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
         <p class="text-center items-center justify-center leading-5 typography-text-sm text-white/50 md:ml-6">
-          Alle Preise verstehen sich inkl. der gesetzlichen Mehrwertsteuer und <a href="/webshop/versand" class="underline">zzgl. Versandkosten und Gebühren.</a><br />
+          Alle Preise verstehen sich inkl. der gesetzlichen Mehrwertsteuer und <a href="/1/versand" class="underline">zzgl. Versandkosten und Gebühren.</a><br />
           Krause & Sohn GmbH Kaufbacher Ring 2 01723 Kesselsdorf
         </p>
       </div>

@@ -19,7 +19,12 @@
         "dispose": "Feuerwerk Entsorgen",
         "effekts": "Feuerwerk Effektlexikon",
         "safety": "Sicherheit",
-        "burn": "Waldbrandstufe"
+        "burn": "Waldbrandstufe",
+        "categories": "Definition der Feuerwerkskategorien",
+        "forms": "Feuerwerk Antrag & T1-Klausel",
+        "coupons": "Gutscheine",
+        "sale": "Angebote",
+        "howToBuy": "Feuerwerk kaufen"
       }
     },
     "CookieBar": {

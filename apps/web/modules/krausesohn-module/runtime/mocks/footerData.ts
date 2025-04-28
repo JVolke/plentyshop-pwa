@@ -63,6 +63,26 @@ export const categories = [
         key: 'burn',
         link: "/1/waldbrandstufe"
       },
+      {
+        key: 'categories',
+        link: "/1/definition-feuerwerkskategorien"
+      },
+      {
+        key: 'forms',
+        link: "/1/vordruck-antrag"
+      },
+      {
+        key: 'coupons',
+        link: "/1/gutscheine"
+      },
+      {
+        key: 'sale',
+        link: "/angebote"
+      },
+      {
+        key: 'howToBuy',
+        link: "/1/feuerwerk-online-kaufen"
+      },
     ],
   },
   {
