@@ -2,9 +2,9 @@
   <div v-if="showWidget"
        ref="widgetRef"
        class="shopauskunft-widget"
-       data-widget-id="ffe45f3eaa94"
+       data-widget-id="488ffac36e0b"
        data-widget-theme="light"
-       data-retailer-id="krause-sohn"
+       data-retailer-id="feuerwerk-onlineshop"
        data-widget-locale="de_DE">
   </div>
 </template>

@@ -7,7 +7,7 @@ import { orderGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<shopauskunftPropsType>();
 
-const shopauskunftId = ref('S00036055');
+const shopauskunftId = ref('S00036056');
 const companyName = ref('Krause & Sohn GmbH');
 
 onMounted(() => {
