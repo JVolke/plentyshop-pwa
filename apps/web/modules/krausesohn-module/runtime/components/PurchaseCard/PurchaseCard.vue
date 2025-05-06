@@ -49,10 +49,15 @@
           <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
           <div class="mt-2 variation-properties">
-            <div class="flex">
-              <span class="font-semibold mr-2">Artikelnummer:</span><span>{{ product.variation.number }}</span>
-            </div>
-            <VariationProperties :product="product" />
+            <table class="border-0">
+              <tbody>
+              <tr class="odd:bg-transparent">
+                <td class="font-semibold mr-2">Artikelnummer:</td>
+                <td class="w-full text-right">{{ product.variation.number }}</td>
+              </tr>
+              <VariationProperties :product="product" />
+              </tbody>
+            </table>
           </div>
           <div class="inline-flex items-center mt-4 mb-2">
             <SfRating

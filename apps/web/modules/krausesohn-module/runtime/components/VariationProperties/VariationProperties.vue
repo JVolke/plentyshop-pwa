@@ -1,7 +1,7 @@
 <template>
-  <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
-    <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
-      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex variation-properties">
+  <template v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
+    <tr v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`" class="odd:bg-transparent">
+      <template v-if="propertyHasNameOrValue(variationProperty)" >
         <ClientOnly>
           <Component
             :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
@@ -9,9 +9,9 @@
             :variation-property="variationProperty"
           />
         </ClientOnly>
-      </div>
-    </template>
-  </div>
+      </template>
+    </tr>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -41,5 +41,6 @@ const componentsMapper: ComponentsMapper = {
   string: VariationPropertyText,
   html: VariationPropertyHtml,
   date: VariationPropertyDate,
+  selection: VariationPropertyText,
 };
 </script>
