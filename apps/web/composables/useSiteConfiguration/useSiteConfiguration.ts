@@ -11,6 +11,8 @@ import type {
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
+import { metaDefaults } from '~/configuration/app.config';
+
 
 /**
  * @description Composable for managing site configuration.
@@ -38,11 +40,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    seoSettings: metaDefaults,
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
+      seoSettings: metaDefaults,
       matomoUrl: useRuntimeConfig().public.matomoUrl,
       matomoId: useRuntimeConfig().public.matomoId
     },
@@ -147,7 +151,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       state.value.matomoUrl !== state.value.initialData.matomoUrl ||
       state.value.matomoId !== state.value.initialData.matomoId ||
-      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
+
     );
   });
 
@@ -170,6 +176,22 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       {
         key: 'secondaryColor',
         value: state.value.secondaryColor,
+      },
+      {
+        key: 'metaTitle',
+        value: state.value.seoSettings.title,
+      },
+      {
+        key: 'metaDescription',
+        value: state.value.seoSettings.description,
+      },
+      {
+        key: 'metaKeywords',
+        value: state.value.seoSettings.keywords,
+      },
+      {
+        key: 'robots',
+        value: state.value.seoSettings.robots,
       },
       {
         key: 'matomoUrl', // Verwende die Punktnotation, falls die API das erwartet
@@ -224,6 +246,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      seoSettings: state.value.seoSettings,
       matomoUrl: state.value.matomoUrl,
       matomoId: state.value.matomoId
     };

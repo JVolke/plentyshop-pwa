@@ -1,5 +1,5 @@
 <template>
-  <p class="typography-headline-3" v-html="title" />
+  <p  class="typography-headline-3" v-html="title" />
 
   <SfScrollable
     buttons-placement="floating"

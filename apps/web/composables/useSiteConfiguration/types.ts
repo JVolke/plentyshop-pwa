@@ -19,6 +19,12 @@ export type ConfigurationSettings = {
   secondaryColor: string;
   matomoUrl: string;
   matomoId: number;
+  seoSettings: {
+    title: string;
+    description: string;
+    keywords: string;
+    robots: string;
+  };
 };
 
 
@@ -40,6 +46,12 @@ export interface UseSiteConfigurationState {
   blockType: string;
   blockUuid: string;
   initialData: ConfigurationSettings;
+  seoSettings: {
+    title: string;
+    description: string;
+    keywords: string;
+    robots: string;
+  };
   matomoUrl: string;
   matomoId: number;
   matomoEnabled: boolean;
@@ -76,6 +88,7 @@ export interface UseSiteConfiguration {
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
   secondaryColor: Readonly<Ref<UseSiteConfigurationState['secondaryColor']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
+  seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;

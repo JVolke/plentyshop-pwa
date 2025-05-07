@@ -61,6 +61,8 @@
           {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
+      <UiBadges class="my-2" :product="product" :use-availability="true" />
+
       <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
       </UiButton>
