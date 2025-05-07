@@ -67,8 +67,8 @@
 </template>
 
 <script setup lang="ts">
-// import gearBlack from 'assets/icons/paths/gear-black.svg';
-// import gearWhite from 'assets/icons/paths/gear-white.svg';
+import gearBlack from 'assets/icons/paths/gear-black.svg';
+import gearWhite from 'assets/icons/paths/gear-white.svg';
 
 import { SfIconSearch } from '@storefront-ui/vue';
 import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';

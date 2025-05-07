@@ -11,6 +11,7 @@ export type DrawerView =
   | null;
 
 export type SettingsType = 'general-settings' | 'seo-settings' | null;
+export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {
   blockSize: string;
@@ -19,6 +20,12 @@ export type ConfigurationSettings = {
   secondaryColor: string;
   matomoUrl: string;
   matomoId: number;
+  headerLogo: string;
+  favicon: string;
+  ogTitle: string;
+  ogImg: string;
+  useAvif: boolean;
+  useWebp: boolean;
   seoSettings: {
     title: string;
     description: string;
@@ -39,6 +46,12 @@ export interface UseSiteConfigurationState {
   currentFont: string;
   primaryColor: string;
   secondaryColor: string;
+  headerLogo: string;
+  favicon: string;
+  ogTitle: string;
+  ogImg: string;
+  useAvif: boolean;
+  useWebp: boolean;
   selectedFont: SelectedFont;
   blockSize: string;
   placement: string;
@@ -87,6 +100,12 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
   secondaryColor: Readonly<Ref<UseSiteConfigurationState['secondaryColor']>>;
+  headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
+  favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
+  ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;
+  ogImg: Readonly<Ref<UseSiteConfigurationState['ogImg']>>;
+  useAvif: Readonly<Ref<UseSiteConfigurationState['useAvif']>>;
+  useWebp: Readonly<Ref<UseSiteConfigurationState['useWebp']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
   seoSettings: Readonly<Ref<UseSiteConfigurationState['seoSettings']>>;
   placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;

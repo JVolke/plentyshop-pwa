@@ -10,8 +10,8 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
-import { metaDefaults } from '~/configuration/app.config';
 
 
 /**
@@ -35,12 +35,18 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    headerLogo: useRuntimeConfig().public.headerLogo,
+    favicon: structuredClone(favicon).icon,
+    ogTitle: structuredClone(openGraph).title,
+    ogImg: structuredClone(openGraph).image,
+    useAvif: useRuntimeConfig().public.useAvif,
+    useWebp: useRuntimeConfig().public.useWebp,
+    seoSettings: metaDefaults,
     drawerView: null,
     blockType: '',
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
-    seoSettings: metaDefaults,
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -49,6 +55,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       seoSettings: metaDefaults,
       matomoUrl: useRuntimeConfig().public.matomoUrl,
       matomoId: useRuntimeConfig().public.matomoId
+      seoSettings: structuredClone(metaDefaults),
+      headerLogo: useRuntimeConfig().public.headerLogo,
+      favicon: structuredClone(favicon).icon,
+      ogTitle: structuredClone(openGraph).title,
+      ogImg: structuredClone(openGraph).image,
+      useAvif: useRuntimeConfig().public.useAvif,
+      useWebp: useRuntimeConfig().public.useWebp,
     },
     matomoUrl: useRuntimeConfig().public.matomoUrl,
     matomoId: useRuntimeConfig().public.matomoId,
@@ -151,9 +164,15 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       state.value.matomoUrl !== state.value.initialData.matomoUrl ||
       state.value.matomoId !== state.value.initialData.matomoId ||
+      state.value.headerLogo !== state.value.initialData.headerLogo ||
+      state.value.favicon !== state.value.initialData.favicon ||
+      state.value.ogTitle !== state.value.initialData.ogTitle ||
+      state.value.ogImg !== state.value.initialData.ogImg ||
+      state.value.useAvif !== state.value.initialData.useAvif ||
+      state.value.useWebp !== state.value.initialData.useWebp ||
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
-
     );
   });
 
@@ -176,6 +195,30 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       {
         key: 'secondaryColor',
         value: state.value.secondaryColor,
+      },
+      {
+        key: 'headerLogo',
+        value: state.value.headerLogo,
+      },
+      {
+        key: 'favicon',
+        value: state.value.favicon,
+      },
+      {
+        key: 'ogTitle',
+        value: state.value.ogTitle,
+      },
+      {
+        key: 'ogImg',
+        value: state.value.ogImg,
+      },
+      {
+        key: 'useAvif',
+        value: state.value.useAvif ? 'true' : 'false',
+      },
+      {
+        key: 'useWebp',
+        value: state.value.useWebp ? 'true' : 'false',
       },
       {
         key: 'metaTitle',
@@ -234,6 +277,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: String(state.value.matomoShowGrossPrices),
       },
     ];
+
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
     if (error.value) {
@@ -246,6 +290,12 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      headerLogo: state.value.headerLogo,
+      favicon: state.value.favicon,
+      ogTitle: state.value.ogTitle,
+      ogImg: state.value.ogImg,
+      useAvif: state.value.useAvif,
+      useWebp: state.value.useWebp,
       seoSettings: state.value.seoSettings,
       matomoUrl: state.value.matomoUrl,
       matomoId: state.value.matomoId
