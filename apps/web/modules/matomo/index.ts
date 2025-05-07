@@ -67,6 +67,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Füge das Plugin hinzu
     addPlugin({
+      src: resolve('plugin.server'),
+      mode: 'server',
+    });
+    addPlugin({
       src: resolve('plugin.client'),
       mode: 'client',
     });

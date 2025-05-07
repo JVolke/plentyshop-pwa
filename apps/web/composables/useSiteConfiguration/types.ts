@@ -10,7 +10,6 @@ export type DrawerView =
   | 'MatomoSettings'
   | null;
 
-export type SettingsType = 'general-settings' | 'seo-settings' | null;
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {

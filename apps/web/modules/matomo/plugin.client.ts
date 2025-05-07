@@ -4,7 +4,6 @@ import {
   useRuntimeConfig,
   useState, watch,
   useCookieConsent,
-  useRegisterCookie,
   useRouter,
   usePlentyEvent
 } from '#imports';
@@ -181,16 +180,4 @@ export default defineNuxtPlugin(() => {
     }
   });
 
-  // Cookie Registration
-  if (cookieGroup) {
-    registerCookie({
-      name: 'Matomo Analytics', // Verwenden Sie denselben CookieName wie oben
-      Provider: 'Krause & Sohn GmbH', // Passenden Provider definieren
-      Status: 'Der Cookie wird zur Analyse des Nutzungsverhaltens genutzt.', // Passenden Status definieren
-      PrivacyPolicy: 'https://www.krause-sohn.de/privacy-policy', // Link zur Matomo-Datenschutzerklärung
-      Lifespan: 'Session', // Typische Lebensdauer von Matomo-Cookies
-      cookieNames: ['/_pk_id/', '_pk_ses/', 'mtm_consent', 'mtm_consent_removed'],
-      accepted: false,
-    }, cookieGroup);
-  }
 });

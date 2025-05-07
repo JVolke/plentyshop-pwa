@@ -52,9 +52,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
-      seoSettings: metaDefaults,
       matomoUrl: useRuntimeConfig().public.matomoUrl,
-      matomoId: useRuntimeConfig().public.matomoId
+      matomoId: useRuntimeConfig().public.matomoId,
       seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
       favicon: structuredClone(favicon).icon,
