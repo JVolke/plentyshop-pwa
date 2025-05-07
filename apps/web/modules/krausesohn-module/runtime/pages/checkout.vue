@@ -97,6 +97,7 @@ const {
   validateTerms,
   scrollToShippingAddress,
 } = useCheckout();
+const { fetchPaymentMethods } = usePaymentMethods();
 
 const {
   loadPayment,
@@ -108,6 +109,7 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 const { setPageMeta } = usePageMeta();
+const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 
 const icon = 'page';
 setPageMeta(t('checkout'), icon);
@@ -210,5 +212,9 @@ watch(cartIsEmpty, async () => {
     send({ type: 'neutral', message: t('emptyCartNotification') });
     await navigateTo(localePath(paths.cart));
   }
+});
+
+watch(itemSumNet, async () => {
+  await fetchPaymentMethods();
 });
 </script>
