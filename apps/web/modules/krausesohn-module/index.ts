@@ -69,6 +69,13 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'ShippingMethod');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/ShippingMethod/ShippingMethod.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'OrderSummary');
       if (comp) {
         comp.filePath = resolve('./runtime/components/OrderSummary/OrderSummary.vue');

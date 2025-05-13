@@ -31,23 +31,6 @@
               </WishlistButton>
             </div>
           </div>
-          <div class="flex space-x-2">
-            <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
-            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
-              <UiTag :size="'sm'" :variant="'secondary'">{{
-                t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
-              }}</UiTag>
-            </div>
-          </div>
-          <LowestPrice :product="product" />
-          <BasePrice
-            v-if="productGetters.showPricePerUnit(product)"
-            :base-price="basePriceSingleValue"
-            :unit-content="productGetters.getUnitContent(product)"
-            :unit-name="productGetters.getUnitName(product)"
-          />
-          <UiBadges class="mt-4" :product="product" :use-availability="true" />
-
           <div class="mt-2 variation-properties">
             <table class="border-0">
               <tbody>
@@ -86,7 +69,28 @@
           <ProductAttributes :product="product" />
           <!-- BundleOrderItems v-if="product.bundleComponents" :product="product" /  Paketbestandteile -->
           <OrderProperties :product="product" />
+
+          <div class="flex space-x-2">
+            <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+              <UiTag :size="'sm'" :variant="'secondary'">{{
+                  t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+                }}</UiTag>
+            </div>
+          </div>
+          <LowestPrice :product="product" />
+          <BasePrice
+            v-if="productGetters.showPricePerUnit(product)"
+            :base-price="basePriceSingleValue"
+            :unit-content="productGetters.getUnitContent(product)"
+            :unit-name="productGetters.getUnitName(product)"
+          />
+          <UiBadges class="mt-4" :product="product" :use-availability="true" />
+
+
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
+
+
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
