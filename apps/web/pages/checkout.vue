@@ -5,6 +5,9 @@
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >
+    <div class="w-full p-1 text-center">
+      <p class="text-lg">Bei Fragen erreichen Sie uns Mo - Fr Zwischen 08:30 und 16:00 Uhr via Telefon: 035204-794040 oder E-Mail: info@krause-sohn.de</p>
+    </div>
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider id="top-contact-information-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />

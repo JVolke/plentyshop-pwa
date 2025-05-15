@@ -69,6 +69,13 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
+      const comp = components.find((c) => c.pascalName === 'CustomerWish');
+      if (comp) {
+        comp.filePath = resolve('./runtime/components/CustomerWish/CustomerWish.vue');
+      }
+    });
+
+    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'ShippingMethod');
       if (comp) {
         comp.filePath = resolve('./runtime/components/ShippingMethod/ShippingMethod.vue');

@@ -23,6 +23,7 @@
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
           <PreferredDelivery v-if="countryHasDelivery" />
+          <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -34,6 +35,7 @@
         <div class="relative md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
+          <CustomerWish />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutGeneralTerms />
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
@@ -97,6 +99,8 @@ const {
   validateTerms,
   scrollToShippingAddress,
 } = useCheckout();
+const { preferredDeliveryAvailable } = usePreferredDelivery();
+
 const { fetchPaymentMethods } = usePaymentMethods();
 
 const {
@@ -122,14 +126,14 @@ const checkPayPalPaymentsEligible = async () => {
     const applePayAvailable = await useApplePay().checkIsEligible();
 
     if (googlePayAvailable || applePayAvailable) {
-      await usePaymentMethods().fetchPaymentMethods();
+      await fetchPaymentMethods();
     }
   }
 };
 
 await Promise.all([
   useCartShippingMethods().getShippingMethods(),
-  usePaymentMethods().fetchPaymentMethods(),
+  fetchPaymentMethods(),
   useAggregatedCountries().fetchAggregatedCountries(),
 ]);
 

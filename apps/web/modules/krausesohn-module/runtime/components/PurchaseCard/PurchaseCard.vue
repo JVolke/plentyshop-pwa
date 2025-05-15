@@ -240,7 +240,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   });
 
   if (addedToCart) {
-    quickCheckout === true
+    quickCheckout
       ? openQuickCheckout(product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
   }

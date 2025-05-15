@@ -10,7 +10,7 @@
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold md:text-lg">
             {{
-              $t('numberOfProducts', {
+              t('numberOfProducts', {
                 count: products?.length ?? 0,
                 total: totalProducts,
               })
@@ -20,7 +20,7 @@
             <template #prefix>
               <SfIconTune />
             </template>
-            {{ $t('listSettings') }}
+            {{ t('listSettings') }}
           </UiButton>
         </div>
         <section
@@ -62,9 +62,9 @@
         </section>
         <LazyCategoryEmptyState v-else />
         <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
-          <span>{{ $t('asterisk') }}</span>
-          <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-          <span v-else>{{ $t('itemInclVAT') }}</span>
+          <span>{{ t('asterisk') }}</span>
+          <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+          <span v-else>{{ t('itemInclVAT') }}</span>
           <i18n-t keypath="excludedShipping" scope="global">
             <template #shipping>
               <SfLink
@@ -72,7 +72,7 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ $t('delivery') }}
+                {{ t('delivery') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -98,7 +98,7 @@ import type { CategoryPageContentProps } from '~/components/CategoryPageContent/
 import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
-
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
