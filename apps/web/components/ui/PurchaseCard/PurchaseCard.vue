@@ -125,7 +125,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('delivery') }}
+                    {{ t('delivery') }}
                   </SfLink>
                 </template>
               </i18n-t>
@@ -229,7 +229,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   });
 
   if (addedToCart) {
-    quickCheckout === true
+    quickCheckout
       ? openQuickCheckout(product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
   }
