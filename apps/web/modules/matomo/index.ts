@@ -59,12 +59,6 @@ export default defineNuxtModule<ModuleOptions>({
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'));
 
-
-    addComponent({
-      name: 'MatomoSettings',
-      filePath: resolve('./runtime/components/MatomoSettings.vue'),
-    });
-
     // Füge das Plugin hinzu
     addPlugin({
       src: resolve('plugin.server'),

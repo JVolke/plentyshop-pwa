@@ -7,7 +7,6 @@ export type DrawerView =
   | 'SeoView'
   | 'PagesView'
   | 'blocksSettings'
-  | 'MatomoSettings'
   | null;
 
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
@@ -19,8 +18,6 @@ export type ConfigurationSettings = {
   secondaryColor: string;
   headerBackgroundColor: string;
   iconColor: string;
-  matomoUrl: string;
-  matomoId: number;
   headerLogo: string;
   favicon: string;
   ogTitle: string;
@@ -67,16 +64,6 @@ export interface UseSiteConfigurationState {
     keywords: string;
     robots: string;
   };
-  matomoUrl: string;
-  matomoId: number;
-  matomoEnabled: boolean;
-  matomoDebug: boolean;
-  matomoDisableCookies: boolean;
-  matomoRequireConsent: boolean;
-  matomoTrackPageView: boolean;
-  matomoTrackSiteSearch: boolean;
-  matomoTrackEcommerce: boolean;
-  matomoShowGrossPrices: boolean;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -116,16 +103,6 @@ export interface UseSiteConfiguration {
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
-  matomoUrl: Readonly<Ref<UseSiteConfigurationState['matomoUrl']>>;
-  matomoId: Readonly<Ref<UseSiteConfigurationState['matomoId']>>;
-  matomoEnabled: Readonly<Ref<UseSiteConfigurationState['matomoEnabled']>>;
-  matomoDebug: Readonly<Ref<UseSiteConfigurationState['matomoDebug']>>;
-  matomoDisableCookies: Readonly<Ref<UseSiteConfigurationState['matomoDisableCookies']>>;
-  matomoRequireConsent: Readonly<Ref<UseSiteConfigurationState['matomoRequireConsent']>>;
-  matomoTrackPageView: Readonly<Ref<UseSiteConfigurationState['matomoTrackPageView']>>;
-  matomoTrackSiteSearch: Readonly<Ref<UseSiteConfigurationState['matomoTrackSiteSearch']>>;
-  matomoTrackEcommerce: Readonly<Ref<UseSiteConfigurationState['matomoTrackEcommerce']>>;
-  matomoShowGrossPrices: Readonly<Ref<UseSiteConfigurationState['matomoShowGrossPrices']>>;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

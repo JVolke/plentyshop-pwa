@@ -1,10 +1,13 @@
 <template>
   <div>
+    <KrauseSohnBanner />
     <EditablePage :identifier="'index'" :type="'immutable'" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import KrauseSohnBanner from '~/modules/krausesohn-module/runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue';
+
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const icon = 'home';

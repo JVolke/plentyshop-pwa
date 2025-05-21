@@ -53,8 +53,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
       primaryColor: useRuntimeConfig().public.primaryColor,
       secondaryColor: useRuntimeConfig().public.secondaryColor,
-      matomoUrl: useRuntimeConfig().public.matomoUrl,
-      matomoId: useRuntimeConfig().public.matomoId,
       iconColor: useRuntimeConfig().public.iconColor,
       headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
       seoSettings: structuredClone(metaDefaults),
@@ -65,16 +63,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
     },
-    matomoUrl: useRuntimeConfig().public.matomoUrl,
-    matomoId: useRuntimeConfig().public.matomoId,
-    matomoEnabled: useRuntimeConfig().public.matomoEnabled,
-    matomoDebug: useRuntimeConfig().public.matomoDebug,
-    matomoDisableCookies: useRuntimeConfig().public.matomoDisableCookies,
-    matomoRequireConsent: useRuntimeConfig().public.matomoRequireConsent,
-    matomoTrackPageView: useRuntimeConfig().public.matomoTrackPageView,
-    matomoTrackSiteSearch: useRuntimeConfig().public.matomoTrackSiteSearch,
-    matomoTrackEcommerce: useRuntimeConfig().public.matomoTrackEcommerce,
-    matomoShowGrossPrices: useRuntimeConfig().public.matomoShowGrossPrices,
+
   }));
 
   /**
@@ -166,8 +155,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       state.value.iconColor !== state.value.initialData.iconColor ||
       state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
-      state.value.matomoUrl !== state.value.initialData.matomoUrl ||
-      state.value.matomoId !== state.value.initialData.matomoId ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
       state.value.favicon !== state.value.initialData.favicon ||
       state.value.ogTitle !== state.value.initialData.ogTitle ||
@@ -248,46 +235,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         key: 'iconBackgroundColor',
         value: state.value.headerBackgroundColor,
       },
-      {
-        key: 'matomoUrl', // Verwende die Punktnotation, falls die API das erwartet
-        value: state.value.matomoUrl,
-      },
-      {
-        key: 'matomoId',
-        value: String(state.value.matomoId),
-      },
-      {
-        key: 'matomoEnabled',
-        value: String(state.value.matomoEnabled),
-      },
-      {
-        key: 'matomoDebug',
-        value: String(state.value.matomoDebug),
-      },
-      {
-        key: 'matomoDisableCookies',
-        value: String(state.value.matomoDisableCookies),
-      },
-      {
-        key: 'matomoRequireConsent',
-        value: String(state.value.matomoRequireConsent),
-      },
-      {
-        key: 'matomoTrackPageView',
-        value: String(state.value.matomoTrackPageView),
-      },
-      {
-        key: 'matomoTrackSiteSearch',
-        value: String(state.value.matomoTrackSiteSearch),
-      },
-      {
-        key: 'matomoTrackEcommerce',
-        value: String(state.value.matomoTrackEcommerce),
-      },
-      {
-        key: 'matomoShowGrossPrices',
-        value: String(state.value.matomoShowGrossPrices),
-      },
     ];
 
     const { error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -311,8 +258,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useAvif: state.value.useAvif,
       useWebp: state.value.useWebp,
       seoSettings: state.value.seoSettings,
-      matomoUrl: state.value.matomoUrl,
-      matomoId: state.value.matomoId
     };
 
     state.value.loading = false;

@@ -32,6 +32,10 @@ export default defineNuxtModule({
       name: 'ShopAuskunftRBA',
       filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunftRBA.vue'),
     });
+    addComponent({
+      name: 'KrauseSohnBanner',
+      filePath: resolve('./runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue'),
+    });
 
     nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'UiProductCard');
