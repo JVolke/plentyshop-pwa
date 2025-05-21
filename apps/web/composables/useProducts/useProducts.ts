@@ -37,7 +37,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
-
     const identifier = category || params.categoryUrlPath || params.categoryId;
 
     const { data } = await useAsyncData(`useProducts-${identifier}`, () => useSdk().plentysystems.getFacet(params));

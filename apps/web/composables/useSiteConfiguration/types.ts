@@ -17,6 +17,8 @@ export type ConfigurationSettings = {
   selectedFont: SelectedFont;
   primaryColor: string;
   secondaryColor: string;
+  headerBackgroundColor: string;
+  iconColor: string;
   matomoUrl: string;
   matomoId: number;
   headerLogo: string;
@@ -33,7 +35,6 @@ export type ConfigurationSettings = {
   };
 };
 
-
 export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
@@ -45,6 +46,8 @@ export interface UseSiteConfigurationState {
   currentFont: string;
   primaryColor: string;
   secondaryColor: string;
+  headerBackgroundColor: string;
+  iconColor: string;
   headerLogo: string;
   favicon: string;
   ogTitle: string;
@@ -99,6 +102,8 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
   secondaryColor: Readonly<Ref<UseSiteConfigurationState['secondaryColor']>>;
+  headerBackgroundColor: Readonly<Ref<UseSiteConfigurationState['headerBackgroundColor']>>;
+  iconColor: Readonly<Ref<UseSiteConfigurationState['iconColor']>>;
   headerLogo: Readonly<Ref<UseSiteConfigurationState['headerLogo']>>;
   favicon: Readonly<Ref<UseSiteConfigurationState['favicon']>>;
   ogTitle: Readonly<Ref<UseSiteConfigurationState['ogTitle']>>;

@@ -366,7 +366,7 @@
     },
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
     "success": "Nachricht erfolgreich gesendet",
-    "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Sicherheitskonfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten."
+    "misConfigured": "Unser Kontaktformular ist aufgrund einer fehlenden Konfiguration vorübergehend deaktiviert. Bitte schauen Sie später noch einmal vorbei oder kontaktieren Sie uns über alternative Kontaktmöglichkeiten."
   },
   "contactInfo": {
     "add": "Kontaktinformationen hinzufügen",
@@ -772,6 +772,7 @@
     },
     "vat": {
       "incl": "inkl.",
+      "excl": "exkl.",
       "plus": "zzgl."
     }
   },
@@ -1067,6 +1068,7 @@
       "search": "Suchen",
       "noResult2": "Bitte geben Sie mindestens die Postleitzahl oder den Ort ein.",
       "setPackstation": "Übernehmen",
+      "postNumberLabel": "Geben Sie Ihre Postnummer ein",
       "postNumberPlaceholder": "Postnummer",
       "packstationAddedSuccessMessage": "Die Packstation/Postfiliale wurde als Lieferadresse übernommen.",
       "containerTextInfo": "Gib eine Adresse ein und wähle einen Filter für den Abholort. Klicke anschließend auf eines der Suchergebnisse, um diesen Abholort auszuwählen.",

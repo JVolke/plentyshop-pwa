@@ -13,7 +13,6 @@ import { getPaletteFromColor } from '~/utils/tailwindHelper';
 import { metaDefaults, openGraph, favicon } from '~/configuration/app.config';
 import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
 
-
 /**
  * @description Composable for managing site configuration.
  * @returns UseSiteConfigurationReturn
@@ -35,6 +34,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
+    iconColor: useRuntimeConfig().public.iconColor,
+    headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
     headerLogo: useRuntimeConfig().public.headerLogo,
     favicon: structuredClone(favicon).icon,
     ogTitle: structuredClone(openGraph).title,
@@ -54,6 +55,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryColor: useRuntimeConfig().public.secondaryColor,
       matomoUrl: useRuntimeConfig().public.matomoUrl,
       matomoId: useRuntimeConfig().public.matomoId,
+      iconColor: useRuntimeConfig().public.iconColor,
+      headerBackgroundColor: useRuntimeConfig().public.headerBackgroundColor,
       seoSettings: structuredClone(metaDefaults),
       headerLogo: useRuntimeConfig().public.headerLogo,
       favicon: structuredClone(favicon).icon,
@@ -161,6 +164,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
+      state.value.iconColor !== state.value.initialData.iconColor ||
+      state.value.headerBackgroundColor !== state.value.initialData.headerBackgroundColor ||
       state.value.matomoUrl !== state.value.initialData.matomoUrl ||
       state.value.matomoId !== state.value.initialData.matomoId ||
       state.value.headerLogo !== state.value.initialData.headerLogo ||
@@ -236,6 +241,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         value: state.value.seoSettings.robots,
       },
       {
+        key: 'iconColor',
+        value: state.value.iconColor,
+      },
+      {
+        key: 'iconBackgroundColor',
+        value: state.value.headerBackgroundColor,
+      },
+      {
         key: 'matomoUrl', // Verwende die Punktnotation, falls die API das erwartet
         value: state.value.matomoUrl,
       },
@@ -289,6 +302,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
+      iconColor: state.value.iconColor,
+      headerBackgroundColor: state.value.headerBackgroundColor,
       headerLogo: state.value.headerLogo,
       favicon: state.value.favicon,
       ogTitle: state.value.ogTitle,
@@ -299,7 +314,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       matomoUrl: state.value.matomoUrl,
       matomoId: state.value.matomoId
     };
-
 
     state.value.loading = false;
     return true;

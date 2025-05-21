@@ -1,8 +1,8 @@
 <template>
   <li class="border border-[#D9E2DC] rounded-[5px] mb-3">
     <div
-      class="relative"
-      :class="['px-4 py-2 group flex items-center justify-between cursor-pointer', isActive ? 'bg-gray-200' : '']"
+      class="relative px-4 py-2 group flex items-center justify-between cursor-pointer"
+      :class="[isActive ? 'bg-sky-100 border border-sky-400' : 'hover:bg-sky-50 border border-transparent']"
       @click="toggleOnTablet"
     >
       <span v-if="item.hasChildren" @click="toggleOnDesktop">
@@ -19,11 +19,7 @@
       <span
         v-else
         class="flex-1 overflow-hidden whitespace-nowrap overflow-ellipsis cursor-pointer"
-        @click="
-          openSettingsMenu(item.id, item.type);
-          setCategoryId(item.id, parentId, item.details[0].name, item.details[0].nameUrl);
-          checkIfItemHasChildren();
-        "
+        @click="handleSettingsClick"
       >
         <span v-if="item.details[0].name === 'Homepage'">
           <SfIconHome class="w-4 h-4 mr-2" />
@@ -43,12 +39,9 @@
         <SfIconBase
           size="base"
           viewBox="0 0 24 24"
-          class="text-primary-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-          @click="
-            openSettingsMenu(item.id, item.type);
-            setCategoryId(item.id, parentId, item.details[0].name, pagePath);
-            checkIfItemHasChildren();
-          "
+          class="text-primary-900 transition-opacity duration-200"
+          :class="[isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100']"
+          @click="handleSettingsClick"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
             <path :d="gearPath" fill="#062633" />
@@ -97,17 +90,15 @@ import type { CategoryEntry } from '@plentymarkets/shop-api';
 import { gearPath } from 'assets/icons/paths/gear';
 const { isCategoryDirty } = useCategorySettingsCollection();
 const { usePaginatedChildren } = useCategoriesSearch();
-const { setSettingsCategory } = useSiteConfiguration();
-const { setCategoryId, setPageType, setPageHasChildren } = useCategoryIdHelper();
-const route = useRoute();
+const { setSettingsCategory, settingsType } = useSiteConfiguration();
+const { getCategoryId, setCategoryId, setParentName, setPageType, setPageHasChildren } = useCategoryIdHelper();
 const viewport = useViewport();
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-const { item } = defineProps<{
+const { item, parentId } = defineProps<{
   item: CategoryEntry;
   parentId: number | undefined;
 }>();
-
 const pagePath = computed(() => {
   const firstSlashIndex = item.details[0]?.previewUrl?.indexOf('/', 8) ?? -1;
   return firstSlashIndex !== -1 ? item.details[0]?.previewUrl?.slice(firstSlashIndex) ?? '/' : '/';
@@ -118,12 +109,29 @@ const open = ref(false);
 const childrenPagination = usePaginatedChildren(item);
 
 const toggleOpen = async (isTabletCheck = false) => {
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
   if (isTabletCheck && !isTablet.value) return;
 
   open.value = !open.value;
+  if (item.level === 5) {
+    setParentName(item.details[0].name);
+  }
   if (open.value && item.hasChildren && childrenPagination.items.value.length === 0) {
     await childrenPagination.fetchMore();
   }
+};
+const handleSettingsClick = () => {
+  openSettingsMenu(item.id, item.type);
+  setCategoryId({
+    id: item.id,
+    parentId: parentId,
+    name: item.details[0].name,
+    path: item.details[0].nameUrl,
+    level: item.level,
+  });
+  checkIfItemHasChildren();
 };
 const toggleOnDesktop = () => toggleOpen();
 const toggleOnTablet = () => toggleOpen(true);
@@ -136,7 +144,7 @@ const handleChildrenScroll = async (e: Event) => {
   }
 };
 
-const isActive = computed(() => route.path === item?.details[0].nameUrl);
+const isActive = computed(() => item.id === getCategoryId.value && settingsType.value);
 const openSettingsMenu = (id: number, pageType?: string) => {
   currentGeneralPageId.value = id;
   setSettingsCategory({} as CategoryTreeItem, 'general-menu');
