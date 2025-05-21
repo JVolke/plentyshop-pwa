@@ -42,7 +42,9 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/shop-api';
 const { setPageMeta } = usePageMeta();
-
+useHead({
+  title: "Warenkorb - Einkauf prüfen"
+});
 definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');

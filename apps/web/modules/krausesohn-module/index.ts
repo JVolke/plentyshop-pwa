@@ -13,10 +13,6 @@ export default defineNuxtModule({
       filePath: resolve('./runtime/components/ShippingTimer.vue'),
     });
     addComponent({
-      name: 'MinimumShipping',
-      filePath: resolve('./runtime/components/MinimumShipping.vue'),
-    });
-    addComponent({
       name: 'CategoryPageHeaderImage',
       filePath: resolve('./runtime/components/CategoryPageHeaderImage/CategoryPageHeaderImage.vue'),
     });
@@ -83,13 +79,6 @@ export default defineNuxtModule({
       const comp = components.find((c) => c.pascalName === 'ShippingMethod');
       if (comp) {
         comp.filePath = resolve('./runtime/components/ShippingMethod/ShippingMethod.vue');
-      }
-    });
-
-    nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'OrderSummary');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/OrderSummary/OrderSummary.vue');
       }
     });
 

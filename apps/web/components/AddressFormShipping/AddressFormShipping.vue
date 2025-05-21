@@ -134,7 +134,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ $t('krausesohn.telefoneNumber') }} {{ $t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ t('krausesohn.telefoneNumber') }}</UiFormLabel>
       <SfInput
         v-model="phoneNumber"
         name="phoneNumber"

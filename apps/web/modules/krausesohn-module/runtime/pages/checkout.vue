@@ -102,7 +102,9 @@ const {
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 
 const { fetchPaymentMethods } = usePaymentMethods();
-
+useHead({
+  title: "Kasse - Bestellung abschließen"
+})
 const {
   loadPayment,
   loadShipping,

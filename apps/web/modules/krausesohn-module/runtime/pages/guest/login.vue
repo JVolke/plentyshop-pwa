@@ -58,6 +58,10 @@ definePageMeta({
   middleware: ['guest-guard'],
 });
 
+useHead({
+  title: "Login - Anmeldung"
+});
+
 const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { data: cart } = useCart();
