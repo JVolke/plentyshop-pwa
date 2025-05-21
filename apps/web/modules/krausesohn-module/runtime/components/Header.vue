@@ -80,7 +80,7 @@
         </SfDropdown>
         <UiButton
           v-else
-          class="group relative text-primary-500  hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
+          class="group relative text-primary-500  hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           :aria-label="t('auth.login.openLoginForm')"
           square
