@@ -69,8 +69,6 @@
           <!-- BundleOrderItems v-if="product.bundleComponents" :product="product" /  Paketbestandteile -->
           <OrderProperties :product="product" />
 
-          <ShippingInfoFirework v-if="isFirework" />
-
           <div class="flex space-x-2 mt-2">
             <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
             <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
@@ -134,7 +132,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('delivery') }}
+                    {{ t('delivery') }}
                   </SfLink>
                 </template>
               </i18n-t>

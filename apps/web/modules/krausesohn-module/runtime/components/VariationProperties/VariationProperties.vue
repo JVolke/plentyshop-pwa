@@ -1,10 +1,10 @@
 <template>
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2">
-    <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`" class="odd:bg-transparent">
+    <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
       <div v-if="propertyHasNameOrValue(variationProperty)" class="flex justify-between py-1">
         <Component
           :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] && !excludeIds.includes(productPropertyGetters.getPropertyId(variationProperty))"
           :variation-property="variationProperty"
         />
       </div>
@@ -21,6 +21,7 @@ import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationP
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
 import VariationPropertyFile from '~/components/VariationPropertyFile/VariationPropertyFile.vue';
 
+const excludeIds = [50,51,13,14,15]; // Eigenschaften, die nicht angezeigt werden sollen
 const props = defineProps<VariationPropertiesProps>();
 const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
   return (

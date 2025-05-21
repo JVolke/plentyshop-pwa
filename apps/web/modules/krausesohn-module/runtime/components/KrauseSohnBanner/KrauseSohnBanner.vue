@@ -6,9 +6,10 @@
           :src="mainBanner.desktopUrl"
           :srcset="`${mainBanner.mobileUrl} 400w, ${mainBanner.desktopUrl} 768w, ${mainBanner.desktopUrl} 992w`"
           sizes="(max-width: 767px) 100vw, (max-width: 991px) 100vw, 976px"
-          width="976"
-          height="468"
+          width="1458"
+          height="480"
           class="w-full h-auto object-cover rounded-lg"
+          style="max-height: 480px"
           :alt="mainBanner.alt"
         />
         <div class="absolute bottom-0 left-0 w-full p-4 bg-primary-500 bg-opacity-75 text-white hover:bg-opacity-100 transition-colors duration-300">
