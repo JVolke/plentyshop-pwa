@@ -39,38 +39,34 @@
             :unit-name="productGetters.getUnitName(cartItem.variation)"
           />
         </div>
+        <div
+          v-if="cartItem.basketItemOrderParams.length > 0"
+          class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+        >
+          <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
+          <CartOrderProperty
+            v-for="property in cartItem.basketItemOrderParams"
+            :key="property.propertyId"
+            :cart-item="cartItem"
+            :basket-item-order-param="property"
+          />
+        </div>
         <div class="my-2">
-          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-            <li>
-              <span class="font-semibold mr-1">Artikelnummer:</span>
-              <span>{{ cartItem.variation!.variation!.number }}</span>
-            </li>
-            <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
-              <span class="mr-1">{{ attribute.label }}:</span>
-              <span class="font-medium">{{ attribute.value }}</span>
-            </li>
-            <!-- li>
-              <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
-              <span>{{ cartItem.variation!.item!.manufacturer.externalName }}</span>
-            </li -->
-          </ul>
-          <div
-            v-if="cartItem.basketItemOrderParams.length > 0"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
-          >
-            <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
-            <CartOrderProperty
-              v-for="property in cartItem.basketItemOrderParams"
-              :key="property.propertyId"
-              :cart-item="cartItem"
-              :basket-item-order-param="property"
-            />
-          </div>
           <div
             v-if="cartGetters.getVariation(cartItem)"
             class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
           >
-            <VariationProperties :product="cartGetters.getVariation(cartItem)" />
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="font-semibold">Artikelnummer</span>
+                <span class="text-right">{{ cartItem.variation!.variation!.number }}</span>
+              </div>
+              <div v-if="cartItem.variation" class="flex justify-between">
+                <span class="font-semibold">Hersteller / Hergestellt für:</span>
+                <span class="text-right">{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
+              </div>
+              <VariationProperties :product="cartGetters.getVariation(cartItem)" />
+            </div>
           </div>
         </div>
       </div>
@@ -98,9 +94,9 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-neutral-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ format(currentFullPrice || 0) }}
+          {{ format(currentFullPrice || 0)}}
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"
@@ -133,11 +129,11 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { productGetters, cartGetters, manufacturerGetters, Manufacturer } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
-import { debounce } from '../../../utils/debounce';
+//import { debounce } from '../../../utils/debounce';
 
 const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
@@ -228,6 +224,10 @@ const cartItemImage = computed(() => {
 const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+const manufacturerName = computed(
+  () => manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation ?? ({} as Product)))
+)
 
 const basePriceSingleValue = computed(
   () =>

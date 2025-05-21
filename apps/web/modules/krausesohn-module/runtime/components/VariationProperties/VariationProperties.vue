@@ -1,17 +1,15 @@
 <template>
-  <template v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
-    <tr v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`" class="odd:bg-transparent">
-      <template v-if="propertyHasNameOrValue(variationProperty)" >
-        <ClientOnly>
-          <Component
-            :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-            v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-            :variation-property="variationProperty"
-          />
-        </ClientOnly>
-      </template>
-    </tr>
-  </template>
+  <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2">
+    <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`" class="odd:bg-transparent">
+      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex justify-between py-1">
+        <Component
+          :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          :variation-property="variationProperty"
+        />
+      </div>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">

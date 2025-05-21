@@ -55,6 +55,16 @@ const handleReset = () => {
 };
 const handleSubmit = () => {
   props.close?.();
+  const searchTermLower = inputModel.value.toLowerCase().trim();
+
+  // Abfangen spezifischer Suchbegriffe und Weiterleitung zu einer externen URL
+  // Todo: Hinweis angeben
+  if (searchTermLower.includes('feuerwerk')) {
+    window.location.href = 'https://www.feuerwerk-onlineshop.de'; // Ersetzen Sie dies durch die tatsächliche externe URL
+    handleReset();
+    return; // Verhindert die Ausführung der allgemeinen Suche
+  }
+
   updateSearchTerm(inputModel.value);
   emit('frontend:searchProduct', inputModel.value);
   router.push({ path: localePath(paths.search), query: { term: inputModel.value } });
