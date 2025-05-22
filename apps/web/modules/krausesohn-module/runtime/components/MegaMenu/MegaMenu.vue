@@ -47,7 +47,9 @@
               <div
                 ref="triggerReference"
                 data-testid="category-button"
-                class="inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2 !text-white hover:!bg-neutral-50 hover:!text-primary-500 active:!bg-neutral-300 active:!text-neutral-900"
+                class="inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2
+                !text-white hover:!bg-neutral-50 hover:!text-primary-500
+                active:!bg-neutral-50 active:!text-primary-500"
                 @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
                 @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
               >

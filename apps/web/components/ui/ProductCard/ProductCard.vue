@@ -1,13 +1,6 @@
 <template>
   <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col" data-testid="product-card">
     <div class="relative overflow-hidden">
-      <UiBadges
-        :use-tags="useTagsOnCategoryPage"
-        :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
-        :product="product"
-        :use-availability="isFromWishlist"
-      />
-
       <SfLink
         :tag="NuxtLink"
         rel="preload"
@@ -33,7 +26,7 @@
       <slot name="wishlistButton">
         <WishlistButton
           square
-          class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
+          class="absolute top-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
           :product="product"
         />
       </slot>
@@ -50,7 +43,7 @@
         v-if="productGetters.getShortDescription(product)"
         class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
-        <div class="line-clamp-3" v-html="productGetters.getShortDescription(product)" />
+        <!-- div class="line-clamp-3" v-html="productGetters.getShortDescription(product)" /-->
       </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
@@ -64,30 +57,17 @@
           <span>{{ format(price) }}</span>
           <span>{{ t('asterisk') }} </span>
         </span>
-        <span
-          v-if="crossedPrice && differentPrices(price, crossedPrice)"
-          class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
-        >
+        <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
           {{ format(crossedPrice) }}
         </span>
       </div>
-      <UiButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
-        size="sm"
-        class="min-w-[80px] w-fit"
-        data-testid="add-to-basket-short"
-        :disabled="loading"
-        @click="addWithLoader(Number(productGetters.getId(product)))"
-      >
-        <template v-if="!loading" #prefix>
-          <SfIconShoppingCart size="sm" />
-        </template>
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <span v-else>
-          {{ t('addToCartShort') }}
-        </span>
-      </UiButton>
-      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+      <UiBadges
+        class="my-2"
+        :use-tags="useTagsOnCategoryPage"
+        :product="product"
+        :use-availability="true" />
+
+      <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
       </UiButton>
     </div>
@@ -102,7 +82,7 @@ import { defaults } from '~/composables';
 
 const localePath = useLocalePath();
 const { format } = usePriceFormatter();
-const { t } = useI18n();
+const { t, n } = useI18n();
 const {
   product,
   name,
@@ -119,7 +99,6 @@ const {
   unitName,
   basePrice,
   showBasePrice,
-  isFromWishlist = false,
   isFromSlider = false,
 } = defineProps<ProductCardProps>();
 
@@ -131,14 +110,10 @@ const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
 
-const variationId = computed(() => productGetters.getVariationId(product));
 
-const productPath = computed(() => {
-  const basePath = `/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`;
-  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product) === 1;
-
-  return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
-});
+const productPath = computed(() =>
+  localePath(`/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`),
+);
 
 const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
@@ -169,9 +144,6 @@ const addWithLoader = async (productId: number, quickCheckout = true) => {
   } finally {
     loading.value = false;
   }
-};
-const differentPrices = (price: number, crossedPrice: number) => {
-  return crossedPrice ? Math.round(price * 100) / 100 !== Math.round(crossedPrice * 100) / 100 : false;
 };
 
 const NuxtLink = resolveComponent('NuxtLink');

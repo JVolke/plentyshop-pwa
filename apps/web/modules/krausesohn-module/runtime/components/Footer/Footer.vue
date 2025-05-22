@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <!-- ShopAuskunft/ -->
+    <ShopAuskunft />
   </client-only>
   <footer class="pt-10 bg-secondary-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
     <div
@@ -20,7 +20,7 @@
           >
             <SfLink
               :tag="NuxtLink"
-              class="router-link-active router-link-exact-active no-underline text-neutral-600 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+              class="router-link-active router-link-exact-active no-underline text-neutral-900 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
               variant="secondary"
               :to="localePath(link)"
             >

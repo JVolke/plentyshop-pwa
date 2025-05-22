@@ -34,30 +34,9 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'UiProductCard');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/ProductCard/ProductCard.vue');
-      }
-    });
-
-    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'MegaMenu');
       if (comp) {
         comp.filePath = resolve('./runtime/components/MegaMenu/MegaMenu.vue');
-      }
-    });
-
-    nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'ProductSlider');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/ProductSlider/ProductSlider.vue');
-      }
-    });
-
-    nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'UiHeader');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/Header.vue');
       }
     });
 

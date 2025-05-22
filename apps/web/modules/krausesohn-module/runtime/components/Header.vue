@@ -90,31 +90,7 @@
         </UiButton>
       </nav>
     </template>
-
-    <div v-if="viewport.isLessThan('lg')">
-      <UiButton
-        variant="tertiary"
-        class="relative text-primary-500 hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
-        square
-        data-testid="open-languageselect-button"
-        :aria-label="t('languageSelector')"
-        :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-        @click="toggleLanguageSelect()"
-      >
-        <SfIconLanguage />
-      </UiButton>
-      <UiButton
-        variant="tertiary"
-        class="relative  hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
-        square
-        :aria-label="t('openSearchModalButtonLabel')"
-        @click="searchModalOpen"
-      >
-        <SfIconSearch />
-      </UiButton>
-    </div>
   </MegaMenu>
-  <LanguageSelector />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"

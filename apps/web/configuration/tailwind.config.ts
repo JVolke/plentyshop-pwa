@@ -10,6 +10,15 @@ export default {
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
+      textShadow: {
+        sm: '0 1px 2px var(--tw-shadow-color)',
+        DEFAULT: '0 2px 4px var(--tw-shadow-color)',
+        md: '0 4px 6px var(--tw-shadow-color)',
+        lg: '0 8px 16px var(--tw-shadow-color)',
+        // Benutzerdefinierter Schatten für Kontrast
+        'contrast-white': '1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff',
+        'contrast-black': '1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
+      },
       sfTypography: () => ({
         'display-1': {
           fontFamily: 'inherit',
@@ -103,5 +112,5 @@ export default {
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
+  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas'), require('tailwindcss-textshadow')],
 } as Config;

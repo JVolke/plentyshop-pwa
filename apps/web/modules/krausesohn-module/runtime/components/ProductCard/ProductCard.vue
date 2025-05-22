@@ -54,14 +54,18 @@
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ n(price, 'currency') }}</span>
+          <span>{{ format(price) }}</span>
           <span>{{ t('asterisk') }} </span>
         </span>
         <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
-          {{ n(crossedPrice, 'currency') }}
+          {{ format(crossedPrice) }}
         </span>
       </div>
-      <UiBadges class="my-2" :product="product" :use-availability="true" />
+      <UiBadges
+        class="my-2"
+        :use-tags="useTagsOnCategoryPage"
+        :product="product"
+        :use-availability="true" />
 
       <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
@@ -77,6 +81,7 @@ import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 
 const localePath = useLocalePath();
+const { format } = usePriceFormatter();
 const { t, n } = useI18n();
 const {
   product,
@@ -103,6 +108,8 @@ const { price, crossedPrice } = useProductPrice(product);
 const { send } = useNotification();
 const loading = ref(false);
 const config = useRuntimeConfig();
+const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
+
 
 const productPath = computed(() =>
   localePath(`/${productGetters.getUrlPath(product)}_${productGetters.getItemId(product)}`),
