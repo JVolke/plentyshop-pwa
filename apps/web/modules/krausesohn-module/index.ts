@@ -83,15 +83,6 @@ export default defineNuxtModule({
     });
 
     nuxt.hook('components:extend', (components) => {
-      const comp = components.find((c) => c.pascalName === 'UiFooter');
-      if (comp) {
-        comp.filePath = resolve('./runtime/components/Footer/Footer.vue');
-      }
-    });
-
-
-
-    nuxt.hook('components:extend', (components) => {
       const comp = components.find((c) => c.pascalName === 'UiCartProductCard');
       if (comp) {
         comp.filePath = resolve('./runtime/components/CardProductCard/CardProductCard.vue');

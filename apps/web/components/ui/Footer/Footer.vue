@@ -1,9 +1,13 @@
 <template>
+  <client-only>
+    <ShopAuskunft />
+  </client-only>
   <footer class="pt-10 bg-secondary-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
     <div
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
       data-testid="section-top"
     >
+
       <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
         <div class="ml-4 text-lg font-medium leading-7 text-neutral-900">
           {{ t(`categories.${key}.label`) }}
@@ -16,7 +20,7 @@
           >
             <SfLink
               :tag="NuxtLink"
-              class="router-link-active router-link-exact-active no-underline text-neutral-600 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+              class="router-link-active router-link-exact-active no-underline text-neutral-900 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
               variant="secondary"
               :to="localePath(link)"
             >
@@ -27,14 +31,16 @@
       </div>
     </div>
     <hr />
-
     <div class="bg-neutral-900" data-testid="section-bottom">
-      <div class="justify-end px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
-        <p class="flex items-center justify-center leading-5 text-center typography-text-sm text-white/50 md:ml-6">
-          {{ companyName }}
+      <div class="justify-center px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">
+        <p class="text-center items-center justify-center leading-5 typography-text-sm text-white md:ml-6">
+          Alle Preise verstehen sich inkl. der gesetzlichen Mehrwertsteuer und <a href="/webshop/versand" class="underline">zzgl. Versandkosten und Gebühren.</a><br />
+          Krause & Sohn GmbH Kaufbacher Ring 2 01723 Kesselsdorf
         </p>
       </div>
     </div>
+
+
   </footer>
 </template>
 
@@ -42,14 +48,15 @@
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories } from '~/modules/krausesohn-module/runtime/mocks';
 import type { FooterProps } from './types';
+import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 
 const storename: string = useRuntimeConfig().public.storename;
 
 const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
 
 const { simplifiedFooter = false } = defineProps<FooterProps>();
-
 const { t } = useI18n();
+
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
