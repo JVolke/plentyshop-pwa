@@ -5,6 +5,8 @@
       ref="inputReference"
       v-model="inputModel"
       :placeholder="t('search')"
+      :aria-label="t('krausesohn.search')"
+      role="search"
       @focus="open"
     >
       <template #prefix>
