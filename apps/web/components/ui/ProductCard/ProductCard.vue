@@ -67,8 +67,8 @@
         :product="product"
         :use-availability="true" />
 
-      <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
-        <span>{{ t('showOptions') }}</span>
+      <UiButton type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-full">
+        <span>{{ t('krausesohn.showOptions') }}</span>
       </UiButton>
     </div>
   </div>

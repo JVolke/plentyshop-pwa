@@ -2,7 +2,8 @@
   "customerWish": "Hinweise und Wünsche (Fragen bitte direkt per E-Mail oder Telefon stellen)",
   "krausesohn": {
     "termsInfo": "Es gelten unsere {terms}, unser {cancellationRights} und unsere {privacyPolicy}. Mit dem Klick auf Kaufen nehmen Sie diese zur Kenntnis.",
-    "telefoneNumber": "Telefonnummer"
+    "telefoneNumber": "Telefonnummer",
+    "showOptions": "Zum Artikel"
   },
   "categories": {
     "legal": {
