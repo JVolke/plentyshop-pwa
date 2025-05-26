@@ -4,7 +4,7 @@
     <div class="mt-4">
       <ul
         v-if="shippingMethods && shippingMethods.length > 0"
-        class="grid gap-y-4 md:grid-cols-2 md:gap-x-4"
+        class="grid gap-y-4 md:grid-cols-1 md:gap-x-1"
         role="radiogroup"
         data-testid="shipping-method-list"
       >
@@ -29,6 +29,9 @@
             />
           </template>
           <div class="flex items-center flex-row gap-2">
+            <img
+              :src="'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/shipping/'+ method.parcelServiceId + '.png'"
+              :alt="'Bild für ' + shippingProviderGetters.getShippingMethodName(method)" width="80" height="80"/>
             <span>{{ shippingProviderGetters.getShippingMethodName(method) }}</span>
             <span class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</span>
           </div>

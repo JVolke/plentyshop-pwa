@@ -31,7 +31,8 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <RecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
+          <ProductSlider v-if="crossSellingItems" :items="crossSellingItems.products" title="Dazu passt:" />
+          <ProductSlider v-if="crossSellingItemsAccessory" :items="crossSellingItemsAccessory.products" title="Ähnliche Artikel:" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -77,10 +78,26 @@ await fetchProduct(productParams).then(() => {
   });
 });
 
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
+
+fetchCrossSelling({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Similar'
+});
+
+const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts('crossSelling' + productId + 'Accessory');
+
+fetchCrossSellingAccessory({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Accessory'
+});
+
 if (Object.keys(product.value).length === 0) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Product not found',
+  throw new Response(null, {
+    status: 404,
+    statusText: 'Not found',
   });
 }
 setCurrentProduct(product.value || ({} as Product));

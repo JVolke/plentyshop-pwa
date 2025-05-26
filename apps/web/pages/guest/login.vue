@@ -17,7 +17,6 @@
 
         <template v-if="loadedConfig && isAvailable">
           <PayPalExpressButton class="mt-4" type="CartPreview" />
-          <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
           <OrDivider />
         </template>
 
@@ -57,6 +56,10 @@ import { cartGetters } from '@plentymarkets/shop-api';
 definePageMeta({
   pageType: 'static',
   middleware: ['guest-guard'],
+});
+
+useHead({
+  title: "Login - Anmeldung"
 });
 
 const { login, loading } = useCustomer();

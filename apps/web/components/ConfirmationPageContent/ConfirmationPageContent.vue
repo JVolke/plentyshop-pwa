@@ -1,4 +1,5 @@
 <template>
+  <shopauskunft-r-b-a :order="order" />
   <div class="px-4 md:px-0 flex items-center flex-col" data-testid="order-success-page">
     <div class="p-4 md:p-6 flex flex-col max-w-2xl mx-auto">
       <h1 class="mt-6 mb-1 text-2xl text-center" data-testid="success-header">
@@ -75,13 +76,7 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <UiButton
-        :aria-label="t('closeAuthentication')"
-        square
-        variant="tertiary"
-        class="absolute right-2 top-2"
-        @click="closeAuthentication()"
-      >
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication()">
         <SfIconClose />
       </UiButton>
     </header>
@@ -100,6 +95,7 @@ import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 import { paths } from '~/utils/paths';
+import ShopauskunftRBA from '~/modules/krausesohn-module/runtime/components/ShopauskunftRBA/ShopauskunftRBA.vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { order } = defineProps<ConfirmationPageContentProps>();
@@ -112,4 +108,6 @@ const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
 useProcessingOrder().processingOrder.value = false;
 
 await getActiveShippingCountries();
+
+
 </script>

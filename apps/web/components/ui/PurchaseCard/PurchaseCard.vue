@@ -31,26 +31,15 @@
               </WishlistButton>
             </div>
           </div>
-          <div class="flex space-x-2">
-            <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
-            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
-              <UiTag :size="'sm'" :variant="'secondary'">{{
-                  t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
-                }}</UiTag>
-            </div>
-          </div>
-          <LowestPrice :product="product" />
-          <BasePrice
-            v-if="productGetters.showPricePerUnit(product)"
-            :base-price="basePriceSingleValue"
-            :unit-content="productGetters.getUnitContent(product)"
-            :unit-name="productGetters.getUnitName(product)"
-          />
-          <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
           <div class="mt-2 variation-properties">
-            <span class="font-semibold">Artikelnummer</span><span class="mr-1">:</span><span>{{ product.variation.number }}</span>
-            <VariationProperties :product="product" />
+            <div class="space-y-2">
+              <div class="flex justify-between">
+                <span class="font-semibold">Artikelnummer</span>
+                <span class="text-right">{{ product.variation.number }}</span>
+              </div>
+              <VariationProperties :product="product" />
+            </div>
           </div>
           <div class="inline-flex items-center mt-4 mb-2">
             <SfRating
@@ -79,7 +68,25 @@
           <ProductAttributes :product="product" />
           <!-- BundleOrderItems v-if="product.bundleComponents" :product="product" /  Paketbestandteile -->
           <OrderProperties :product="product" />
+
+          <div class="flex space-x-2 mt-2">
+            <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
+            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+              <UiTag :size="'sm'" :variant="'secondary'">{{
+                  t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+                }}</UiTag>
+            </div>
+          </div>
+          <LowestPrice :product="product" />
+          <BasePrice
+            v-if="productGetters.showPricePerUnit(product)"
+            :base-price="basePriceSingleValue"
+            :unit-content="productGetters.getUnitContent(product)"
+            :unit-name="productGetters.getUnitName(product)"
+          />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
+
+          <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -130,11 +137,9 @@
                 </template>
               </i18n-t>
             </div>
-            <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1"/>
-
-            <template v-if="showPayPalButtons">
-              <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
-            </template>
+            <client-only>
+              <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1 && !isFirework && !isT1"/>
+            </client-only>
           </div>
         </section>
       </div>
@@ -143,7 +148,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, productBundleGetters, manufacturerGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
@@ -186,6 +191,23 @@ const priceWithProperties = computed(
       productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
 );
+
+
+const getFireworkProperty = productGetters.getPropertyById(4, product);
+const isFirework = computed(()=>{
+  if (getFireworkProperty)
+  {
+    return getFireworkProperty.values.selectionId === 5;
+  }
+  return false;
+});
+const isT1 = computed(()=>{
+  if (getFireworkProperty)
+  {
+    return getFireworkProperty.values.selectionId === 12;
+  }
+  return false;
+});
 
 const basePriceSingleValue = computed(
   () =>
@@ -261,7 +283,9 @@ const openReviewsAccordion = () => {
 
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
-const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
+
+
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product) && !isFirework.value && !isT1.value);
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

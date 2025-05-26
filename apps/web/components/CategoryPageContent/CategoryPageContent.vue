@@ -1,6 +1,5 @@
 <template>
-  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <CategoryPageHeaderImage :title="title"></CategoryPageHeaderImage>
+  <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout" >
     <div class="md:flex gap-6" data-testid="category-page-content">
       <CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
@@ -88,6 +87,7 @@
         />
       </div>
     </div>
+    <slot name="content" />
   </NarrowContainer>
 </template>
 
@@ -98,7 +98,6 @@ import type { CategoryPageContentProps } from '~/components/CategoryPageContent/
 import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
-
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();

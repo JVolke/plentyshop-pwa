@@ -1,15 +1,16 @@
 <template>
   <NuxtLayout
+    v-if="productsCatalog?.products.length > 0"
     name="default"
     :breadcrumbs="breadcrumbs"
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <template v-if="isEditablePage && runtimeConfig.public.isDev">
-      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
-    </template>
     <template v-else>
+      <CategoryPageHeaderImage
+        :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :category-id="categoryGetters.getId(productsCatalog.category)"/>
       <CategoryPageContent
         v-if="productsCatalog?.products"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -17,6 +18,9 @@
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
       >
+        <template #content>
+          <CategoryDescription :category="productsCatalog.category"/>
+        </template>
         <template #sidebar>
           <!-- CategoryTree :category="productsCatalog.category" /-->
           <CategorySorting />
@@ -24,6 +28,22 @@
           <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
         </template>
       </CategoryPageContent>
+    </template>
+  </NuxtLayout>
+  <NuxtLayout
+    v-else
+    name="default"
+    class="relative"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+  >
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <!-- template v-if="isEditablePage && runtimeConfig.public.isDev">
+      <EditablePage />
+    </template-->
+    <template v-else>
+      <narrow-container class="mb-20 px-4 md:px-0">
+        <CategoryDescription :category="productsCatalog.category"/>
+      </narrow-container>
     </template>
   </NuxtLayout>
 </template>
@@ -63,9 +83,9 @@ const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
   if (!productsCatalog.value.category) {
-    throw createError({
-      statusCode: 404,
-      statusMessage: 'Page not found',
+    throw new Response(null, {
+      status: 404,
+      statusText: 'Not found',
     });
   }
 };

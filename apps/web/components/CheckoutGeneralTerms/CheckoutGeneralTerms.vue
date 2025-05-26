@@ -1,7 +1,8 @@
 <template>
-  <div class="text-sm mx-4 md:pb-0">
+  <div class="text-sm mx-4 md:pb-0 mb-2">
     <div class="flex items-center">
       <SfCheckbox
+        v-if="isCheckboxRequired"
         id="terms-checkbox"
         :model-value="checkboxValue"
         :invalid="showErrors"
@@ -10,7 +11,7 @@
         @update:model-value="(event) => setCheckboxValue(Boolean(event))"
       />
       <label for="terms-checkbox" class="select-none">
-        <i18n-t keypath="termsInfo" scope="global">
+        <i18n-t keypath="krausesohn.termsInfo" scope="global">
           <template #terms>
             <SfLink
               :href="localePath(paths.termsAndConditions)"
@@ -43,7 +44,7 @@
         </i18n-t>
       </label>
     </div>
-    <div class="text-sm text-neutral-500 mt-1 ml-7">* {{ t('contact.form.asterixHint') }}</div>
+    <div v-if="isCheckboxRequired" class="text-sm text-neutral-500 mt-1 ml-7">* {{ t('contact.form.asterixHint') }}</div>
     <div v-if="showErrors" class="text-negative-700 text-sm">{{ t('termsRequired') }}</div>
   </div>
 </template>
@@ -52,8 +53,19 @@
 import { SfCheckbox, SfLink } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 
-const localePath = useLocalePath();
 const { t } = useI18n();
 
+const localePath = useLocalePath();
+const props = defineProps({
+  isCheckboxRequired: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+if (!props.isCheckboxRequired)
+{
+  setCheckboxValue(true);
+}
 </script>

@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <ShopAuskunft />
+    <!-- ShopAuskunft /-->
   </client-only>
   <footer class="pt-10 bg-secondary-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
     <div

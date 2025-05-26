@@ -34,10 +34,63 @@ import { productGetters } from '@plentymarkets/shop-api';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();
+const { t } = useI18n();
 
 const { product } = toRefs(props);
-const { t } = useI18n();
 
 const productDetailsOpen = ref(true);
 const technicalDataOpen = ref(false);
 </script>
+<style>
+table {
+  width: 100%!important;
+  margin-bottom: 1rem;
+  color: #212529;
+  border: 1px solid grey;
+}
+
+table th,
+table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+table thead th {
+  vertical-align: bottom;
+}
+
+table tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.075);
+}
+
+.table-sm th,
+.table-sm td {
+  padding: 0.375rem;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+@media (max-width: 575.98px) {
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+</style>
