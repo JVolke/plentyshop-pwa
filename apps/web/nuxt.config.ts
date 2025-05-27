@@ -7,6 +7,7 @@ import { paths } from './utils/paths';
 
 export default defineNuxtConfig({
   telemetry: false,
+  ssr: true, // Setzen Sie dies auf false, um SSR zu deaktivieren
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,
