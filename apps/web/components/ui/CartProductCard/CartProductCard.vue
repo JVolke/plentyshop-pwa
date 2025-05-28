@@ -25,7 +25,7 @@
       </SfLink>
 
       <div v-if="!cartItem.variation?.bundleComponents">
-        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+        {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
@@ -98,9 +98,9 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-neutral-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ n(currentFullPrice || 0, 'currency') }}
+          {{ format(currentFullPrice || 0) }}
         </span>
         <UiQuantitySelector
           ref="quantitySelectorReference"
@@ -145,7 +145,8 @@ const emit = defineEmits(['load']);
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t, n } = useI18n();
+const { t } = useI18n();
+const { format } = usePriceFormatter();
 const localePath = useLocalePath();
 
 const imageLoaded = ref(false);
