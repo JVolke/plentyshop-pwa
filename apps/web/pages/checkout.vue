@@ -45,29 +45,12 @@
         </div>
       </div>
     </div>
-
-    <UiModal
-      v-model="paypalCardDialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-      tag="section"
-      disable-click-away
-    >
-      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
-    </UiModal>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { AddressType, cartGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
-import {
-  PayPalApplePayKey,
-  PayPalCreditCardPaymentKey,
-  PayPalGooglePayKey,
-  PayPalPaymentKey,
-} from '~/composables/usePayPal/types';
-import { keyBy } from '~/utils/keyBy';
+import { AddressType, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -78,48 +61,25 @@ definePageMeta({
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
-const { isLoading: navigationInProgress } = useLoadingIndicator();
-const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { emit } = usePlentyEvent();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
-const { isGuest, isAuthorized, validGuestEmail, backToContactInformation } = useCustomer();
 const { countryHasDelivery } = useCheckoutAddress(AddressType.Shipping);
 const {
   cart,
   cartIsEmpty,
-  clearCartItems,
   cartLoading,
-  anyAddressFormIsOpen,
   persistShippingAddress,
-  hasShippingAddress,
   persistBillingAddress,
-  hasBillingAddress,
-  backToFormEditing,
-  validateTerms,
-  scrollToShippingAddress,
+  setBillingSkeleton,
+  setShippingSkeleton,
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
-
 const { fetchPaymentMethods } = usePaymentMethods();
+const { loadPayment, loadShipping, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
+  useCheckoutPagePaymentAndShipping();
 useHead({
   title: "Kasse - Bestellung abschließen"
 })
-const {
-  loadPayment,
-  loadShipping,
-  paymentMethods,
-  selectedPaymentId,
-  handleShippingMethodUpdate,
-  handlePaymentMethodUpdate,
-} = useCheckoutPagePaymentAndShipping();
-
-const { setPageMeta } = usePageMeta();
-const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
-
-const icon = 'page';
-setPageMeta(t('checkout'), icon);
-
 emit('frontend:beginCheckout', cart.value);
 
 const checkPayPalPaymentsEligible = async () => {
@@ -132,86 +92,33 @@ const checkPayPalPaymentsEligible = async () => {
     }
   }
 };
-
-await Promise.all([
-  useCartShippingMethods().getShippingMethods(),
-  fetchPaymentMethods(),
-  useAggregatedCountries().fetchAggregatedCountries(),
-]);
+await callOnce(async () => {
+  await Promise.all([
+    useCartShippingMethods().getShippingMethods(),
+    fetchPaymentMethods(),
+    useAggregatedCountries().fetchAggregatedCountries(),
+  ]);
+});
 
 onNuxtReady(async () => {
   await useFetchAddress(AddressType.Shipping)
     .fetchServer()
     .then(() => persistShippingAddress())
+    .then(() => setShippingSkeleton(false))
     .catch((error) => useHandleError(error));
 
   await useFetchAddress(AddressType.Billing)
     .fetchServer()
     .then(() => persistBillingAddress())
+    .then(() => setBillingSkeleton(false))
     .catch((error) => useHandleError(error));
 
   await checkPayPalPaymentsEligible();
 });
 
-const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 const { processingOrder } = useProcessingOrder();
-
-const disableBuyButton = computed(
-  () =>
-    createOrderLoading.value ||
-    disableShippingPayment.value ||
-    cartLoading.value ||
-    navigationInProgress.value ||
-    processingOrder.value,
-);
-
-
-const readyToBuy = () => {
-  if ((!isAuthorized.value && !isGuest.value) || (isGuest.value && !validGuestEmail.value)) {
-    return backToContactInformation();
-  }
-
-  if (anyAddressFormIsOpen.value) {
-    send({ type: 'secondary', message: t('unsavedAddress') });
-    return backToFormEditing();
-  }
-
-  if (!hasShippingAddress.value || !hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
-    scrollToShippingAddress();
-    return false;
-  }
-
-  return validateTerms();
-};
-
-
-const handleRegularOrder = async () => {
-  const data = await createOrder({
-    paymentId: paymentMethods.value.selected,
-    additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
-  });
-
-  if (data?.order?.id) {
-    emit('frontend:orderCreated', data);
-    clearCartItems();
-    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
-  }
-};
-
-
-
-const order = async () => {
-  if (!readyToBuy()) return;
-
-  processingOrder.value = true;
-  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
-
-  paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
-    ? (paypalCardDialog.value = true)
-    : await handleRegularOrder();
-};
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {

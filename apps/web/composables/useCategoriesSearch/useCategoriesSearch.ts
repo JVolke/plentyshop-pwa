@@ -19,6 +19,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     return nodes.some((node) => {
       if (node.id === newPage.parentCategoryId) {
         node.children = node.children || [];
+        node.hasChildren = true;
         node.children.unshift(newPage);
         return true;
       }
@@ -95,7 +96,7 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
     state.value[loadingKey] = true;
 
     try {
-      const { data } = await useAsyncData(() =>
+      const { data } = await useAsyncData(`categories-search-${categoryType}`, () =>
         useSdk().plentysystems.getCategoriesSearch({
           level: 1,
           type: categoryType,
@@ -120,11 +121,9 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
   const getCategories = async (params: CategorySearchCriteria) => {
     state.value.loadingContent = true;
     try {
-      const { data } = await useAsyncData<{ data: CategoryData }>(() =>
-        useSdk().plentysystems.getCategoriesSearch(params),
-      );
+      const getCategoriesResult = await useSdk().plentysystems.getCategoriesSearch(params);
 
-      state.value.data = data?.value?.data ?? state.value.data;
+      state.value.data = getCategoriesResult.data ?? state.value.data;
     } catch (error) {
       throw new Error(error as string);
     } finally {
@@ -174,16 +173,14 @@ export const useCategoriesSearch: UseCategoriesSearchMethodsReturn = () => {
 
       loading.value = true;
       try {
-        const { data } = await useAsyncData<{ data: CategoryData }>(() =>
-          useSdk().plentysystems.getCategoriesSearch({
-            parentCategoryId: category.id,
-            itemsPerPage: 30,
-            page: page.value,
-            with: 'details,clients',
-          }),
-        );
+        const data = await useSdk().plentysystems.getCategoriesSearch({
+          parentCategoryId: category.id,
+          itemsPerPage: 30,
+          page: page.value,
+          with: 'details,clients',
+        });
 
-        const result: CategoryData = data?.value?.data ?? createEmptyCategoryData();
+        const result: CategoryData = data.data ?? createEmptyCategoryData();
 
         addChildrenToParent(category.id, result.entries);
 

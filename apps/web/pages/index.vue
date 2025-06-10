@@ -8,6 +8,9 @@
 <script lang="ts" setup>
 import KrauseSohnBanner from '~/modules/krausesohn-module/runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue';
 
+definePageMeta({
+  middleware: ['confirmation-redirect'],
+});
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
 const icon = 'home';

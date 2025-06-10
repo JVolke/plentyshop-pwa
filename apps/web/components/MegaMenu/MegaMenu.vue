@@ -74,7 +74,7 @@
               :style="style"
               class="hidden md:inline-block columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
               tabindex="0"
-              @mouseleave="close()"
+              @mouseleave="onMouseLeave"
               @keydown.esc="focusTrigger(index)"
             >
               <template v-for="node in activeMenu.children" :key="node.id">
@@ -183,7 +183,6 @@
 </template>
 
 <script lang="ts" setup>
-import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
   SfDrawer,
@@ -196,24 +195,44 @@ import {
   useDropdown,
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
-import type { MegaMenuProps } from '~/components/MegaMenu/types';
+import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { paths } from '~/utils/paths';
+import type { MegaMenuProps } from '~/components/MegaMenu/types';
+
+const props = defineProps<MegaMenuProps>();
+const NuxtLink = resolveComponent('NuxtLink');
 
 const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
-const { setDrawerOpen } = useDrawerState();
-const NuxtLink = resolveComponent('NuxtLink');
-const props = defineProps<MegaMenuProps>();
+const { headerBackgroundColor } = useSiteConfiguration();
+const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
+const { setDrawerOpen } = useDrawerState();
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
   placement: 'bottom-start',
   middleware: [],
 });
+
+const isTouchDevice = ref(false);
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
+const drawerReference = ref();
+const megaMenuReference = ref();
+const triggerReference = ref();
+const tappedCategories = ref<Map<number, boolean>>(new Map());
+let removeHook: () => void;
+
+const trapFocusOptions = {
+  activeState: isOpen,
+  arrowKeysUpDown: true,
+  initialFocus: 'container',
+} as const;
+
+const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
+const headerClass = computed(() => ({ 'z-[10]': isOpen.value }));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -227,23 +246,6 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 const generateCategoryLink = (category: CategoryTreeItem) => {
   return buildCategoryMenuLink(category, categoryTree.value);
 };
-
-const drawerReference = ref();
-const megaMenuReference = ref();
-const triggerReference = ref();
-
-const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
-
-const trapFocusOptions = {
-  activeState: isOpen,
-  arrowKeysUpDown: true,
-  initialFocus: 'container',
-} as const;
-useTrapFocus(
-  computed(() => megaMenuReference.value?.[0]),
-  trapFocusOptions,
-);
-useTrapFocus(drawerReference, trapFocusOptions);
 
 const openMenu = (menuType: number[]) => {
   activeNode.value = menuType;
@@ -263,17 +265,58 @@ const focusTrigger = (index: number) => {
   unrefElement(triggerReference.value[index]).focus();
 };
 
-setCategory(categoryTree.value);
+const onMouseLeave = () => {
+  close();
+  tappedCategories.value.clear();
+};
+
+const onCategoryMouseEnter = (menuNode: CategoryTreeItem) => {
+  if (!viewport.isGreaterOrEquals('lg')) return;
+
+  if (menuNode.childCount > 0) {
+    activeNode.value = [menuNode.id];
+    open();
+    setCategory([menuNode]);
+    return;
+  }
+
+  if (category.value !== null) category.value = null;
+};
+
+const handleFirstTouch = (menuNode: CategoryTreeItem) => {
+  tappedCategories.value.set(menuNode.id, true);
+  onCategoryMouseEnter(menuNode);
+};
+
+const onCategoryTap = (menuNode: CategoryTreeItem) => {
+  if (menuNode.childCount > 0 && isTouchDevice.value && !tappedCategories.value.get(menuNode.id)) {
+    return handleFirstTouch(menuNode);
+  }
+
+  router.push(localePath(generateCategoryLink(menuNode)));
+};
+
+onMounted(() => {
+  isTouchDevice.value = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  removeHook = router.afterEach(() => close());
+});
+
+onBeforeUnmount(() => removeHook?.());
 
 watch(
   () => props.categories,
-  async (categories: CategoryTreeItem[]) => {
+  (categories: CategoryTreeItem[]) => {
     categoryTree.value = categoryTreeGetters.getTree(categories);
     setCategory(categoryTree.value);
   },
 );
 
-const headerClass = computed(() => ({
-  'z-[10]': isOpen.value,
-}));
+setCategory(categoryTree.value);
+
+useTrapFocus(
+  computed(() => megaMenuReference.value?.[0]),
+  trapFocusOptions,
+);
+
+useTrapFocus(drawerReference, trapFocusOptions);
 </script>

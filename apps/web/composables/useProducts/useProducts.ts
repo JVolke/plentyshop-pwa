@@ -18,53 +18,56 @@ export const useProducts: UseProductsReturn = (category = '') => {
     currentProduct: {} as Product,
   }));
 
-  const nuxtApp = useNuxtApp(); // Instanz holen
-
+  /**
+   * @description Function for fetching products.
+   * @param params { FacetSearchCriteria }
+   * @return FetchProducts
+   * @example
+   * ``` ts
+   * const { fetchProducts: fetchProducts1, data: productsCatalog1 } = useProducts('/living-room');
+   * const { fetchProducts: fetchProducts2, data: productsCatalog2 } = useProducts('49');
+   * const { fetchProducts: fetchProducts3, data: productsCatalog3 } = useProducts('19');
+   *
+   * fetchProducts1({ categoryUrlPath: '/living-room', page: 1 });
+   * fetchProducts2({ categoryId: '49', page: 1 });
+   * fetchProducts3({ categoryId: '19', page: 1 });
+   * ```
+   */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
     const identifier = category || params.categoryUrlPath || params.categoryId;
 
-    let fetchedData;
-
-    // *** DIESER BLOCK IST DIE KRITISCHE ÄNDERUNG ZUM TESTEN ***
-    // Verwende useAsyncData nur auf dem Server oder bei der initialen Hydration.
-    // Ansonsten (nach der Hydration im Browser, wenn der User filtert/sortiert),
-    // erzwingen wir einen direkten Fetch über useSdk().
-    if (import.meta.server || nuxtApp.isHydrating) {
-      // Den Key dynamischer machen, um alle relevanten Parameter einzubeziehen
-      // Dies zwingt useAsyncData, einen neuen Fetch zu machen, wenn sich NUR params ändern
-      const dynamicKey = `useProducts-${identifier}-${JSON.stringify(params || {})}`; // params kann undefined sein, daher {}
-      const { data } = await useAsyncData(dynamicKey, () => useSdk().plentysystems.getFacet(params), {
-        // Optional: Falls Sie useAsyncData nur einmal auf dem Server haben wollen
-        // immediate: process.server, // Nur auf dem Server ausführen
-      });
-      fetchedData = data.value;
-    } else {
-      // Client-seitiger Fetch nach der Hydration (Benutzerinteraktion)
-      fetchedData = await useSdk().plentysystems.getFacet(params);
-    }
-    // ************************************************************
+    const { data } = await useAsyncData(`useProducts-${identifier}-${JSON.stringify(params)}`, () =>
+      useSdk().plentysystems.getFacet(params),
+    );
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
-    if (fetchedData?.data) {
-      fetchedData.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
-      state.value.data = fetchedData.data;
-    } else {
-      // Wenn fetchedData kein data hat, z.B. bei einem Fehler,
-      // stellen Sie sicher, dass state.value.data nicht leer ist
-      state.value.data = {} as Facet; // Oder eine geeignete Fehlermeldung
+    if (data.value?.data) {
+      data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+      state.value.data = data.value.data;
     }
 
     state.value.loading = false;
     return state.value.data;
   };
 
+  /**
+   * @description Function for setting the current product.
+   * @param product { Product }
+   * @return SetCurrentProduct
+   * @example
+   * ``` ts
+   *  setCurrentProduct({} as Product)
+   * ```
+   */
   const setCurrentProduct: SetCurrentProduct = async (product: Product) => {
     state.value.loading = true;
+
     state.value.currentProduct = product;
+
     state.value.loading = false;
   };
 
