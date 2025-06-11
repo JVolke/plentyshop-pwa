@@ -108,6 +108,4 @@ const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
 useProcessingOrder().processingOrder.value = false;
 
 await getActiveShippingCountries();
-
-
 </script>

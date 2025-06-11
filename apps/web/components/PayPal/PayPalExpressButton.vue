@@ -139,7 +139,7 @@ const createButton = () => {
     if (paypalButton.value) {
       paypalButton.value.innerHTML = '';
     }
-    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL];
+    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL, paypalScript.value.FUNDING?.PAYLATER];
     FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
   }
 };

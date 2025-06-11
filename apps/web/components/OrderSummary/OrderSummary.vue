@@ -14,7 +14,6 @@
           :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
           class="flex justify-between typography-text-base w-full"
         >
-
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
             {{ format(cartGetters.getBasketItemOrderParamPrice(property)) }}
@@ -80,7 +79,6 @@
         <h2 v-else data-testid="total">{{ format(totals.total) }}</h2>
       </div>
       <UiDivider class="w-auto mb-4" />
-
       <slot />
     </div>
   </div>

@@ -112,7 +112,7 @@ function sortQueryChanged() {
 sortQueryChanged();
 
 watch(
-  () => useRoute(),
+  () => useNuxtApp().$router.currentRoute.value.query.sort,
   () => {
     sortQueryChanged();
   },
