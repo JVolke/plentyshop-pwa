@@ -206,7 +206,6 @@ const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
-const { headerBackgroundColor } = useSiteConfiguration();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { setDrawerOpen } = useDrawerState();
