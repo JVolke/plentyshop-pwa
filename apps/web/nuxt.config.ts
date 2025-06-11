@@ -91,6 +91,7 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_HEADER_BACKGROUND_COLOR || process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
+      fetchDynamicTranslations: false,
       matomoUrl: process.env.MATOMO_URL || '',
       matomoId: process.env.MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
       matomoEnabled: process.env.MATOMO_ENABLED === 'true',
