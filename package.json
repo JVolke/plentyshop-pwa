@@ -18,7 +18,7 @@
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
     "format": "prettier --check \"**/*.{ts,vue,css,scss,md}\"",
     "format:fix": "prettier --write \"**/*.{ts,vue,css,scss,md}\"",
-    "clean": "npx rimraf --glob ./**/node_modules && rm package-lock.json",
+    "clean": "npx rimraf ./**/node_modules && rm package-lock.json",
     "clean:hard": "npx rimraf ./**/node_modules && npx rimraf ./**/lib && rm package-lock.json && npx rimraf ./**/.turbo && npx rimraf ./**/.nuxt",
     "clean:logs": "npx rimraf ./**/*.log",
     "test": "npm run turbo:disable-telemetry && turbo run test",
