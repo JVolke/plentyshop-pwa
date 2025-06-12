@@ -21,11 +21,9 @@ declare global {
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig().public;
-  const { consent: cookieConsent } = useCookieConsent('matomo_consent'); // Verwenden Sie einen passenden CookieName
-  const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => cookieConsent.value);
-  const { add: registerCookie } = useRegisterCookie();
+  const { consent } = useCookieConsent('matomo_consent'); // Verwenden Sie einen passenden CookieName
+  const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => consent.value);
   const router = useRouter();
-  const cookieGroup = 'CookieBar.marketing.label';
 
   /*
   if (!config.matomoUrl || !config.matomoId || !import.meta.client) {
@@ -42,8 +40,9 @@ export default defineNuxtPlugin(() => {
     window._paq.push(['disableCookies']);
   }
 
-  watch(cookieConsent, (value) => {
+  watch(consent, (value) => {
     matomoConsentGiven.value = value;
+    console.log("matomoConsentGiven", matomoConsentGiven);
     if (window._paq) {
       if (value) {
         window._paq.push(['rememberCookieConsentGiven']);
@@ -149,7 +148,7 @@ export default defineNuxtPlugin(() => {
   });
 
   on('frontend:productLoaded', ( data) => {
-    window._paq.push(['trackEcommerceProductView',
+    window._paq.push(['setEcommerceView',
       productGetters.getVariationId(data.product),
       productGetters.getName(data.product),
       '',

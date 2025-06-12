@@ -3,14 +3,14 @@ import { defineNuxtPlugin, useRuntimeConfig, useCookieConsent, useRegisterCookie
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig().public;
-  const { consent: cookieConsent } = useCookieConsent('matomo_consent'); // Verwenden Sie denselben CookieName wie im Client
+  const { consent  } = useCookieConsent('matomo_consent'); // Verwenden Sie denselben CookieName wie im Client
   const { add: registerCookie } = useRegisterCookie();
   const cookieGroup = 'CookieBar.marketing.label';
 
   // Cookie Registration (only on server)
   if (cookieGroup) {
     registerCookie({
-      name: 'Matomo Analytics', // Verwenden Sie denselben CookieName wie oben
+      name: 'matomo_consent', // Verwenden Sie denselben CookieName wie oben
       Provider: 'Krause & Sohn GmbH', // Passenden Provider definieren
       Status: 'Der Cookie wird zur Analyse des Nutzungsverhaltens genutzt.', // Passenden Status definieren
       PrivacyPolicy: 'https://www.krause-sohn.de/privacy-policy', // Link zur Matomo-Datenschutzerklärung
