@@ -1,10 +1,10 @@
 // modules/matomo/index.ts
-import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule, useRuntimeConfig } from '@nuxt/kit';
+import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
 import { defu } from 'defu';
 
 export interface ModuleOptions {
   url: string;
-  id: number;
+  id: string;
   enabled?: boolean;
   debug?: boolean;
   disableCookies?: boolean;
@@ -22,7 +22,7 @@ export default defineNuxtModule<ModuleOptions>({
   },
   defaults: {
     url: '',
-    id: 0,
+    id: '0',
     enabled: true,
     debug: false,
     disableCookies: false,
@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
 
 
     nuxt.options.runtimeConfig.public.matomoUrl = process.env.NUXT_PUBLIC_MATOMO_URL as string;
-    nuxt.options.runtimeConfig.public.matomoId = process.env.NUXT_PUBLIC_MATOMO_SITE_ID ? parseInt(process.env.NUXT_PUBLIC_MATOMO_SITE_ID, 10) : 0;
+    nuxt.options.runtimeConfig.public.matomoId = process.env.NUXT_PUBLIC_MATOMO_SITE_ID || '0';
     nuxt.options.runtimeConfig.public.matomoEnabled = process.env?.NUXT_PUBLIC_MATOMO_ENABLED === '1';
     nuxt.options.runtimeConfig.public.matomoDebug = process.env?.NUXT_PUBLIC_MATOMO_DEBUG === '1';
     nuxt.options.runtimeConfig.public.matomoDisableCookies = process.env?.NUXT_PUBLIC_MATOMO_DISABLE_COOKIES === '1';
