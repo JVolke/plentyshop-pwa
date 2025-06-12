@@ -60,7 +60,7 @@
         @click="openDrawerWithView('MatomoSettings')"
       >
         <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="paintBrushWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
+        <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
       </button>
     </div>
   </aside>

@@ -27,9 +27,10 @@ export default defineNuxtPlugin(() => {
   const router = useRouter();
   const cookieGroup = 'CookieBar.marketing.label';
 
+  /*
   if (!config.matomoUrl || !config.matomoId || !import.meta.client) {
     return;
-  }
+  }*/
 
   window._paq = window._paq || [];
 

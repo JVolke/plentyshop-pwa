@@ -33,7 +33,6 @@ export default defineNuxtModule<ModuleOptions>({
     showGrossPrices: false,
   },
   async setup(options, nuxt) {
-    console.log("Setup function")
     const { resolve } = createResolver(import.meta.url);
 
     // Installiere optionale Module (angenommen, E-Commerce-Funktionen sind relevant)
