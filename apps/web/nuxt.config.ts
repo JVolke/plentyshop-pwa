@@ -93,7 +93,7 @@ export default defineNuxtConfig({
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
       fetchDynamicTranslations: false,
       matomoUrl: process.env.NUXT_PUBLIC_MATOMO_URL || '',
-      matomoId: process.env.NUXT_PUBLIC_MATOMO_SITE_ID ? parseInt(process.env.MATOMO_SITE_ID, 10) : 0,
+      matomoId: process.env.NUXT_PUBLIC_MATOMO_SITE_ID ? parseInt(process.env.NUXT_PUBLIC_MATOMO_SITE_ID, 10) : 0,
       matomoEnabled: process.env.NUXT_PUBLIC_MATOMO_ENABLED === 'true',
       matomoDebug: process.env.NUXT_PUBLIC_MATOMO_DEBUG === 'true',
       matomoDisableCookies: process.env.NUXT_PUBLIC_MATOMO_DISABLE_COOKIES === 'true',
