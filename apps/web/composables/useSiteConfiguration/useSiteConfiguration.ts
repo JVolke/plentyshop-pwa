@@ -22,6 +22,8 @@ import type { Block, CategoryTreeItem } from '@plentymarkets/shop-api';
  * ```
  */
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
+  const runtimeConfig = useRuntimeConfig().public;
+
   const state = useState<UseSiteConfigurationState>('siteConfiguration', () => ({
     data: [],
     drawerOpen: false,
@@ -48,6 +50,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockUuid: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    // ANPASSUNG: Nur matomoUrl und matomoSiteId im State initialisieren
+    matomoUrl: runtimeConfig.matomoUrl || '',
+    matomoSiteId: String(runtimeConfig.matomoSiteId || 0),
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -62,9 +67,23 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       ogImg: structuredClone(openGraph).image,
       useAvif: useRuntimeConfig().public.useAvif,
       useWebp: useRuntimeConfig().public.useWebp,
+      // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
+      matomoUrl: runtimeConfig.matomoUrl || '',
+      matomoSiteId: String(runtimeConfig.matomoSiteId || '0'),
     },
 
   }));
+
+  // ANPASSUNG: Hilfsfunktion zum (Neu-)Initialisieren des Matomo-Trackers
+  // Diese Funktion fügt die initialen Matomo-Befehle zu window._paq hinzu.
+  const initializeMatomoTracker = () => {
+    if (import.meta.client && window._paq) {
+      window._paq.push(['setTrackerUrl', state.value.matomoUrl + 'matomo.php']); // Oder nur 'matomo.php' wenn matomoUrl der Basis-URL ist
+      window._paq.push(['setSiteId', Number(state.value.matomoSiteId)]); // Konvertierung zu Zahl
+      // Wenn Sie direkt nach dem Setzen einen PageView tracken wollen (z.B. beim Laden der Seite):
+      // window._paq.push(['trackPageView']);
+    }
+  };
 
   /**
    * @description Function for loading a google font.
@@ -178,7 +197,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.useWebp !== state.value.initialData.useWebp ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont) ||
-      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings)
+      JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
+    // ANPASSUNG: Nur matomoUrl und matomoSiteId in settingsIsDirty
+    state.value.matomoUrl !== state.value.initialData.matomoUrl ||
+    state.value.matomoSiteId !== state.value.initialData.matomoSiteId
     );
   });
 
@@ -251,6 +273,15 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
           key: 'headerBackgroundColor',
           value: state.value.headerBackgroundColor,
         },
+        // ANPASSUNG: Nur matomoUrl und matomoSiteId beim Speichern
+        {
+          key: 'matomoUrl',
+          value: state.value.matomoUrl,
+        },
+        {
+          key: 'matomoSiteId',
+          value: state.value.matomoSiteId, // <-- Bleibt String
+        },
       ];
 
       await useSdk().plentysystems.setConfiguration({ settings });
@@ -269,6 +300,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         useAvif: state.value.useAvif,
         useWebp: state.value.useWebp,
         seoSettings: state.value.seoSettings,
+        // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
+        matomoUrl: state.value.matomoUrl,
+        matomoSiteId: state.value.matomoSiteId,
       };
     } catch (error) {
       console.error('Error saving settings:', error);

@@ -51,6 +51,17 @@
         <SfIconSearch v-if="drawerView === 'SeoView'" class="text-white" />
         <SfIconSearch v-else />
       </button>
+      <button
+        type="button"
+        class="editor-button relative py-2 flex justify-center"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MatomoSettings' }"
+        aria-label="Open design drawer"
+        data-testid="open-design-drawer"
+        @click="openDrawerWithView('MatomoSettings')"
+      >
+        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="paintBrushWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="paintBrushBlack" />
+      </button>
     </div>
   </aside>
 </template>

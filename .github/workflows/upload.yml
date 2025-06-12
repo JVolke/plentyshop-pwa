@@ -4,7 +4,7 @@ on:
   release:
     types: [published]
   push:
-    branches: [krause-sohn-2025]
+    branches: [e]
   workflow_dispatch:
     inputs:
       environment:

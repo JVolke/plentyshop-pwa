@@ -54,7 +54,10 @@ export default defineNuxtModule<ModuleOptions>({
     /**if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
       return;
     }*/
-
+    addComponent({
+      name: 'MatomoSettingsDrawer',
+      filePath: resolve('./runtime/components/MatomoSettingsDrawer.vue'),
+    });
 
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'));

@@ -7,10 +7,17 @@ export type DrawerView =
   | 'SeoView'
   | 'PagesView'
   | 'blocksSettings'
+  | 'MatomoSettings'
   | null;
 
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
+// ANPASSUNG: Nur matomoUrl und matomoSiteId als String
+export interface MatomoSettings {
+  matomoUrl: string;
+  matomoSiteId: string; // Geändert zu String
+}
+
 export type ConfigurationSettings = {
   blockSize: string;
   selectedFont: SelectedFont;
@@ -30,7 +37,7 @@ export type ConfigurationSettings = {
     keywords: string;
     robots: string;
   };
-};
+} & MatomoSettings;
 
 export interface UseSiteConfigurationState {
   data: [];
@@ -64,6 +71,9 @@ export interface UseSiteConfigurationState {
     keywords: string;
     robots: string;
   };
+  // NEUE Matomo-Einstellungen im State
+  matomoUrl: string;
+  matomoSiteId: string;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -103,6 +113,9 @@ export interface UseSiteConfiguration {
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
+  // NEUE Matomo-Einstellungen ebenfalls als Readonly<Ref> hinzufügen
+  matomoUrl: Readonly<Ref<UseSiteConfigurationState['matomoUrl']>>;
+  matomoSiteId: Readonly<Ref<UseSiteConfigurationState['matomoSiteId']>>;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;
