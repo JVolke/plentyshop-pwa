@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
 
 
     nuxt.options.runtimeConfig.public.matomoUrl = process.env.NUXT_PUBLIC_MATOMO_URL as string;
-    nuxt.options.runtimeConfig.public.matomoId = process.env.NUXT_PUBLIC_MATOMO_SITE_ID || '0';
+    nuxt.options.runtimeConfig.public.matomoId = process.env.NUXT_PUBLIC_MATOMO_ID || '0';
     nuxt.options.runtimeConfig.public.matomoEnabled = process.env?.NUXT_PUBLIC_MATOMO_ENABLED === '1';
     nuxt.options.runtimeConfig.public.matomoDebug = process.env?.NUXT_PUBLIC_MATOMO_DEBUG === '1';
     nuxt.options.runtimeConfig.public.matomoDisableCookies = process.env?.NUXT_PUBLIC_MATOMO_DISABLE_COOKIES === '1';

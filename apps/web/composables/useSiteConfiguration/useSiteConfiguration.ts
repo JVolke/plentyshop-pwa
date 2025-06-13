@@ -52,7 +52,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     // ANPASSUNG: Nur matomoUrl und matomoSiteId im State initialisieren
     matomoUrl: runtimeConfig.matomoUrl || '',
-    matomoSiteId: String(runtimeConfig.matomoSiteId || 0),
+    matomoSiteId: String(runtimeConfig.matomoId || 0),
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -69,7 +69,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useWebp: useRuntimeConfig().public.useWebp,
       // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
       matomoUrl: runtimeConfig.matomoUrl || '',
-      matomoSiteId: String(runtimeConfig.matomoSiteId || '0'),
+      matomoSiteId: String(runtimeConfig.matomoId || '0'),
     },
 
   }));
