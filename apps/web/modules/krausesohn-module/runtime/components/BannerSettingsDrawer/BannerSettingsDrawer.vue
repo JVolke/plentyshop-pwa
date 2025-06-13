@@ -41,8 +41,7 @@
     </UiAccordionItem>
 
     <UiAccordionItem
-      v-model="secondaryBannersOpen"
-      data-testid="secondary-banners-section"
+      v-model="secondaryBannersSectionOpen" data-testid="secondary-banners-main-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -50,25 +49,35 @@
         <h2 class="">Sekundärbanner</h2>
       </template>
       <div class="py-2 px-4">
-        <div v-for="(banner, index) in secondaryBanners" :key="index" class="mb-6 border-b pb-4 last:border-b-0 last:pb-0">
-          <h3 class="font-bold text-lg mb-2">Banner {{ index + 1 }}</h3>
-          <div class="mb-4">
-            <UiFormLabel :for="`secondary-banner-${index}-desktop-url`">Desktop URL</UiFormLabel>
-            <SfInput :id="`secondary-banner-${index}-desktop-url`" v-model="banner.desktopUrl" type="text" :data-testid="`secondary-banner-${index}-desktop-url`" class="w-full" />
+        <UiAccordionItem
+          v-for="(banner, index) in secondaryBanners"
+          :key="index"
+          v-model="secondaryBannersOpen[index]" :data-testid="`secondary-banner-${index}-section`"
+          summary-active-class="bg-neutral-100"
+          summary-class="w-full hover:bg-neutral-100 px-4 py-2 flex justify-between items-center select-none border-b last:border-b-0"
+        >
+          <template #summary>
+            <h3 class="font-bold">Banner {{ index + 1 }}</h3>
+          </template>
+          <div class="py-2 px-4">
+            <div class="mb-4">
+              <UiFormLabel :for="`secondary-banner-${index}-desktop-url`">Desktop URL</UiFormLabel>
+              <SfInput :id="`secondary-banner-${index}-desktop-url`" v-model="banner.desktopUrl" type="text" :data-testid="`secondary-banner-${index}-desktop-url`" class="w-full" />
+            </div>
+            <div class="mb-4">
+              <UiFormLabel :for="`secondary-banner-${index}-link`">Link</UiFormLabel>
+              <SfInput :id="`secondary-banner-${index}-link`" v-model="banner.link" type="text" :data-testid="`secondary-banner-${index}-link`" class="w-full" />
+            </div>
+            <div class="mb-4">
+              <UiFormLabel :for="`secondary-banner-${index}-title`">Titel</UiFormLabel>
+              <SfInput :id="`secondary-banner-${index}-title`" v-model="banner.title" type="text" :data-testid="`secondary-banner-${index}-title`" class="w-full" />
+            </div>
+            <div class="mb-4">
+              <UiFormLabel :for="`secondary-banner-${index}-alt`">Alt-Text</UiFormLabel>
+              <SfInput :id="`secondary-banner-${index}-alt`" v-model="banner.alt" type="text" :data-testid="`secondary-banner-${index}-alt`" class="w-full" />
+            </div>
           </div>
-          <div class="mb-4">
-            <UiFormLabel :for="`secondary-banner-${index}-link`">Link</UiFormLabel>
-            <SfInput :id="`secondary-banner-${index}-link`" v-model="banner.link" type="text" :data-testid="`secondary-banner-${index}-link`" class="w-full" />
-          </div>
-          <div class="mb-4">
-            <UiFormLabel :for="`secondary-banner-${index}-title`">Titel</UiFormLabel>
-            <SfInput :id="`secondary-banner-${index}-title`" v-model="banner.title" type="text" :data-testid="`secondary-banner-${index}-title`" class="w-full" />
-          </div>
-          <div class="mb-4">
-            <UiFormLabel :for="`secondary-banner-${index}-alt`">Alt-Text</UiFormLabel>
-            <SfInput :id="`secondary-banner-${index}-alt`" v-model="banner.alt" type="text" :data-testid="`secondary-banner-${index}-alt`" class="w-full" />
-          </div>
-        </div>
+        </UiAccordionItem>
       </div>
     </UiAccordionItem>
   </div>
@@ -82,9 +91,20 @@ import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSite
 const {
   mainBanner,
   secondaryBanners,
-  closeDrawer, // Beibehalten, da der Matomo-Drawer dies auch verwendet
+  closeDrawer,
 } = useSiteConfiguration();
 
 const mainBannerOpen = ref(true); // Standardmäßig geöffnet
-const secondaryBannersOpen = ref(false); // Standardmäßig geschlossen
+
+// Neues Ref für den übergeordneten Accordion-Abschnitt der Sekundärbanner
+const secondaryBannersSectionOpen = ref(false); // Anfangs geschlossen
+
+// Ein Array von Refs für den Zustand jedes einzelnen Sekundärbanners
+// Initialisiere alle als geschlossen, oder je nach Bedarf.
+const secondaryBannersOpen = ref(secondaryBanners.value.map(() => false));
+
+// Optional: Wenn Sie möchten, dass das erste Sekundärbanner standardmäßig geöffnet ist:
+// if (secondaryBannersOpen.value.length > 0) {
+//   secondaryBannersOpen.value[0] = true;
+// }
 </script>
