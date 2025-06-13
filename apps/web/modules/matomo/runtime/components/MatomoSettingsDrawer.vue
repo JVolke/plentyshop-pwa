@@ -1,7 +1,7 @@
 <template>
   <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">Settings</div>
+      <div class="flex items-center text-xl font-bold">Matomo Einstellungen</div>
       <button data-testid="design-view-close" class="!p-0" @click="closeDrawer">
         <SfIconClose />
       </button>
