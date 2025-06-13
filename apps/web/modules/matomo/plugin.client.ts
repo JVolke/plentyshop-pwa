@@ -42,7 +42,6 @@ export default defineNuxtPlugin(() => {
 
   watch(consent, (value) => {
     matomoConsentGiven.value = value;
-    console.log("matomoConsentGiven", matomoConsentGiven);
     if (window._paq) {
       if (value) {
         window._paq.push(['rememberCookieConsentGiven']);

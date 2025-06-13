@@ -30,5 +30,6 @@ const getDrawerView = (view: string) => {
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
   if (view === 'blocksSettings') return resolveComponent('BlockEditView');
   if (view === 'MatomoSettings') return resolveComponent('MatomoSettingsDrawer');
+  if (view === 'BannerSettings') return resolveComponent('BannerSettingsDrawer');
 };
 </script>

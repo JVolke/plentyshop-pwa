@@ -8,6 +8,7 @@ export type DrawerView =
   | 'PagesView'
   | 'blocksSettings'
   | 'MatomoSettings'
+  | 'BannerSettings'
   | null;
 
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
@@ -15,7 +16,23 @@ export type SelectedFont = { caption: string; value: string };
 // ANPASSUNG: Nur matomoUrl und matomoSiteId als String
 export interface MatomoSettings {
   matomoUrl: string;
-  matomoSiteId: string; // Geändert zu String
+  matomoId: string; // Geändert zu String
+}
+// Banner-spezifische Einstellungen (Main Banner)
+export interface MainBannerSettings {
+  desktopUrl: string;
+  mobileUrl: string;
+  link: string;
+  title: string;
+  alt: string;
+}
+
+// Banner-spezifische Einstellungen (Secondary Banners)
+export interface SecondaryBannerSettings {
+  desktopUrl: string;
+  link: string;
+  title: string;
+  alt: string;
 }
 
 export type ConfigurationSettings = {
@@ -37,7 +54,10 @@ export type ConfigurationSettings = {
     keywords: string;
     robots: string;
   };
-} & MatomoSettings;
+} & MatomoSettings & { // HINZUGEFÜGT: Banner Einstellungen zur Gesamtkonfiguration
+  mainBanner: MainBannerSettings;
+  secondaryBanners: SecondaryBannerSettings[];
+};
 
 export interface UseSiteConfigurationState {
   data: [];
@@ -73,7 +93,10 @@ export interface UseSiteConfigurationState {
   };
   // NEUE Matomo-Einstellungen im State
   matomoUrl: string;
-  matomoSiteId: string;
+  matomoId: string;
+  // HINZUGEFÜGT: Banner-Einstellungen im State
+  mainBanner: MainBannerSettings;
+  secondaryBanners: SecondaryBannerSettings[];
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -115,7 +138,10 @@ export interface UseSiteConfiguration {
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   // NEUE Matomo-Einstellungen ebenfalls als Readonly<Ref> hinzufügen
   matomoUrl: Readonly<Ref<UseSiteConfigurationState['matomoUrl']>>;
-  matomoSiteId: Readonly<Ref<UseSiteConfigurationState['matomoSiteId']>>;
+  matomoId: Readonly<Ref<UseSiteConfigurationState['matomoId']>>;
+  // HINZUGEFÜGT: Banner-Einstellungen als Readonly<Ref>
+  mainBanner: Readonly<Ref<UseSiteConfigurationState['mainBanner']>>;
+  secondaryBanners: Readonly<Ref<UseSiteConfigurationState['secondaryBanners']>>;
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

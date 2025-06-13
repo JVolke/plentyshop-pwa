@@ -57,7 +57,7 @@
           <label>
             <SfInput
               id="matomo-site-id-input"
-              v-model="matomoSiteId"
+              v-model="matomoId"
               type="text"
               placeholder="1"
               data-testid="matomo-site-id-input"
@@ -77,7 +77,7 @@ import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSite
 
 const {
   matomoUrl,
-  matomoSiteId,
+  matomoId,
   closeDrawer,
 } = useSiteConfiguration();
 

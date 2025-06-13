@@ -52,7 +52,24 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     // ANPASSUNG: Nur matomoUrl und matomoSiteId im State initialisieren
     matomoUrl: runtimeConfig.matomoUrl || '',
-    matomoSiteId: String(runtimeConfig.matomoId || 0),
+    matomoId: String(runtimeConfig.matomoId || 0),
+    // HINZUGEFÜGT: Main Banner Einstellungen
+    mainBanner: {
+      desktopUrl: runtimeConfig.mainBanner?.desktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
+      mobileUrl: runtimeConfig.mainBanner?.mobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
+      link: runtimeConfig.mainBanner?.link || '/default-main-link',
+      title: runtimeConfig.mainBanner?.title || 'Standard Hauptbanner Titel',
+      alt: runtimeConfig.mainBanner?.alt || 'Standard Alt-Text für Hauptbanner',
+    },
+
+    // HINZUGEFÜGT: Secondary Banners Einstellungen (als Array von Objekten)
+    // In der Initialisierung von `state`
+    secondaryBanners: (runtimeConfig.secondaryBanners || []).map((banner: any, index: number) => ({
+      desktopUrl: banner?.desktopUrl || `https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp`,
+      link: banner?.link || `/default-banner${index + 1}-link`,
+      title: banner?.title || `Standard Banner ${index + 1} Titel`,
+      alt: banner?.alt || `Standard Alt-Text für Banner ${index + 1}`,
+    })),
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -69,21 +86,26 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       useWebp: useRuntimeConfig().public.useWebp,
       // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
       matomoUrl: runtimeConfig.matomoUrl || '',
-      matomoSiteId: String(runtimeConfig.matomoId || '0'),
+      matomoId: String(runtimeConfig.matomoId || '0'),
+      // HINZUGEFÜGT: Main Banner Einstellungen
+      mainBanner: {
+        desktopUrl: runtimeConfig.mainBanner?.desktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
+        mobileUrl: runtimeConfig.mainBanner?.mobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
+        link: runtimeConfig.mainBanner?.link || '/default-main-link',
+        title: runtimeConfig.mainBanner?.title || 'Standard Hauptbanner Titel',
+        alt: runtimeConfig.mainBanner?.alt || 'Standard Alt-Text für Hauptbanner',
+      },
+
+      // HINZUGEFÜGT: Secondary Banners Einstellungen (als Array von Objekten)
+      secondaryBanners: (runtimeConfig.secondaryBanners || []).map((banner: any, index: number) => ({
+        desktopUrl: banner?.desktopUrl || `https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp`,
+        link: banner?.link || `/default-banner${index + 1}-link`,
+        title: banner?.title || `Standard Banner ${index + 1} Titel`,
+        alt: banner?.alt || `Standard Alt-Text für Banner ${index + 1}`,
+      })),
     },
 
   }));
-
-  // ANPASSUNG: Hilfsfunktion zum (Neu-)Initialisieren des Matomo-Trackers
-  // Diese Funktion fügt die initialen Matomo-Befehle zu window._paq hinzu.
-  const initializeMatomoTracker = () => {
-    if (import.meta.client && window._paq) {
-      window._paq.push(['setTrackerUrl', state.value.matomoUrl + 'matomo.php']); // Oder nur 'matomo.php' wenn matomoUrl der Basis-URL ist
-      window._paq.push(['setSiteId', Number(state.value.matomoSiteId)]); // Konvertierung zu Zahl
-      // Wenn Sie direkt nach dem Setzen einen PageView tracken wollen (z.B. beim Laden der Seite):
-      // window._paq.push(['trackPageView']);
-    }
-  };
 
   /**
    * @description Function for loading a google font.
@@ -183,7 +205,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const settingsIsDirty = computed(() => {
-    return (
+     if (
       state.value.blockSize !== state.value.initialData.blockSize ||
       state.value.primaryColor !== state.value.initialData.primaryColor ||
       state.value.secondaryColor !== state.value.initialData.secondaryColor ||
@@ -200,8 +222,32 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       JSON.stringify(state.value.seoSettings) !== JSON.stringify(state.value.initialData.seoSettings) ||
     // ANPASSUNG: Nur matomoUrl und matomoSiteId in settingsIsDirty
     state.value.matomoUrl !== state.value.initialData.matomoUrl ||
-    state.value.matomoSiteId !== state.value.initialData.matomoSiteId
-    );
+    state.value.matomoId !== state.value.initialData.matomoId
+    ) { return true }
+    // Hauptbanner-Prüfung
+    if (state.value.mainBanner.desktopUrl !== state.value.initialData.mainBanner.desktopUrl ||
+      state.value.mainBanner.mobileUrl !== state.value.initialData.mainBanner.mobileUrl ||
+      state.value.mainBanner.link !== state.value.initialData.mainBanner.link ||
+      state.value.mainBanner.title !== state.value.initialData.mainBanner.title ||
+      state.value.mainBanner.alt !== state.value.initialData.mainBanner.alt) {
+      return true;
+    }
+
+    // Sekundärbanner-Prüfung (tiefgreifender Vergleich)
+    if (state.value.secondaryBanners.length !== state.value.initialData.secondaryBanners.length) {
+      return true; // Längenunterschied
+    }
+    for (let i = 0; i < state.value.secondaryBanners.length; i++) {
+      const current = state.value.secondaryBanners[i];
+      const initial = state.value.initialData.secondaryBanners[i];
+      if (current.desktopUrl !== initial.desktopUrl ||
+        current.link !== initial.link ||
+        current.title !== initial.title ||
+        current.alt !== initial.alt) {
+        return true;
+      }
+    }
+    return false;
   });
 
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
@@ -279,9 +325,32 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
           value: state.value.matomoUrl,
         },
         {
-          key: 'matomoSiteId',
-          value: state.value.matomoSiteId, // <-- Bleibt String
+          key: 'matomoId',
+          value: state.value.matomoId, // <-- Bleibt String
         },
+
+        // HINZUGEFÜGT: Main Banner Einstellungen (unpräfixiert an Plenty senden)
+        { key: 'mainBanner.desktopUrl', value: state.value.mainBanner.desktopUrl },
+        { key: 'mainBanner.mobileUrl', value: state.value.mainBanner.mobileUrl },
+        { key: 'mainBanner.link', value: state.value.mainBanner.link },
+        { key: 'mainBanner.title', value: state.value.mainBanner.title },
+        { key: 'mainBanner.alt', value: state.value.mainBanner.alt },
+
+        // HINZUGEFÜGT: Secondary Banners Einstellungen (unpräfixiert an Plenty senden, geflachte Keys)
+        { key: 'secondaryBanners.0.desktopUrl', value: state.value.secondaryBanners[0].desktopUrl },
+        { key: 'secondaryBanners.0.link', value: state.value.secondaryBanners[0].link },
+        { key: 'secondaryBanners.0.title', value: state.value.secondaryBanners[0].title },
+        { key: 'secondaryBanners.0.alt', value: state.value.secondaryBanners[0].alt },
+
+        { key: 'secondaryBanners.1.desktopUrl', value: state.value.secondaryBanners[1].desktopUrl },
+        { key: 'secondaryBanners.1.link', value: state.value.secondaryBanners[1].link },
+        { key: 'secondaryBanners.1.title', value: state.value.secondaryBanners[1].title },
+        { key: 'secondaryBanners.1.alt', value: state.value.secondaryBanners[1].alt },
+
+        { key: 'secondaryBanners.2.desktopUrl', value: state.value.secondaryBanners[2].desktopUrl },
+        { key: 'secondaryBanners.2.link', value: state.value.secondaryBanners[2].link },
+        { key: 'secondaryBanners.2.title', value: state.value.secondaryBanners[2].title },
+        { key: 'secondaryBanners.2.alt', value: state.value.secondaryBanners[2].alt },
       ];
 
       await useSdk().plentysystems.setConfiguration({ settings });
@@ -302,7 +371,9 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         seoSettings: state.value.seoSettings,
         // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
         matomoUrl: state.value.matomoUrl,
-        matomoSiteId: state.value.matomoSiteId,
+        matomoId: state.value.matomoId,
+        mainBanner: state.value.mainBanner,
+        secondaryBanners: state.value.secondaryBanners,
       };
     } catch (error) {
       console.error('Error saving settings:', error);

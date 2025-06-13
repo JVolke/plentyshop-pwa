@@ -59,8 +59,19 @@
         data-testid="open-design-drawer"
         @click="openDrawerWithView('MatomoSettings')"
       >
-        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="paintBrushWhite" />
+        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearWhite" />
         <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
+      </button>
+      <button
+        type="button"
+        class="editor-button relative py-2 flex justify-center"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MatomoSettings' }"
+        aria-label="Open design drawer"
+        data-testid="open-design-drawer"
+        @click="openDrawerWithView('BannerSettings')"
+      >
+        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
       </button>
     </div>
   </aside>

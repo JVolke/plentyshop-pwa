@@ -21,6 +21,10 @@ export default defineNuxtModule({
       filePath: resolve('./runtime/components/CategoryDescription/CategoryDescription.vue'),
     });
     addComponent({
+      name: 'BannerSettingsDrawer',
+      filePath: resolve('./runtime/components/BannerSettingsDrawer/BannerSettingsDrawer.vue'),
+    });
+    addComponent({
       name: 'ShopAuskunft',
       filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunft.vue'),
     });
