@@ -188,49 +188,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       updateHeaderBackgroundColor(newValue);
     },
   );
-
-  // NEUE WATCHER FÜR BANNER URLS UND TITEL
-  // Hauptbanner
-  watch([
-    () => state.value.mainBannerDesktopUrl,
-    () => state.value.mainBannerMobileUrl,
-    () => state.value.mainBannerLink,
-    () => state.value.mainBannerTitle,
-    () => state.value.mainBannerAlt,
-  ], (newValues) => {
-    // Hier ist keine direkte DOM-Manipulation nötig, da die Vue-Komponente
-    // (die die Banner anzeigt) die useSiteConfiguration-Werte direkt bindet.
-    // Die computed properties in der Banner-Komponente (MainBannerDisplay.vue)
-    // reagieren automatisch auf diese Änderungen im State.
-  }, { deep: true }); // 'deep' ist hier nicht streng nötig, da es primitive Werte sind, aber schadet nicht.
-
-  // Sekundärbanner 1
-  watch([
-    () => state.value.secondaryBanner1DesktopUrl,
-    () => state.value.secondaryBanner1Link,
-    () => state.value.secondaryBanner1Title,
-    () => state.value.secondaryBanner1Alt,
-  ], (newValues) => {
-  });
-
-  // Sekundärbanner 2
-  watch([
-    () => state.value.secondaryBanner2DesktopUrl,
-    () => state.value.secondaryBanner2Link,
-    () => state.value.secondaryBanner2Title,
-    () => state.value.secondaryBanner2Alt,
-  ], (newValues) => {
-  });
-
-  // Sekundärbanner 3
-  watch([
-    () => state.value.secondaryBanner3DesktopUrl,
-    () => state.value.secondaryBanner3Link,
-    () => state.value.secondaryBanner3Title,
-    () => state.value.secondaryBanner3Alt,
-  ], (newValues) => {
-  });
-
+  
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
     if (block) {
       state.value.blockType = block.name;
