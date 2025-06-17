@@ -13,27 +13,6 @@ export type DrawerView =
 
 export type SettingsType = 'general-settings' | 'seo-settings' | 'general-menu' | null;
 export type SelectedFont = { caption: string; value: string };
-// ANPASSUNG: Nur matomoUrl und matomoSiteId als String
-export interface MatomoSettings {
-  matomoUrl: string;
-  matomoId: string; // Geändert zu String
-}
-// Banner-spezifische Einstellungen (Main Banner)
-export interface MainBannerSettings {
-  desktopUrl: string;
-  mobileUrl: string;
-  link: string;
-  title: string;
-  alt: string;
-}
-
-// Banner-spezifische Einstellungen (Secondary Banners)
-export interface SecondaryBannerSettings {
-  desktopUrl: string;
-  link: string;
-  title: string;
-  alt: string;
-}
 
 export type ConfigurationSettings = {
   blockSize: string;
@@ -54,9 +33,26 @@ export type ConfigurationSettings = {
     keywords: string;
     robots: string;
   };
-} & MatomoSettings & { // HINZUGEFÜGT: Banner Einstellungen zur Gesamtkonfiguration
-  mainBanner: MainBannerSettings;
-  secondaryBanners: SecondaryBannerSettings[];
+  matomoUrl: string;
+  matomoId: string; // Geändert zu String
+  // HINZUGEFÜGT: FLATE Banner-Einstellungen
+  mainBannerDesktopUrl: string;
+  mainBannerMobileUrl: string;
+  mainBannerLink: string;
+  mainBannerTitle: string;
+  mainBannerAlt: string;
+  secondaryBanner1DesktopUrl: string;
+  secondaryBanner1Link: string;
+  secondaryBanner1Title: string;
+  secondaryBanner1Alt: string;
+  secondaryBanner2DesktopUrl: string;
+  secondaryBanner2Link: string;
+  secondaryBanner2Title: string;
+  secondaryBanner2Alt: string;
+  secondaryBanner3DesktopUrl: string;
+  secondaryBanner3Link: string;
+  secondaryBanner3Title: string;
+  secondaryBanner3Alt: string;
 };
 
 export interface UseSiteConfigurationState {
@@ -94,9 +90,24 @@ export interface UseSiteConfigurationState {
   // NEUE Matomo-Einstellungen im State
   matomoUrl: string;
   matomoId: string;
-  // HINZUGEFÜGT: Banner-Einstellungen im State
-  mainBanner: MainBannerSettings;
-  secondaryBanners: SecondaryBannerSettings[];
+  // HINZUGEFÜGT: FLATE Banner-Einstellungen im State
+  mainBannerDesktopUrl: string;
+  mainBannerMobileUrl: string;
+  mainBannerLink: string;
+  mainBannerTitle: string;
+  mainBannerAlt: string;
+  secondaryBanner1DesktopUrl: string;
+  secondaryBanner1Link: string;
+  secondaryBanner1Title: string;
+  secondaryBanner1Alt: string;
+  secondaryBanner2DesktopUrl: string;
+  secondaryBanner2Link: string;
+  secondaryBanner2Title: string;
+  secondaryBanner2Alt: string;
+  secondaryBanner3DesktopUrl: string;
+  secondaryBanner3Link: string;
+  secondaryBanner3Title: string;
+  secondaryBanner3Alt: string;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -139,9 +150,25 @@ export interface UseSiteConfiguration {
   // NEUE Matomo-Einstellungen ebenfalls als Readonly<Ref> hinzufügen
   matomoUrl: Readonly<Ref<UseSiteConfigurationState['matomoUrl']>>;
   matomoId: Readonly<Ref<UseSiteConfigurationState['matomoId']>>;
-  // HINZUGEFÜGT: Banner-Einstellungen als Readonly<Ref>
-  mainBanner: Readonly<Ref<UseSiteConfigurationState['mainBanner']>>;
-  secondaryBanners: Readonly<Ref<UseSiteConfigurationState['secondaryBanners']>>;
+  // HINZUGEFÜGT: FLATE Banner-Einstellungen als Readonly<Ref>
+  mainBannerDesktopUrl: Readonly<Ref<UseSiteConfigurationState['mainBannerDesktopUrl']>>;
+  mainBannerMobileUrl: Readonly<Ref<UseSiteConfigurationState['mainBannerMobileUrl']>>;
+  mainBannerLink: Readonly<Ref<UseSiteConfigurationState['mainBannerLink']>>;
+  mainBannerTitle: Readonly<Ref<UseSiteConfigurationState['mainBannerTitle']>>;
+  mainBannerAlt: Readonly<Ref<UseSiteConfigurationState['mainBannerAlt']>>;
+  secondaryBanner1DesktopUrl: Readonly<Ref<UseSiteConfigurationState['secondaryBanner1DesktopUrl']>>;
+  secondaryBanner1Link: Readonly<Ref<UseSiteConfigurationState['secondaryBanner1Link']>>;
+  secondaryBanner1Title: Readonly<Ref<UseSiteConfigurationState['secondaryBanner1Title']>>;
+  secondaryBanner1Alt: Readonly<Ref<UseSiteConfigurationState['secondaryBanner1Alt']>>;
+  secondaryBanner2DesktopUrl: Readonly<Ref<UseSiteConfigurationState['secondaryBanner2DesktopUrl']>>;
+  secondaryBanner2Link: Readonly<Ref<UseSiteConfigurationState['secondaryBanner2Link']>>;
+  secondaryBanner2Title: Readonly<Ref<UseSiteConfigurationState['secondaryBanner2Title']>>;
+  secondaryBanner2Alt: Readonly<Ref<UseSiteConfigurationState['secondaryBanner2Alt']>>;
+  secondaryBanner3DesktopUrl: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3DesktopUrl']>>;
+  secondaryBanner3Link: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Link']>>;
+  secondaryBanner3Title: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Title']>>;
+  secondaryBanner3Alt: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Alt']>>;
+  // ... Rest der UseSiteConfiguration bleibt unverändert ...
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: SetColorPalette;

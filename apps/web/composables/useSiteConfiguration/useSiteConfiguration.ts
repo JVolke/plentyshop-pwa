@@ -53,23 +53,29 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     // ANPASSUNG: Nur matomoUrl und matomoSiteId im State initialisieren
     matomoUrl: runtimeConfig.matomoUrl || '',
     matomoId: String(runtimeConfig.matomoId || 0),
-    // HINZUGEFÜGT: Main Banner Einstellungen
-    mainBanner: {
-      desktopUrl: runtimeConfig.mainBanner?.desktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
-      mobileUrl: runtimeConfig.mainBanner?.mobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
-      link: runtimeConfig.mainBanner?.link || '/default-main-link',
-      title: runtimeConfig.mainBanner?.title || 'Standard Hauptbanner Titel',
-      alt: runtimeConfig.mainBanner?.alt || 'Standard Alt-Text für Hauptbanner',
-    },
 
-    // HINZUGEFÜGT: Secondary Banners Einstellungen (als Array von Objekten)
-    // In der Initialisierung von `state`
-    secondaryBanners: (runtimeConfig.secondaryBanners || []).map((banner: any, index: number) => ({
-      desktopUrl: banner?.desktopUrl || `https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp`,
-      link: banner?.link || `/default-banner${index + 1}-link`,
-      title: banner?.title || `Standard Banner ${index + 1} Titel`,
-      alt: banner?.alt || `Standard Alt-Text für Banner ${index + 1}`,
-    })),
+    // HINZUGEFÜGT: FLATE Banner-Einstellungen
+    mainBannerDesktopUrl: runtimeConfig.mainBannerDesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
+    mainBannerMobileUrl: runtimeConfig.mainBannerMobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
+    mainBannerLink: runtimeConfig.mainBannerLink || '/default-main-link',
+    mainBannerTitle: runtimeConfig.mainBannerTitle || 'Standard Hauptbanner Titel',
+    mainBannerAlt: runtimeConfig.mainBannerAlt || 'Standard Alt-Text für Hauptbanner',
+
+    secondaryBanner1DesktopUrl: runtimeConfig.secondaryBanner1DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp',
+    secondaryBanner1Link: runtimeConfig.secondaryBanner1Link || '/default-banner1-link',
+    secondaryBanner1Title: runtimeConfig.secondaryBanner1Title || 'Standard Banner 1 Titel',
+    secondaryBanner1Alt: runtimeConfig.secondaryBanner1Alt || 'Standard Alt-Text für Banner 1',
+
+    secondaryBanner2DesktopUrl: runtimeConfig.secondaryBanner2DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/schulanfang-2022-desktop.jpg',
+    secondaryBanner2Link: runtimeConfig.secondaryBanner2Link || '/default-banner2-link',
+    secondaryBanner2Title: runtimeConfig.secondaryBanner2Title || 'Standard Banner 2 Titel',
+    secondaryBanner2Alt: runtimeConfig.secondaryBanner2Alt || 'Standard Alt-Text für Banner 2',
+
+    secondaryBanner3DesktopUrl: runtimeConfig.secondaryBanner3DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Kategorie-Startseite/2025/Banner-schmal_Baumscheiben-personalisiert.webp',
+    secondaryBanner3Link: runtimeConfig.secondaryBanner3Link || '/default-banner3-link',
+    secondaryBanner3Title: runtimeConfig.secondaryBanner3Title || 'Standard Banner 3 Titel',
+    secondaryBanner3Alt: runtimeConfig.secondaryBanner3Alt || 'Standard Alt-Text für Banner 3',
+
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -87,24 +93,28 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
       matomoUrl: runtimeConfig.matomoUrl || '',
       matomoId: String(runtimeConfig.matomoId || '0'),
-      // HINZUGEFÜGT: Main Banner Einstellungen
-      mainBanner: {
-        desktopUrl: runtimeConfig.mainBanner?.desktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
-        mobileUrl: runtimeConfig.mainBanner?.mobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
-        link: runtimeConfig.mainBanner?.link || '/default-main-link',
-        title: runtimeConfig.mainBanner?.title || 'Standard Hauptbanner Titel',
-        alt: runtimeConfig.mainBanner?.alt || 'Standard Alt-Text für Hauptbanner',
-      },
+      // HINZUGEFÜGT: FLATE Banner-Einstellungen in initialData
+      mainBannerDesktopUrl: runtimeConfig.mainBannerDesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
+      mainBannerMobileUrl: runtimeConfig.mainBannerMobileUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
+      mainBannerLink: runtimeConfig.mainBannerLink || '/default-main-link',
+      mainBannerTitle: runtimeConfig.mainBannerTitle || 'Standard Hauptbanner Titel',
+      mainBannerAlt: runtimeConfig.mainBannerAlt || 'Standard Alt-Text für Hauptbanner',
 
-      // HINZUGEFÜGT: Secondary Banners Einstellungen (als Array von Objekten)
-      secondaryBanners: (runtimeConfig.secondaryBanners || []).map((banner: any, index: number) => ({
-        desktopUrl: banner?.desktopUrl || `https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp`,
-        link: banner?.link || `/default-banner${index + 1}-link`,
-        title: banner?.title || `Standard Banner ${index + 1} Titel`,
-        alt: banner?.alt || `Standard Alt-Text für Banner ${index + 1}`,
-      })),
+      secondaryBanner1DesktopUrl: runtimeConfig.secondaryBanner1DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp',
+      secondaryBanner1Link: runtimeConfig.secondaryBanner1Link || '/default-banner1-link',
+      secondaryBanner1Title: runtimeConfig.secondaryBanner1Title || 'Standard Banner 1 Titel',
+      secondaryBanner1Alt: runtimeConfig.secondaryBanner1Alt || 'Standard Alt-Text für Banner 1',
+
+      secondaryBanner2DesktopUrl: runtimeConfig.secondaryBanner2DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/schulanfang-2022-desktop.jpg',
+      secondaryBanner2Link: runtimeConfig.secondaryBanner2Link || '/default-banner2-link',
+      secondaryBanner2Title: runtimeConfig.secondaryBanner2Title || 'Standard Banner 2 Titel',
+      secondaryBanner2Alt: runtimeConfig.secondaryBanner2Alt || 'Standard Alt-Text für Banner 2',
+
+      secondaryBanner3DesktopUrl: runtimeConfig.secondaryBanner3DesktopUrl || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Kategorie-Startseite/2025/Banner-schmal_Baumscheiben-personalisiert.webp',
+      secondaryBanner3Link: runtimeConfig.secondaryBanner3Link || '/default-banner3-link',
+      secondaryBanner3Title: runtimeConfig.secondaryBanner3Title || 'Standard Banner 3 Titel',
+      secondaryBanner3Alt: runtimeConfig.secondaryBanner3Alt || 'Standard Alt-Text für Banner 3',
     },
-
   }));
 
   /**
@@ -224,28 +234,27 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.matomoUrl !== state.value.initialData.matomoUrl ||
     state.value.matomoId !== state.value.initialData.matomoId
     ) { return true }
-    // Hauptbanner-Prüfung
-    if (state.value.mainBanner.desktopUrl !== state.value.initialData.mainBanner.desktopUrl ||
-      state.value.mainBanner.mobileUrl !== state.value.initialData.mainBanner.mobileUrl ||
-      state.value.mainBanner.link !== state.value.initialData.mainBanner.link ||
-      state.value.mainBanner.title !== state.value.initialData.mainBanner.title ||
-      state.value.mainBanner.alt !== state.value.initialData.mainBanner.alt) {
+    // HINZUGEFÜGT: FLATE Banner-Prüfung
+    if (
+      state.value.mainBannerDesktopUrl !== state.value.initialData.mainBannerDesktopUrl ||
+      state.value.mainBannerMobileUrl !== state.value.initialData.mainBannerMobileUrl ||
+      state.value.mainBannerLink !== state.value.initialData.mainBannerLink ||
+      state.value.mainBannerTitle !== state.value.initialData.mainBannerTitle ||
+      state.value.mainBannerAlt !== state.value.initialData.mainBannerAlt ||
+      state.value.secondaryBanner1DesktopUrl !== state.value.initialData.secondaryBanner1DesktopUrl ||
+      state.value.secondaryBanner1Link !== state.value.initialData.secondaryBanner1Link ||
+      state.value.secondaryBanner1Title !== state.value.initialData.secondaryBanner1Title ||
+      state.value.secondaryBanner1Alt !== state.value.initialData.secondaryBanner1Alt ||
+      state.value.secondaryBanner2DesktopUrl !== state.value.initialData.secondaryBanner2DesktopUrl ||
+      state.value.secondaryBanner2Link !== state.value.initialData.secondaryBanner2Link ||
+      state.value.secondaryBanner2Title !== state.value.initialData.secondaryBanner2Title ||
+      state.value.secondaryBanner2Alt !== state.value.initialData.secondaryBanner2Alt ||
+      state.value.secondaryBanner3DesktopUrl !== state.value.initialData.secondaryBanner3DesktopUrl ||
+      state.value.secondaryBanner3Link !== state.value.initialData.secondaryBanner3Link ||
+      state.value.secondaryBanner3Title !== state.value.initialData.secondaryBanner3Title ||
+      state.value.secondaryBanner3Alt !== state.value.initialData.secondaryBanner3Alt
+    ) {
       return true;
-    }
-
-    // Sekundärbanner-Prüfung (tiefgreifender Vergleich)
-    if (state.value.secondaryBanners.length !== state.value.initialData.secondaryBanners.length) {
-      return true; // Längenunterschied
-    }
-    for (let i = 0; i < state.value.secondaryBanners.length; i++) {
-      const current = state.value.secondaryBanners[i];
-      const initial = state.value.initialData.secondaryBanners[i];
-      if (current.desktopUrl !== initial.desktopUrl ||
-        current.link !== initial.link ||
-        current.title !== initial.title ||
-        current.alt !== initial.alt) {
-        return true;
-      }
     }
     return false;
   });
@@ -328,29 +337,27 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
           key: 'matomoId',
           value: state.value.matomoId, // <-- Bleibt String
         },
+        // HINZUGEFÜGT: FLATE Banner-Einstellungen beim Speichern
+        { key: 'mainBannerDesktopUrl', value: state.value.mainBannerDesktopUrl },
+        { key: 'mainBannerMobileUrl', value: state.value.mainBannerMobileUrl },
+        { key: 'mainBannerLink', value: state.value.mainBannerLink },
+        { key: 'mainBannerTitle', value: state.value.mainBannerTitle },
+        { key: 'mainBannerAlt', value: state.value.mainBannerAlt },
 
-        // HINZUGEFÜGT: Main Banner Einstellungen (unpräfixiert an Plenty senden)
-        { key: 'mainBanner.desktopUrl', value: state.value.mainBanner.desktopUrl },
-        { key: 'mainBanner.mobileUrl', value: state.value.mainBanner.mobileUrl },
-        { key: 'mainBanner.link', value: state.value.mainBanner.link },
-        { key: 'mainBanner.title', value: state.value.mainBanner.title },
-        { key: 'mainBanner.alt', value: state.value.mainBanner.alt },
+        { key: 'secondaryBanner1DesktopUrl', value: state.value.secondaryBanner1DesktopUrl },
+        { key: 'secondaryBanner1Link', value: state.value.secondaryBanner1Link },
+        { key: 'secondaryBanner1Title', value: state.value.secondaryBanner1Title },
+        { key: 'secondaryBanner1Alt', value: state.value.secondaryBanner1Alt },
 
-        // HINZUGEFÜGT: Secondary Banners Einstellungen (unpräfixiert an Plenty senden, geflachte Keys)
-        { key: 'secondaryBanners.0.desktopUrl', value: state.value.secondaryBanners[0].desktopUrl },
-        { key: 'secondaryBanners.0.link', value: state.value.secondaryBanners[0].link },
-        { key: 'secondaryBanners.0.title', value: state.value.secondaryBanners[0].title },
-        { key: 'secondaryBanners.0.alt', value: state.value.secondaryBanners[0].alt },
+        { key: 'secondaryBanner2DesktopUrl', value: state.value.secondaryBanner2DesktopUrl },
+        { key: 'secondaryBanner2Link', value: state.value.secondaryBanner2Link },
+        { key: 'secondaryBanner2Title', value: state.value.secondaryBanner2Title },
+        { key: 'secondaryBanner2Alt', value: state.value.secondaryBanner2Alt },
 
-        { key: 'secondaryBanners.1.desktopUrl', value: state.value.secondaryBanners[1].desktopUrl },
-        { key: 'secondaryBanners.1.link', value: state.value.secondaryBanners[1].link },
-        { key: 'secondaryBanners.1.title', value: state.value.secondaryBanners[1].title },
-        { key: 'secondaryBanners.1.alt', value: state.value.secondaryBanners[1].alt },
-
-        { key: 'secondaryBanners.2.desktopUrl', value: state.value.secondaryBanners[2].desktopUrl },
-        { key: 'secondaryBanners.2.link', value: state.value.secondaryBanners[2].link },
-        { key: 'secondaryBanners.2.title', value: state.value.secondaryBanners[2].title },
-        { key: 'secondaryBanners.2.alt', value: state.value.secondaryBanners[2].alt },
+        { key: 'secondaryBanner3DesktopUrl', value: state.value.secondaryBanner3DesktopUrl },
+        { key: 'secondaryBanner3Link', value: state.value.secondaryBanner3Link },
+        { key: 'secondaryBanner3Title', value: state.value.secondaryBanner3Title },
+        { key: 'secondaryBanner3Alt', value: state.value.secondaryBanner3Alt },
       ];
 
       await useSdk().plentysystems.setConfiguration({ settings });
@@ -372,8 +379,27 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         // ANPASSUNG: Nur matomoUrl und matomoSiteId in initialData
         matomoUrl: state.value.matomoUrl,
         matomoId: state.value.matomoId,
-        mainBanner: state.value.mainBanner,
-        secondaryBanners: state.value.secondaryBanners,
+        // HINZUGEFÜGT: FLATE Banner-Einstellungen in initialData
+        mainBannerDesktopUrl: state.value.mainBannerDesktopUrl,
+        mainBannerMobileUrl: state.value.mainBannerMobileUrl,
+        mainBannerLink: state.value.mainBannerLink,
+        mainBannerTitle: state.value.mainBannerTitle,
+        mainBannerAlt: state.value.mainBannerAlt,
+
+        secondaryBanner1DesktopUrl: state.value.secondaryBanner1DesktopUrl,
+        secondaryBanner1Link: state.value.secondaryBanner1Link,
+        secondaryBanner1Title: state.value.secondaryBanner1Title,
+        secondaryBanner1Alt: state.value.secondaryBanner1Alt,
+
+        secondaryBanner2DesktopUrl: state.value.secondaryBanner2DesktopUrl,
+        secondaryBanner2Link: state.value.secondaryBanner2Link,
+        secondaryBanner2Title: state.value.secondaryBanner2Title,
+        secondaryBanner2Alt: state.value.secondaryBanner2Alt,
+
+        secondaryBanner3DesktopUrl: state.value.secondaryBanner3DesktopUrl,
+        secondaryBanner3Link: state.value.secondaryBanner3Link,
+        secondaryBanner3Title: state.value.secondaryBanner3Title,
+        secondaryBanner3Alt: state.value.secondaryBanner3Alt,
       };
     } catch (error) {
       console.error('Error saving settings:', error);

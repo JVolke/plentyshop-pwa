@@ -46,10 +46,12 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
 // Definieren Sie die Banner-Schnittstelle direkt in der Komponente
 interface Banner {
   desktopUrl: string;
-  mobileUrl: string;
+  mobileUrl?: string; // Mobile URL ist bei Sekundärbannern optional oder nicht vorhanden
   link: string;
   title: string;
   alt: string;
@@ -58,7 +60,46 @@ interface Banner {
 // Runtime Konfiguration abrufen
 const config = useRuntimeConfig();
 
-// Typisieren Sie die extracted values explizit
-const mainBanner: Banner = config.public.mainBanner as Banner;
-const secondaryBanners: Banner[] = config.public.secondaryBanners as Banner[];
+// --- Hauptbanner-Logik ---
+const mainBanner = computed<Banner>(() => ({
+  desktopUrl: config.public.mainBannerDesktopUrl as string,
+  mobileUrl: config.public.mainBannerMobileUrl as string,
+  link: config.public.mainBannerLink as string,
+  title: config.public.mainBannerTitle as string,
+  alt: config.public.mainBannerAlt as string,
+}));
+
+// --- Sekundärbanner-Logik ---
+// Da die Banner flach sind, müssen wir sie manuell in ein Array von Banner-Objekten umwandeln.
+const secondaryBanners = computed<Banner[]>(() => {
+  const banners: Banner[] = [];
+  // Banner 1
+  if (config.public.secondaryBanner1DesktopUrl) {
+    banners.push({
+      desktopUrl: config.public.secondaryBanner1DesktopUrl as string,
+      link: config.public.secondaryBanner1Link as string,
+      title: config.public.secondaryBanner1Title as string,
+      alt: config.public.secondaryBanner1Alt as string,
+    });
+  }
+  // Banner 2
+  if (config.public.secondaryBanner2DesktopUrl) {
+    banners.push({
+      desktopUrl: config.public.secondaryBanner2DesktopUrl as string,
+      link: config.public.secondaryBanner2Link as string,
+      title: config.public.secondaryBanner2Title as string,
+      alt: config.public.secondaryBanner2Alt as string,
+    });
+  }
+  // Banner 3
+  if (config.public.secondaryBanner3DesktopUrl) {
+    banners.push({
+      desktopUrl: config.public.secondaryBanner3DesktopUrl as string,
+      link: config.public.secondaryBanner3Link as string,
+      title: config.public.secondaryBanner3Title as string,
+      alt: config.public.secondaryBanner3Alt as string,
+    });
+  }
+  return banners;
+});
 </script>
