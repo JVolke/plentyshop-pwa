@@ -188,7 +188,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       updateHeaderBackgroundColor(newValue);
     },
   );
-  
+
   const openDrawerWithView = (view: DrawerView, block?: Block) => {
     if (block) {
       state.value.blockType = block.name;
