@@ -46,7 +46,7 @@
               <span>{{ cartItem.variation!.variation!.number }}</span>
             </li>
             <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
-              <span class="mr-1">{{ attribute.label }}:</span>
+              <span class="font-semibold mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
             </li>
             <li v-if="cartItem.variation">
