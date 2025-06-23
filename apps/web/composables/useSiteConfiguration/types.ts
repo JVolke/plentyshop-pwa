@@ -53,6 +53,7 @@ export type ConfigurationSettings = {
   secondaryBanner3Link: string;
   secondaryBanner3Title: string;
   secondaryBanner3Alt: string;
+  notifyMessage: string;
 };
 
 export interface UseSiteConfigurationState {
@@ -108,6 +109,7 @@ export interface UseSiteConfigurationState {
   secondaryBanner3Link: string;
   secondaryBanner3Title: string;
   secondaryBanner3Alt: string;
+  notifyMessage:string;
 }
 
 export type LoadGoogleFont = (font: string) => void;
@@ -168,6 +170,7 @@ export interface UseSiteConfiguration {
   secondaryBanner3Link: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Link']>>;
   secondaryBanner3Title: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Title']>>;
   secondaryBanner3Alt: Readonly<Ref<UseSiteConfigurationState['secondaryBanner3Alt']>>;
+  notifyMessage: Readonly<Ref<UseSiteConfigurationState['notifyMessage']>>;
   // ... Rest der UseSiteConfiguration bleibt unverändert ...
   updateNewBlockPosition: UpdateNewBlockPosition;
   loadGoogleFont: LoadGoogleFont;

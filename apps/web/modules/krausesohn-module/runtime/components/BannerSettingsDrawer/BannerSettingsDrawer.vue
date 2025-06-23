@@ -138,12 +138,28 @@
         </UiAccordionItem>
       </div>
     </UiAccordionItem>
+    <UiAccordionItem
+      v-model="notifyMessageOpen"
+      data-testid="main-banner-section"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2 class="">Hinweistext</h2>
+      </template>
+      <div class="py-2 px-4">
+        <div class="mb-4">
+          <UiFormLabel for="notify-message">Text</UiFormLabel>
+          <SfTextarea  id="notify-message" v-model="notifyMessage"  class="w-full" />
+        </div>
+      </div>
+    </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { SfIconClose, SfInput } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfTextarea } from '@storefront-ui/vue';
 import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSiteConfiguration';
 
 const {
@@ -164,10 +180,12 @@ const {
   secondaryBanner3Link,
   secondaryBanner3Title,
   secondaryBanner3Alt,
+  notifyMessage,
   closeDrawer,
 } = useSiteConfiguration();
 
 const mainBannerOpen = ref(true); // Standardmäßig geöffnet
+const notifyMessageOpen = ref(false);
 
 // Neues Ref für den übergeordneten Accordion-Abschnitt der Sekundärbanner
 const secondaryBannersSectionOpen = ref(false); // Anfangs geschlossen

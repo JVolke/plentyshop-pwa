@@ -123,6 +123,8 @@ export default defineNuxtConfig({
       secondaryBanner3Link: process.env.NUXT_PUBLIC_SECONDARY_BANNER_3_LINK || '/default-banner3-link',
       secondaryBanner3Title: process.env.NUXT_PUBLIC_SECONDARY_BANNER_3_TITLE || 'Standard Banner 3 Titel',
       secondaryBanner3Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER_3_ALT || 'Standard Alt-Text für Banner 3',
+
+      notifyMessage: process.env.NUXT_PUBLIC_NOTIFY_MESSAGE || '',
     },
   },
   modules: [

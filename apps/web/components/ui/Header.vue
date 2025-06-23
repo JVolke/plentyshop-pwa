@@ -1,4 +1,5 @@
 <template>
+  <KrauseSohnNotifyMessage />
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
@@ -156,6 +157,8 @@ import {
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
+import KrauseSohnNotifyMessage
+  from '~/modules/krausesohn-module/runtime/components/KrauseSohnNotifiyMessage/KrauseSohnNotifyMessage.vue';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();

@@ -75,6 +75,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     secondaryBanner3Link: runtimeConfig.secondaryBanner3Link || '/default-banner3-link',
     secondaryBanner3Title: runtimeConfig.secondaryBanner3Title || 'Standard Banner 3 Titel',
     secondaryBanner3Alt: runtimeConfig.secondaryBanner3Alt || 'Standard Alt-Text für Banner 3',
+    notifyMessage: runtimeConfig.notifyMessage || '',
 
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
@@ -114,6 +115,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       secondaryBanner3Link: runtimeConfig.secondaryBanner3Link || '/default-banner3-link',
       secondaryBanner3Title: runtimeConfig.secondaryBanner3Title || 'Standard Banner 3 Titel',
       secondaryBanner3Alt: runtimeConfig.secondaryBanner3Alt || 'Standard Alt-Text für Banner 3',
+      notifyMessage: runtimeConfig.notifyMessage || '',
     },
   }));
 
@@ -252,7 +254,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       state.value.secondaryBanner3DesktopUrl !== state.value.initialData.secondaryBanner3DesktopUrl ||
       state.value.secondaryBanner3Link !== state.value.initialData.secondaryBanner3Link ||
       state.value.secondaryBanner3Title !== state.value.initialData.secondaryBanner3Title ||
-      state.value.secondaryBanner3Alt !== state.value.initialData.secondaryBanner3Alt
+      state.value.secondaryBanner3Alt !== state.value.initialData.secondaryBanner3Alt ||
+      state.value.notifyMessage !== state.value.initialData.notifyMessage
     ) {
       return true;
     }
@@ -358,6 +361,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         { key: 'secondaryBanner3Link', value: state.value.secondaryBanner3Link },
         { key: 'secondaryBanner3Title', value: state.value.secondaryBanner3Title },
         { key: 'secondaryBanner3Alt', value: state.value.secondaryBanner3Alt },
+        { key: 'notifyMessage', value: state.value.notifyMessage },
       ];
 
       await useSdk().plentysystems.setConfiguration({ settings });
@@ -400,6 +404,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
         secondaryBanner3Link: state.value.secondaryBanner3Link,
         secondaryBanner3Title: state.value.secondaryBanner3Title,
         secondaryBanner3Alt: state.value.secondaryBanner3Alt,
+        notifyMessage: state.value.notifyMessage
       };
     } catch (error) {
       console.error('Error saving settings:', error);

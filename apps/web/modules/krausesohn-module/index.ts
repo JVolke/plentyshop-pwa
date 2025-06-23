@@ -36,6 +36,10 @@ export default defineNuxtModule({
       name: 'KrauseSohnBanner',
       filePath: resolve('./runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue'),
     });
+    addComponent({
+      name: 'KrauseSohnNotifyMessage',
+      filePath: resolve('./runtime/components/KrauseSohnNotifyMessage/KrauseSohnNotifyMessage.vue'),
+    });
 
 
 
