@@ -5,7 +5,7 @@
     role="alert"
   >
     <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
-      <p class="flex-grow">{{ notificationMessage }}</p>
+      <p class="flex-grow" v-html="notificationMessage" />
       <button
         @click="dismissNotification"
         class="ml-4 p-1 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
