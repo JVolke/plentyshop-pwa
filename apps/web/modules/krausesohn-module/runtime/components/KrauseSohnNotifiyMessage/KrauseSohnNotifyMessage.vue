@@ -14,13 +14,8 @@
 import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSiteConfiguration';
 
 const { notifyMessage } = useSiteConfiguration();
-// Der Schlüssel, unter dem wir den Status im Session Storage speichern
 
-// Reaktive Variable, die steuert, ob die Benachrichtigung angezeigt wird
 const displayNotification = ref(false);
 
-// Verwenden Sie eine computed Property, um auf den notifyMessage-Text zuzugreifen.
-// Dies ist gut, falls notifyMessage in useSiteConfiguration reaktiv ist.
 const notificationMessage = computed(() => notifyMessage.value || '');
-
 </script>
