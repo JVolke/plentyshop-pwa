@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="displayNotification && notificationMessage"
+    v-if="notificationMessage"
     class="shop-notification bg-primary-500 text-white p-2 text-center text-sm md:text-base relative transition-all duration-500 ease-in-out"
     role="alert"
   >
