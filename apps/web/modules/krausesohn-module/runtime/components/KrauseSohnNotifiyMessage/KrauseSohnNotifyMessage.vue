@@ -3,14 +3,13 @@
     v-if="displayNotification && notificationMessage"
     class="shop-notification bg-primary-500 text-white p-2 text-center text-sm md:text-base relative transition-all duration-500 ease-in-out"
     role="alert"
-    :style="notificationDynamicStyles"
   >
     <div class="max-w-screen-2xl mx-auto flex items-center justify-between">
       <p class="flex-grow" v-html="notificationMessage" />
       <button
-        @click="dismissNotification"
-        class="ml-4 p-1 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
         aria-label="Nachricht schließen"
+        class="ml-4 p-1 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+        @click="dismissNotification"
       >
         <SfIconClose class="w-5 h-5" /> </button>
     </div>
@@ -23,7 +22,6 @@ import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSite
 import { SfIconClose } from '@storefront-ui/vue'; // Oder eine andere Icon-Komponente / Bibliothek
 
 const { notifyMessage } = useSiteConfiguration();
-const runtimeConfig = useRuntimeConfig();
 // Der Schlüssel, unter dem wir den Status im Session Storage speichern
 const SESSION_STORAGE_KEY = 'shop_notification_dismissed';
 
@@ -75,29 +73,4 @@ const dismissNotification = () => {
     localStorage.setItem(SESSION_STORAGE_KEY, 'true'); // Im Session Storage merken
   }
 };
-
-// HIER GEÄNDERT: Computed Property für dynamische Styles
-const notificationDynamicStyles = computed(() => {
-  // Überprüfen, ob isPreview in der öffentlichen Runtime-Konfiguration auf 'true' gesetzt ist
-  // (Beachten Sie, dass Werte aus process.env immer Strings sind, daher === 'true')
-  if (runtimeConfig.public.isPreview) {
-    return { zIndex: 'auto' }; // Oder 'unset', 'initial', oder einfach weglassen, wenn kein z-index gewünscht
-  } else {
-    return { zIndex: '1000' }; // Standard z-index, wenn nicht im Preview-Modus
-  }
-});
 </script>
-
-<style scoped>
-/* Optional: Zusätzliche Stile für die Animation oder Positionierung */
-.shop-notification {
-  position: sticky; /* Hält die Leiste oben */
-  top: 0; /* An der Oberkante des Viewports */
-  z-index: 1000; /* Stellt sicher, dass sie über anderen Inhalten liegt */
-  /* Animation beim Ein- und Ausblenden (kann über Tailwind-Klassen verfeinert werden) */
-  /* Beispiel für Enter/Leave Animationen in Nuxt:
-     Siehe: https://nuxt.com/docs/api/components/transition#example-with-group-mode
-     Dafür müsste man aber `v-if` mit `<Transition>` oder `<TransitionGroup>` umwickeln.
-  */
-}
-</style>
