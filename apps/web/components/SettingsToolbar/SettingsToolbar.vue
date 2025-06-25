@@ -59,7 +59,7 @@
         data-testid="open-design-drawer"
         @click="openDrawerWithView('MatomoSettings')"
       >
-        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearWhite" />
+        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearBlack" />
         <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
       </button>
       <button
@@ -70,7 +70,7 @@
         data-testid="open-design-drawer"
         @click="openDrawerWithView('BannerSettings')"
       >
-        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesWhite" />
+        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesBlack" />
         <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
       </button>
     </div>
