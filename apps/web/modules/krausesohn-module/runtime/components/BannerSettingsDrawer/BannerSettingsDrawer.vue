@@ -6,7 +6,7 @@
         <SfIconClose />
       </button>
     </header>
-
+    <div class="h-[calc(100vh-150px)] overflow-y-auto">
     <UiAccordionItem
       v-model="mainBannerOpen"
       data-testid="main-banner-section"
@@ -154,6 +154,7 @@
         </div>
       </div>
     </UiAccordionItem>
+    </div>
   </div>
 </template>
 
@@ -195,9 +196,4 @@ const secondaryBannersSectionOpen = ref(false); // Anfangs geschlossen
 const secondaryBanner1Open = ref(false);
 const secondaryBanner2Open = ref(false);
 const secondaryBanner3Open = ref(false);
-
-// Optional: Wenn Sie möchten, dass das erste Sekundärbanner standardmäßig geöffnet ist:
-// if (secondaryBannersOpen.value.length > 0) {
-//   secondaryBannersOpen.value[0] = true;
-// }
 </script>

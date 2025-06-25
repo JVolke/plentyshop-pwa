@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useSiteConfiguration } from '~/composables';
 
 // Definieren Sie die Banner-Schnittstelle direkt in der Komponente
 interface Banner {
@@ -59,14 +60,33 @@ interface Banner {
 
 // Runtime Konfiguration abrufen
 const config = useRuntimeConfig();
+const {
+  mainBannerDesktopUrl,
+  mainBannerMobileUrl,
+  mainBannerLink,
+  mainBannerTitle,
+  mainBannerAlt,
+  secondaryBanner1DesktopUrl,
+  secondaryBanner1Link,
+  secondaryBanner1Title,
+  secondaryBanner1Alt,
+  secondaryBanner2DesktopUrl,
+  secondaryBanner2Link,
+  secondaryBanner2Title,
+  secondaryBanner2Alt,
+  secondaryBanner3DesktopUrl,
+  secondaryBanner3Link,
+  secondaryBanner3Title,
+  secondaryBanner3Alt,
+} = useSiteConfiguration();
 
 // --- Hauptbanner-Logik ---
 const mainBanner = computed<Banner>(() => ({
-  desktopUrl: config.public.mainBannerDesktopUrl as string,
-  mobileUrl: config.public.mainBannerMobileUrl as string,
-  link: config.public.mainBannerLink as string,
-  title: config.public.mainBannerTitle as string,
-  alt: config.public.mainBannerAlt as string,
+  desktopUrl: mainBannerDesktopUrl.value,
+  mobileUrl: mainBannerMobileUrl.value,
+  link: mainBannerLink.value,
+  title: mainBannerTitle.value,
+  alt: mainBannerAlt.value,
 }));
 
 // --- Sekundärbanner-Logik ---
@@ -76,28 +96,28 @@ const secondaryBanners = computed<Banner[]>(() => {
   // Banner 1
   if (config.public.secondaryBanner1DesktopUrl) {
     banners.push({
-      desktopUrl: config.public.secondaryBanner1DesktopUrl as string,
-      link: config.public.secondaryBanner1Link as string,
-      title: config.public.secondaryBanner1Title as string,
-      alt: config.public.secondaryBanner1Alt as string,
+      desktopUrl: secondaryBanner1DesktopUrl.value,
+      link: secondaryBanner1Link.value,
+      title: secondaryBanner1Title.value,
+      alt: secondaryBanner1Alt.value,
     });
   }
   // Banner 2
   if (config.public.secondaryBanner2DesktopUrl) {
     banners.push({
-      desktopUrl: config.public.secondaryBanner2DesktopUrl as string,
-      link: config.public.secondaryBanner2Link as string,
-      title: config.public.secondaryBanner2Title as string,
-      alt: config.public.secondaryBanner2Alt as string,
+      desktopUrl: secondaryBanner2DesktopUrl.value,
+      link: secondaryBanner2Link.value,
+      title: secondaryBanner2Title.value,
+      alt: secondaryBanner2Alt.value,
     });
   }
   // Banner 3
   if (config.public.secondaryBanner3DesktopUrl) {
     banners.push({
-      desktopUrl: config.public.secondaryBanner3DesktopUrl as string,
-      link: config.public.secondaryBanner3Link as string,
-      title: config.public.secondaryBanner3Title as string,
-      alt: config.public.secondaryBanner3Alt as string,
+      desktopUrl: secondaryBanner3DesktopUrl.value,
+      link: secondaryBanner3Link.value,
+      title: secondaryBanner3Title.value,
+      alt: secondaryBanner3Alt.value,
     });
   }
   return banners;
