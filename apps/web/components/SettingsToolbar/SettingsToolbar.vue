@@ -55,22 +55,22 @@
         type="button"
         class="editor-button relative py-2 flex justify-center"
         :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MatomoSettings' }"
-        aria-label="Open design drawer"
-        data-testid="open-design-drawer"
+        aria-label="Open matomo drawer"
+        data-testid="open-matomo-drawer"
         @click="openDrawerWithView('MatomoSettings')"
       >
-        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearBlack" />
+        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearWhite" />
         <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
       </button>
       <button
         type="button"
         class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MatomoSettings' }"
-        aria-label="Open design drawer"
-        data-testid="open-design-drawer"
+        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'BannerSettings' }"
+        aria-label="Open bannersettings drawer"
+        data-testid="open-bannersettings-drawer"
         @click="openDrawerWithView('BannerSettings')"
       >
-        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesBlack" />
+        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesWhite" />
         <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
       </button>
     </div>
