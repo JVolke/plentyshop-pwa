@@ -3,6 +3,7 @@ export const metaDefaults = {
   description: process.env.METADESC || process.env.NUXT_PUBLIC_META_DESCRIPTION || 'Demo shop for PlentyONE Shop',
   keywords: process.env.METAKEYWORDS || process.env.NUXT_PUBLIC_META_KEYWORDS || 'PlentyONE, plentyshop, pwa',
   robots: process.env.NUXT_PUBLIC_ROBOTS || 'all',
+  themeColor: process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633',
 };
 
 export const openGraph = {
@@ -23,11 +24,10 @@ export const appConfiguration = {
       lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'shop-name', content: process.env.STORENAME || 'PlentyONE GmbH' },
       { name: 'description', content: metaDefaults.description },
       { name: 'keywords', content: metaDefaults.keywords },
       { name: 'robots', content: metaDefaults.robots },
-      { name: 'theme-color', content: '#0C7992' },
+      { name: 'theme-color', content: metaDefaults.themeColor },
       { name: 'generator', content: 'plentymarkets' },
       { property: 'og:title', content: openGraph.title },
       { property: 'og:type', content: openGraph.type },

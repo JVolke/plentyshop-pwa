@@ -47,6 +47,7 @@ export default {
       }),
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
+        editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {
