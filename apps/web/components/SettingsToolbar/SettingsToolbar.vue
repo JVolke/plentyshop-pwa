@@ -83,10 +83,10 @@ import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
-import bWhite from 'assets/icons/paths/b-white.svg';
-import bBlack from 'assets/icons/paths/b-black.svg';
-import mWhite from 'assets/icons/paths/m-white.svg';
-import mBlack from 'assets/icons/paths/m-black.svg';
+import bWhite from 'assets/icons/paths/B-white.svg';
+import bBlack from 'assets/icons/paths/B-black.svg';
+import mWhite from 'assets/icons/paths/M-white.svg';
+import mBlack from 'assets/icons/paths/M-black.svg';
 
 const { drawerView, openDrawerWithView, closeDrawer } = useSiteConfiguration();
 
