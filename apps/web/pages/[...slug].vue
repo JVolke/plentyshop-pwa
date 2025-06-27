@@ -8,6 +8,9 @@
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
     <template v-if="isEditablePage">
       <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
+      <narrow-container class="mb-20 px-4 md:px-0">
+        <CategoryDescription :category="productsCatalog.category"/>
+      </narrow-container>
     </template>
     <template v-else>
       <CategoryPageHeaderImage

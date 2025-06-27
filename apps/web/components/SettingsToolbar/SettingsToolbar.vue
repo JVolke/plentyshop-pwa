@@ -56,8 +56,8 @@
         data-testid="open-matomo-drawer"
         @click="openDrawerWithView('MatomoSettings')"
       >
-        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="gearWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="gearBlack" />
+        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="mWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="mBlack" />
       </button>
       <button
         type="button"
@@ -67,8 +67,8 @@
         data-testid="open-bannersettings-drawer"
         @click="openDrawerWithView('BannerSettings')"
       >
-        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="pagesWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="pagesBlack" />
+        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="bWhite" />
+        <NuxtImg v-else width="24" height="24px" :src="bBlack" />
       </button>
     </div>
   </aside>
@@ -83,6 +83,10 @@ import paintBrushBlack from 'assets/icons/paths/paint-brush-black.svg';
 import paintBrushWhite from 'assets/icons/paths/paint-brush-white.svg';
 import pagesWhite from 'assets/icons/paths/pages-white.svg';
 import pagesBlack from 'assets/icons/paths/pages-black.svg';
+import bWhite from 'assets/icons/paths/b-white.svg';
+import bBlack from 'assets/icons/paths/b-black.svg';
+import mWhite from 'assets/icons/paths/m-white.svg';
+import mBlack from 'assets/icons/paths/m-black.svg';
 
 const { drawerView, openDrawerWithView, closeDrawer } = useSiteConfiguration();
 
