@@ -40,6 +40,10 @@ export default defineNuxtModule({
       name: 'KrauseSohnNotifyMessage',
       filePath: resolve('./runtime/components/KrauseSohnNotifyMessage/KrauseSohnNotifyMessage.vue'),
     });
+    addComponent({
+      name: 'FeuerwerkLink',
+      filePath: resolve('./runtime/components/FeuerwerkLink/FeuerwerkLink.vue'),
+    });
 
 
 
