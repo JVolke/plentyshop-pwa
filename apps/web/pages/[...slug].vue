@@ -1,12 +1,14 @@
 <template>
   <NuxtLayout
-    v-if="productsCatalog?.products.length > 0"
     name="default"
     :breadcrumbs="breadcrumbs"
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <template v-if="isEditablePage">
+      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
+    </template>
     <template v-else>
       <CategoryPageHeaderImage
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -30,22 +32,6 @@
       </CategoryPageContent>
     </template>
   </NuxtLayout>
-  <NuxtLayout
-    v-else
-    name="default"
-    class="relative"
-    :class="{ 'pointer-events-none opacity-50': loading }"
-  >
-    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <!-- template v-if="isEditablePage && runtimeConfig.public.isDev">
-      <EditablePage />
-    </template-->
-    <template v-else>
-      <narrow-container class="mb-20 px-4 md:px-0">
-        <CategoryDescription :category="productsCatalog.category"/>
-      </narrow-container>
-    </template>
-  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
@@ -63,7 +49,6 @@ const { fetchProducts, data: productsCatalog, productsPerPage, loading } = usePr
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
-const runtimeConfig = useRuntimeConfig();
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -83,9 +68,9 @@ const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
   if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Page not found',
     });
   }
 };

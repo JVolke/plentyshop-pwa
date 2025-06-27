@@ -10,6 +10,7 @@ import KrauseSohnBanner from '~/modules/krausesohn-module/runtime/components/Kra
 
 definePageMeta({
   middleware: ['confirmation-redirect'],
+  pageType: 'static',
 });
 const { t } = useI18n();
 const { setPageMeta } = usePageMeta();
