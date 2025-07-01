@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
+  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 pt-8 last:mb-0"  data-testid="cart-product-card">
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
@@ -44,21 +44,19 @@
             :unit-name="productGetters.getUnitName(cartItem.variation)"
           />
         </div>
-        <div class="my-2">
-          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-            <li>
+        <div class="my-2 text-neutral-700">
+            <div class="text-sm flex justify-between">
               <span class="font-semibold mr-1">Artikelnummer:</span>
-              <span>{{ cartItem.variation!.variation!.number }}</span>
-            </li>
-            <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
+              <span class="">{{ cartItem.variation!.variation!.number }}</span>
+            </div>
+            <div v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name" class="text-sm flex justify-between">
               <span class="font-semibold mr-1">{{ attribute.label }}:</span>
               <span class="font-medium">{{ attribute.value }}</span>
-            </li>
-            <li v-if="cartItem.variation">
+            </div>
+            <div v-if="cartItem.variation" class="text-sm flex justify-between">
               <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
               <span>{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
-            </li>
-          </ul>
+            </div>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
             class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"

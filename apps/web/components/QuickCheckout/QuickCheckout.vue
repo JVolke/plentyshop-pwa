@@ -53,13 +53,7 @@
 
         <ProductPrice :product="props.product" />
 
-        <div
-          class="mb-4 font-normal typography-text-sm"
-          data-testid="product-description"
-          v-html="productGetters.getShortDescription(props.product)"
-        />
-
-        <div class="mt-4 typography-text-xs flex gap-1">
+        <div class="mt-1 typography-text-xs flex gap-1 mb-2">
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
@@ -75,6 +69,23 @@
             </template>
           </i18n-t>
         </div>
+
+        <ul class="  sm:typography-text-sm">
+          <li>
+            <span class="font-semibold mr-1">Artikelnummer:</span>
+            <span>{{ props.product.variation.number }}</span>
+          </li>
+          <!--
+          <li v-for="attribute in productGetters.getAttributes(lastUpdatedProduct)" :key="attribute.name">
+            <span class="font-semibold mr-1">{{ attribute.label }}:</span>
+            <span class="font-medium">{{ attribute.value }}</span>
+          </li>
+
+          <li v-if="cartItem.variation">
+            <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
+            <span>{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
+          </li>-->
+        </ul>
 
         <VariationProperties :product="lastUpdatedProduct" />
       </div>
@@ -118,7 +129,7 @@
 <script setup lang="ts">
 import { SfIconClose, SfLink } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import type { Product } from '@plentymarkets/shop-api';
+import { manufacturerGetters, Product } from '@plentymarkets/shop-api';
 import { cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';
