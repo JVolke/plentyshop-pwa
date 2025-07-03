@@ -1,10 +1,29 @@
-import { defineNuxtModule, addComponent, createResolver, extendPages, addPlugin } from '@nuxt/kit';
+import { defineNuxtModule, addComponent, createResolver, extendPages, addPlugin, updateRuntimeConfig } from '@nuxt/kit';
 import type { NuxtPage } from '@nuxt/schema'
 
 export default defineNuxtModule({
   setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
-
+    updateRuntimeConfig({
+      mainBannerDesktopUrl: '',
+      mainBannerMobileUrl: '',
+      mainBannerLink: '',
+      mainBannerTitle: '',
+      mainBannerAlt: '',
+      secondaryBanner1DesktopUrl: '',
+      secondaryBanner2DesktopUrl: '',
+      secondaryBanner3DesktopUrl: '',
+      secondaryBanner1Link: '',
+      secondaryBanner2Link: '',
+      secondaryBanner3Link: '',
+      secondaryBanner1Title: '',
+      secondaryBanner2Title: '',
+      secondaryBanner3Title: '',
+      secondaryBanner1Alt: '',
+      secondaryBanner2Alt: '',
+      secondaryBanner3Alt: '',
+      notifyMessage: '',
+    });
 
 
     // Komponente hinzufügen
@@ -20,10 +39,7 @@ export default defineNuxtModule({
       name: 'CategoryDescription',
       filePath: resolve('./runtime/components/CategoryDescription/CategoryDescription.vue'),
     });
-    addComponent({
-      name: 'BannerSettingsDrawer',
-      filePath: resolve('./runtime/components/BannerSettingsDrawer/BannerSettingsDrawer.vue'),
-    });
+
     addComponent({
       name: 'ShopAuskunft',
       filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunft.vue'),

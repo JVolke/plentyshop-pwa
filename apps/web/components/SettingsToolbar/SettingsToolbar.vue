@@ -46,28 +46,6 @@
         <SfIconSearch v-if="drawerView === 'SeoView'" class="text-white" />
         <SfIconSearch v-else />
       </button>
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'MatomoSettings' }"
-        aria-label="Open matomo drawer"
-        data-testid="open-matomo-drawer"
-        @click="openDrawerWithView('MatomoSettings')"
-      >
-        <NuxtImg v-if="drawerView === 'MatomoSettings'" width="24" height="24px" :src="mWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="mBlack" />
-      </button>
-      <button
-        type="button"
-        class="editor-button relative py-2 flex justify-center"
-        :class="{ 'bg-editor-button text-white rounded-md': drawerView === 'BannerSettings' }"
-        aria-label="Open bannersettings drawer"
-        data-testid="open-bannersettings-drawer"
-        @click="openDrawerWithView('BannerSettings')"
-      >
-        <NuxtImg v-if="drawerView === 'BannerSettings'" width="24" height="24px" :src="bWhite" />
-        <NuxtImg v-else width="24" height="24px" :src="bBlack" />
-      </button>
     </div>
   </aside>
 </template>

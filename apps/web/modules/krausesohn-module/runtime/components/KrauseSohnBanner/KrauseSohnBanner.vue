@@ -60,25 +60,41 @@ interface Banner {
 
 // Runtime Konfiguration abrufen
 const config = useRuntimeConfig();
-const {
-  mainBannerDesktopUrl,
-  mainBannerMobileUrl,
-  mainBannerLink,
-  mainBannerTitle,
-  mainBannerAlt,
-  secondaryBanner1DesktopUrl,
-  secondaryBanner1Link,
-  secondaryBanner1Title,
-  secondaryBanner1Alt,
-  secondaryBanner2DesktopUrl,
-  secondaryBanner2Link,
-  secondaryBanner2Title,
-  secondaryBanner2Alt,
-  secondaryBanner3DesktopUrl,
-  secondaryBanner3Link,
-  secondaryBanner3Title,
-  secondaryBanner3Alt,
-} = useSiteConfiguration();
+
+const { getSetting: getMainBannerDesktopUrl } = useSiteSettings('mainBannerDesktopUrl');
+const mainBannerDesktopUrl = computed(() => getMainBannerDesktopUrl() );
+const { getSetting: getMainBannerMobileUrl } = useSiteSettings('mainBannerMobileUrl');
+const mainBannerMobileUrl = computed(() => getMainBannerMobileUrl() );
+const { getSetting: getMainBannerLink } = useSiteSettings('mainBannerLink');
+const mainBannerLink = computed(() => getMainBannerLink() );
+const { getSetting: getMainBannerTitle } = useSiteSettings('mainBannerTitle');
+const mainBannerTitle = computed(() => getMainBannerTitle() );
+const { getSetting: getMainBannerAlt } = useSiteSettings('mainBannerAlt');
+const mainBannerAlt = computed(() => getMainBannerAlt() );
+const { getSetting: getSecondaryBanner1DesktopUrl } = useSiteSettings('secondaryBanner1DesktopUrl');
+const secondaryBanner1DesktopUrl = computed(() => getSecondaryBanner1DesktopUrl() );
+const { getSetting: getSecondaryBanner1Link } = useSiteSettings('secondaryBanner1Link');
+const secondaryBanner1Link = computed(() => getSecondaryBanner1Link() );
+const { getSetting: getSecondaryBanner1Title } = useSiteSettings('secondaryBanner1Title');
+const secondaryBanner1Title = computed(() => getSecondaryBanner1Title() );
+const { getSetting: getSecondaryBanner1Alt } = useSiteSettings('secondaryBanner1Alt');
+const secondaryBanner1Alt = computed(() => getSecondaryBanner1Alt() );
+const { getSetting: getSecondaryBanner2DesktopUrl } = useSiteSettings('secondaryBanner2DesktopUrl');
+const secondaryBanner2DesktopUrl = computed(() => getSecondaryBanner2DesktopUrl() );
+const { getSetting: getSecondaryBanner2Link } = useSiteSettings('secondaryBanner2Link');
+const secondaryBanner2Link = computed(() => getSecondaryBanner2Link() );
+const { getSetting: getSecondaryBanner2Title } = useSiteSettings('secondaryBanner2Title');
+const secondaryBanner2Title = computed(() => getSecondaryBanner2Title() );
+const { getSetting: getSecondaryBanner2Alt } = useSiteSettings('secondaryBanner2Alt');
+const secondaryBanner2Alt = computed(() => getSecondaryBanner2Alt() );
+const { getSetting: getSecondaryBanner3DesktopUrl } = useSiteSettings('secondaryBanner3DesktopUrl');
+const secondaryBanner3DesktopUrl = computed(() => getSecondaryBanner3DesktopUrl() );
+const { getSetting: getSecondaryBanner3Link } = useSiteSettings('secondaryBanner3Link');
+const secondaryBanner3Link = computed(() => getSecondaryBanner3Link() );
+const { getSetting: getSecondaryBanner3Title } = useSiteSettings('secondaryBanner3Title');
+const secondaryBanner3Title = computed(() => getSecondaryBanner3Title() );
+const { getSetting: getSecondaryBanner3Alt } = useSiteSettings('secondaryBanner3Alt');
+const secondaryBanner3Alt = computed(() => getSecondaryBanner3Alt() );
 
 // --- Hauptbanner-Logik ---
 const mainBanner = computed<Banner>(() => ({

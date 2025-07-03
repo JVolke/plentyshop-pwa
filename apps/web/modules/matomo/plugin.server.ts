@@ -2,7 +2,6 @@
 import { defineNuxtPlugin, useRuntimeConfig, useCookieConsent, useRegisterCookie } from '#imports';
 
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig().public;
   const { consent  } = useCookieConsent('matomo_consent'); // Verwenden Sie denselben CookieName wie im Client
   const { add: registerCookie } = useRegisterCookie();
   const cookieGroup = 'CookieBar.marketing.label';

@@ -1,5 +1,5 @@
 // modules/matomo/index.ts
-import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit';
+import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule, updateRuntimeConfig  } from '@nuxt/kit';
 import { defu } from 'defu';
 
 export interface ModuleOptions {
@@ -34,29 +34,27 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
+    updateRuntimeConfig({
+      public: {
+        matomoUrl: '',
+        matomoId: '',
+        matomoEnabled: true,
+        matomoDebug: false,
+        matomoDisableCookies: true,
+        matomoRequireConsent: '1',
+        matomoTrackPageView: true,
+        matomoTrackSiteSearch: true,
+        matomoTrackEcommerce: true,
+        matomoShowGrossPrices: false,
+      },
+    });
 
     // Installiere optionale Module (angenommen, E-Commerce-Funktionen sind relevant)
     await installModule('@plentymarkets/shop-core').catch(() => {});
 
-
-    nuxt.options.runtimeConfig.public.matomoUrl = process.env.NUXT_PUBLIC_MATOMO_URL as string;
-    nuxt.options.runtimeConfig.public.matomoId = process.env.NUXT_PUBLIC_MATOMO_ID || '0';
-    nuxt.options.runtimeConfig.public.matomoEnabled = process.env?.NUXT_PUBLIC_MATOMO_ENABLED === '1';
-    nuxt.options.runtimeConfig.public.matomoDebug = process.env?.NUXT_PUBLIC_MATOMO_DEBUG === '1';
-    nuxt.options.runtimeConfig.public.matomoDisableCookies = process.env?.NUXT_PUBLIC_MATOMO_DISABLE_COOKIES === '1';
-    nuxt.options.runtimeConfig.public.matomoRequireConsent = process.env?.NUXT_PUBLIC_MATOMO_REQUIRE_CONSENT === '1';
-    nuxt.options.runtimeConfig.public.matomoTrackPageView = process.env?.NUXT_PUBLIC_MATOMO_TRACK_PAGE_VIEW !== '0';
-    nuxt.options.runtimeConfig.public.matomoTrackSiteSearch = process.env?.NUXT_PUBLIC_MATOMO_TRACK_SITE_SEARCH !== '0';
-    nuxt.options.runtimeConfig.public.matomoTrackEcommerce = process.env?.NUXT_PUBLIC_MATOMO_TRACK_ECOMMERCE !== '0';
-    nuxt.options.runtimeConfig.public.matomoShowGrossPrices = process.env?.NUXT_PUBLIC_MATOMO_SHOW_GROSS_PRICES === '1';
-
     /**if (!nuxt.options.runtimeConfig.public.matomoUrl || !nuxt.options.runtimeConfig.public.matomoId || !nuxt.options.runtimeConfig.public.matomoEnabled) {
       return;
     }*/
-    addComponent({
-      name: 'MatomoSettingsDrawer',
-      filePath: resolve('./runtime/components/MatomoSettingsDrawer.vue'),
-    });
 
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'));

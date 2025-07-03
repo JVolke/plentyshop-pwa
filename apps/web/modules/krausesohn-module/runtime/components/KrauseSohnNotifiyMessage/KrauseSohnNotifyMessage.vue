@@ -11,11 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { useSiteConfiguration } from '~/composables/useSiteConfiguration/useSiteConfiguration';
-
-const { notifyMessage } = useSiteConfiguration();
-
-const displayNotification = ref(false);
+const { getSetting: getNotifyMessage } = useSiteSettings('notifyMessage');
+const notifyMessage = computed(() => getNotifyMessage() );
 
 const notificationMessage = computed(() => notifyMessage.value || '');
 </script>

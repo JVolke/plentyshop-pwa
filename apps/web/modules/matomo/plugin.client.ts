@@ -10,6 +10,7 @@ import {
 import { cartGetters, orderGetters, productGetters } from '@plentymarkets/shop-api';
 
 import matomoScriptContent from '~/modules/matomo/runtime/matomo.js?raw';
+import { computed } from 'vue';
 
 
 
@@ -20,7 +21,11 @@ declare global {
 }
 
 export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig().public;
+  const { getSetting: getMatomoUrl } = useSiteSettings('matomoUrl');
+  const matomoUrl = computed(() => getMatomoUrl() );
+  const { getSetting: getMatomoId } = useSiteSettings('matomoId');
+  const matomoId = computed(() => getMatomoId() );
+
   const { consent } = useCookieConsent('matomo_consent'); // Verwenden Sie einen passenden CookieName
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => consent.value);
   const router = useRouter();
@@ -32,13 +37,14 @@ export default defineNuxtPlugin(() => {
 
   window._paq = window._paq || [];
 
-  if (config.matomoDebug) {
+  /**
+  if (matomoDebug) {
     window._paq.push(['enableJSErrorTracking']);
   }
 
-  if (config.matomoDisableCookies) {
+  if (matomoDisableCookies) {
     window._paq.push(['disableCookies']);
-  }
+  }*/
 
   watch(consent, (value) => {
     matomoConsentGiven.value = value;
@@ -55,8 +61,8 @@ export default defineNuxtPlugin(() => {
 
   watch(matomoConsentGiven, (consentGiven) => {
     if (consentGiven) {
-      window._paq.push(['setTrackerUrl', `${config.matomoUrl}/matomo.php`]);
-      window._paq.push(['setSiteId', config.matomoId]);
+      window._paq.push(['setTrackerUrl', `${matomoUrl}/matomo.php`]);
+      window._paq.push(['setSiteId', matomoId]);
       window._paq.push(['setExcludedQueryParams', ['ReferrerID']]);
       window._paq.push(['enableLinkTracking']);
 
@@ -66,7 +72,7 @@ export default defineNuxtPlugin(() => {
       document.head.appendChild(script);
     } else {
       // Optional: Entfernen Sie das Skript, falls Consent widerrufen wird
-      const existingScript = document.querySelector(`script[src="${config.matomoUrl}/matomo.js"]`);
+      const existingScript = document.querySelector(`script[src="${matomoUrl}/matomo.js"]`);
       if (existingScript) {
         existingScript?.remove();
       }
@@ -75,7 +81,7 @@ export default defineNuxtPlugin(() => {
 
   router.afterEach((to) => {
     if (matomoConsentGiven.value && window._paq) {
-      window._paq.push(['setCustomUrl', config.url + to.fullPath]);
+      window._paq.push(['setCustomUrl',  to.fullPath]);
       document.title = to.meta.title as string || document.title;
       window._paq.push(['setDocumentTitle', document.title]);
       window._paq.push(['trackPageView']);
@@ -90,9 +96,9 @@ export default defineNuxtPlugin(() => {
       const totalVat = order.totals.vats.reduce((acc: number, vat: { value: number }) => acc + vat.value, 0);
       window._paq.push(['trackEcommerceOrder',
         orderGetters.getId(order), // orderId
-        config.matomoShowGrossPrices ? order.totals.totalGross : order.totals.totalNet, // grandTotal
-        order.order.orderItems.map((item) => config.showGrossPrices ? orderGetters.getItemPrice(item) : orderGetters.getItemNetPrice(item)).reduce((sum, price) => sum + price, 0), // subtotal (sum of item prices)
-        config.matomoShowGrossPrices ? order.totals.shippingGross : order.totals.shippingNet, // shippingCost
+        order.totals.totalNet, // grandTotal
+        order.order.orderItems.map((item) => orderGetters.getItemNetPrice(item)).reduce((sum, price) => sum + price, 0), // subtotal (sum of item prices)
+        order.totals.shippingNet, // shippingCost
         totalVat, // taxAmount
         false // discountAmount (not easily available here, might need adjustment)
       ]);
@@ -142,7 +148,7 @@ export default defineNuxtPlugin(() => {
           cartGetters.getItemQty(item)
         ]);
       });
-      window._paq.push(['trackEcommerceCartUpdate', config.matomoShowGrossPrices ? data.basketAmount : data.basketAmountNet]);
+      window._paq.push(['trackEcommerceCartUpdate', data.basketAmountNet]);
     }
   });
 
