@@ -156,7 +156,6 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
-import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 import KrauseSohnNotifyMessage
   from '~/modules/krausesohn-module/runtime/components/KrauseSohnNotifiyMessage/KrauseSohnNotifyMessage.vue';
 
@@ -164,6 +163,11 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = ref(0);
+const { getSetting: getIconColor } = useSiteSettings('iconColor');
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
+
+const iconColor = computed(() => getIconColor());
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, localeCodes } = useI18n();

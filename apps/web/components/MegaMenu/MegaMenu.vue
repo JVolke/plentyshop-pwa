@@ -220,12 +220,15 @@ const { buildCategoryMenuLink } = useLocalization();
 const router = useRouter();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const { setDrawerOpen } = useDrawerState();
+const { getSetting: getHeaderBackgroundColor } = useSiteSettings('headerBackgroundColor');
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
   placement: 'bottom-start',
   middleware: [],
 });
+
+const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const isTouchDevice = ref(false);
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
