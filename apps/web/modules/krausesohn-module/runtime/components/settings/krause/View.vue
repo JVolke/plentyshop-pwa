@@ -1,6 +1,6 @@
 <template>
   <SiteConfigurationView>
-    <template #setting-group-title> Matomo Einstellungen </template>
+    <template #setting-group-title> Krause Sohn Einstellungen </template>
   </SiteConfigurationView>
 </template>
 
