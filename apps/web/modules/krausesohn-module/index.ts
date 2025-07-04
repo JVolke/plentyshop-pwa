@@ -4,7 +4,8 @@ import type { NuxtPage } from '@nuxt/schema'
 export default defineNuxtModule({
   setup(options, nuxt) {
     const {resolve} = createResolver(import.meta.url);
-    updateRuntimeConfig({
+   updateRuntimeConfig({
+     public: {
       mainBannerDesktopUrl: '',
       mainBannerMobileUrl: '',
       mainBannerLink: '',
@@ -23,6 +24,7 @@ export default defineNuxtModule({
       secondaryBanner2Alt: '',
       secondaryBanner3Alt: '',
       notifyMessage: '',
+     }
     });
 
 
