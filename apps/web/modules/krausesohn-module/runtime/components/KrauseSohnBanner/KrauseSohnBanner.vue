@@ -71,6 +71,7 @@ const { getSetting: getMainBannerTitle } = useSiteSettings('mainBannerTitle');
 const mainBannerTitle = computed(() => getMainBannerTitle() );
 const { getSetting: getMainBannerAlt } = useSiteSettings('mainBannerAlt');
 const mainBannerAlt = computed(() => getMainBannerAlt() );
+
 const { getSetting: getSecondaryBanner1DesktopUrl } = useSiteSettings('secondaryBanner1DesktopUrl');
 const secondaryBanner1DesktopUrl = computed(() => getSecondaryBanner1DesktopUrl() );
 const { getSetting: getSecondaryBanner1Link } = useSiteSettings('secondaryBanner1Link');
@@ -110,7 +111,7 @@ const mainBanner = computed<Banner>(() => ({
 const secondaryBanners = computed<Banner[]>(() => {
   const banners: Banner[] = [];
   // Banner 1
-  if (config.public.secondaryBanner1DesktopUrl) {
+  if (secondaryBanner1DesktopUrl.value) {
     banners.push({
       desktopUrl: secondaryBanner1DesktopUrl.value,
       link: secondaryBanner1Link.value,
@@ -119,7 +120,7 @@ const secondaryBanners = computed<Banner[]>(() => {
     });
   }
   // Banner 2
-  if (config.public.secondaryBanner2DesktopUrl) {
+  if (secondaryBanner2DesktopUrl.value) {
     banners.push({
       desktopUrl: secondaryBanner2DesktopUrl.value,
       link: secondaryBanner2Link.value,
@@ -128,7 +129,7 @@ const secondaryBanners = computed<Banner[]>(() => {
     });
   }
   // Banner 3
-  if (config.public.secondaryBanner3DesktopUrl) {
+  if (secondaryBanner3DesktopUrl.value) {
     banners.push({
       desktopUrl: secondaryBanner3DesktopUrl.value,
       link: secondaryBanner3Link.value,
