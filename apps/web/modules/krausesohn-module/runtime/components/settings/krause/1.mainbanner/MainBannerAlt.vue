@@ -13,6 +13,7 @@ const { updateSetting, getSetting } = useSiteSettings('mainBannerAlt');
 const mainBannerAlt = computed({
   get: () => getSetting(),
   set: (value) => {
-    updateSetting(value);}
+    updateSetting(value);
+  }
 });
 </script>

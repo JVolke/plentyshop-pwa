@@ -46,8 +46,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useSiteConfiguration } from '~/composables';
 
 // Definieren Sie die Banner-Schnittstelle direkt in der Komponente
 interface Banner {
@@ -58,8 +56,6 @@ interface Banner {
   alt: string;
 }
 
-// Runtime Konfiguration abrufen
-const config = useRuntimeConfig();
 
 const { getSetting: getMainBannerDesktopUrl } = useSiteSettings('mainBannerDesktopUrl');
 const mainBannerDesktopUrl = computed(() => getMainBannerDesktopUrl() );
