@@ -21,10 +21,8 @@ declare global {
 }
 
 export default defineNuxtPlugin(() => {
-  const { getSetting: getMatomoUrl } = useSiteSettings('matomoUrl');
-  const matomoUrl = computed(() => getMatomoUrl() );
-  const { getSetting: getMatomoId } = useSiteSettings('matomoId');
-  const matomoId = computed(() => getMatomoId() );
+  const config = useRuntimeConfig().public;
+
 
   const { consent } = useCookieConsent('matomo_consent'); // Verwenden Sie einen passenden CookieName
   const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => consent.value);
@@ -37,14 +35,14 @@ export default defineNuxtPlugin(() => {
 
   window._paq = window._paq || [];
 
-  /**
-  if (matomoDebug) {
+
+  if (config.matomoDebug) {
     window._paq.push(['enableJSErrorTracking']);
   }
 
-  if (matomoDisableCookies) {
+  if (config.matomoDisableCookies) {
     window._paq.push(['disableCookies']);
-  }*/
+  }
 
   watch(consent, (value) => {
     matomoConsentGiven.value = value;
@@ -61,8 +59,8 @@ export default defineNuxtPlugin(() => {
 
   watch(matomoConsentGiven, (consentGiven) => {
     if (consentGiven) {
-      window._paq.push(['setTrackerUrl', `${matomoUrl}/matomo.php`]);
-      window._paq.push(['setSiteId', matomoId]);
+      window._paq.push(['setTrackerUrl', `${config.matomoUrl}/matomo.php`]);
+      window._paq.push(['setSiteId', config.matomoId]);
       window._paq.push(['setExcludedQueryParams', ['ReferrerID']]);
       window._paq.push(['enableLinkTracking']);
 
@@ -72,7 +70,7 @@ export default defineNuxtPlugin(() => {
       document.head.appendChild(script);
     } else {
       // Optional: Entfernen Sie das Skript, falls Consent widerrufen wird
-      const existingScript = document.querySelector(`script[src="${matomoUrl}/matomo.js"]`);
+      const existingScript = document.querySelector(`script[src="${config.matomoUrl}/matomo.js"]`);
       if (existingScript) {
         existingScript?.remove();
       }
