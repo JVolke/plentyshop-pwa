@@ -10,8 +10,6 @@ import {
 import { cartGetters, orderGetters, productGetters } from '@plentymarkets/shop-api';
 
 import matomoScriptContent from '~/modules/matomo/runtime/matomo.js?raw';
-import { computed } from 'vue';
-
 
 
 declare global {
