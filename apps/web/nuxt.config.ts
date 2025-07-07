@@ -92,31 +92,6 @@ export default defineNuxtConfig({
       iconColor: process.env.NUXT_PUBLIC_ICON_COLOR || '#ffffff',
       showCustomerWishComponent: process.env?.SHOW_CUSTOMER_WISH_COMPONENT === '1',
       fetchDynamicTranslations: false,
-      matomoId: process.env.NUXT_PUBLIC_MATOMO_ID || '',
-      matomoUrl: process.env.NUXT_PUBLIC_MATOMO_URL || '',
-
-      mainBannerDesktopUrl: process.env.NUXT_PUBLIC_MAIN_BANNER_DESKTOP_URL || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-gross.webp',
-      mainBannerMobileUrl: process.env.NUXT_PUBLIC_MAIN_BANNER_MOBILE_URL || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Hauptteaser/2025/Kindertag-klein.webp',
-      mainBannerLink: process.env.NUXT_PUBLIC_MAIN_BANNER_LINK || '/default-main-link',
-      mainBannerTitle: process.env.NUXT_PUBLIC_MAIN_BANNER_TITLE || 'Standard Hauptbanner Titel',
-      mainBannerAlt: process.env.NUXT_PUBLIC_MAIN_BANNER_ALT || 'Standard Alt-Text für Hauptbanner',
-
-      secondaryBanner1DesktopUrl: process.env.NUXT_PUBLIC_SECONDARY_BANNER1_DESKTOP_URL || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/fackeln-sand-desktop.webp',
-      secondaryBanner1Link: process.env.NUXT_PUBLIC_SECONDARY_BANNER1_LINK || '/default-banner1-link',
-      secondaryBanner1Title: process.env.NUXT_PUBLIC_SECONDARY_BANNER1_TITLE || 'Standard Banner 1 Titel',
-      secondaryBanner1Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER1_ALT || 'Standard Alt-Text für Banner 1',
-
-      secondaryBanner2DesktopUrl: process.env.NUXT_PUBLIC_SECONDARY_BANNER2_DESKTOP_URL || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Banner-Links/schulanfang-2022-desktop.jpg',
-      secondaryBanner2Link: process.env.NUXT_PUBLIC_SECONDARY_BANNER2_LINK || '/default-banner2-link',
-      secondaryBanner2Title: process.env.NUXT_PUBLIC_SECONDARY_BANNER2_TITLE || 'Standard Banner 2 Titel',
-      secondaryBanner2Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER2_ALT || 'Standard Alt-Text für Banner 2',
-
-      secondaryBanner3DesktopUrl: process.env.NUXT_PUBLIC_SECONDARY_BANNER3_DESKTOP_URL || 'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/KF-Onlineshop/Kategorie-Startseite/2025/Banner-schmal_Baumscheiben-personalisiert.webp',
-      secondaryBanner3Link: process.env.NUXT_PUBLIC_SECONDARY_BANNER3_LINK || '/default-banner3-link',
-      secondaryBanner3Title: process.env.NUXT_PUBLIC_SECONDARY_BANNER3_TITLE || 'Standard Banner 3 Titel',
-      secondaryBanner3Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER3_ALT || 'Standard Alt-Text für Banner 3',
-
-      notifyMessage: process.env.NUXT_PUBLIC_NOTIFY_MESSAGE || '',
     },
   },
   modules: [

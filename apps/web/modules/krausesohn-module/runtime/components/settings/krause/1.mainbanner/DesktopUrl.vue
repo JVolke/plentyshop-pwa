@@ -7,7 +7,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfIconClose } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('mainBannerDesktopUrl');
 
 const mainBannerDesktopUrl = computed({

@@ -36,8 +36,8 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url);
     updateRuntimeConfig({
       public: {
-        matomoUrl: '',
-        matomoId: '',
+        matomoUrl: process.env.NUXT_PUBLIC_MATOMO_URL || '',
+        matomoId: process.env.NUXT_PUBLIC_MATOMO_ID || '',
         matomoEnabled: true,
         matomoDebug: false,
         matomoDisableCookies: true,
