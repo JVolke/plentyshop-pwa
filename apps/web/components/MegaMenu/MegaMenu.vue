@@ -33,7 +33,7 @@
         <ul
           class="flex px-6 py-2 bg-primary-500 border-b border-b-neutral-200 border-b-solid"
           @blur="
-            (event) => {
+            (event: FocusEvent) => {
               if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
                 close();
               }
