@@ -7,7 +7,6 @@
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
       data-testid="section-top"
     >
-
       <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
         <div class="ml-4 text-lg font-medium leading-7 text-neutral-900">
           {{ t(`categories.${key}.label`) }}
@@ -39,11 +38,8 @@
         </p>
       </div>
     </div>
-
-
   </footer>
 </template>
-
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories } from '~/modules/krausesohn-module/runtime/mocks';
@@ -51,12 +47,9 @@ import type { FooterProps } from './types';
 import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 
 const storename: string = useRuntimeConfig().public.storename;
-
 const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
-
 const { simplifiedFooter = false } = defineProps<FooterProps>();
 const { t } = useI18n();
-
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

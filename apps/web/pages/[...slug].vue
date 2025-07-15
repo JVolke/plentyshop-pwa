@@ -124,6 +124,10 @@ watch(
   },
 );
 
+watchEffect(() => {
+  route.meta.isBlockified = isEditablePage;
+});
+
 useHead({
   title: headTitle,
   meta: [
