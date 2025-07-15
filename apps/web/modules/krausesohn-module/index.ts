@@ -63,7 +63,12 @@ export default defineNuxtModule({
       filePath: resolve('./runtime/components/FeuerwerkLink/FeuerwerkLink.vue'),
     });
 
-
+    nuxt.hook('components:extend', (components) => {
+      const uiButton = components.find((c) => c.pascalName === 'AddressFormShipping');
+      if (uiButton) {
+        uiButton.filePath = resolve('./runtime/components/AddressFormShipping/AddressFormShipping.vue');
+      }
+    });
 
     nuxt.hook('i18n:registerModule', (register) => {
       register({
