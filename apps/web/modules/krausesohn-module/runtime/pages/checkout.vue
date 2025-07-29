@@ -106,8 +106,8 @@ useHead({
   title: "Kasse - Bestellung abschließen"
 })
 const {
-  loadPayment,
-  loadShipping,
+  paymentLoading,
+  shippingLoading,
   paymentMethods,
   selectedPaymentId,
   handleShippingMethodUpdate,
@@ -154,7 +154,7 @@ onNuxtReady(async () => {
 });
 
 const paypalCardDialog = ref(false);
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const { processingOrder } = useProcessingOrder();
 
 const disableBuyButton = computed(

@@ -9,11 +9,6 @@
   <div v-if="filteredComponents.length === 0">
     <div v-if="selectedPaymentId === paypalPaymentId">
       <PayPalExpressButton :disabled="disableBuyButton" type="Checkout" @validation-callback="handlePreparePayment" />
-      <PayPalPayLaterBanner
-        placement="payment"
-        :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
-        :commit="true"
-      />
     </div>
     <PayPalCreditCardBuyButton
       v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
