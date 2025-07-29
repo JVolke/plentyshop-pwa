@@ -117,7 +117,7 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '~/modules/matomo'
+    '~/modules/matomo',
     'vuetify-nuxt-module',
   ],
   vuetify: {
