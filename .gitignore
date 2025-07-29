@@ -45,6 +45,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .env-feuerwerk
+apps/web/cypress.env.json
 
 # turbo
 .turbo

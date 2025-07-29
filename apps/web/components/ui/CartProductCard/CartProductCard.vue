@@ -36,6 +36,7 @@
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
 
       <div>
+      <div v-if="!cartItem.variation?.bundleComponents && showBundleComponents">
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
             v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -111,7 +112,7 @@
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
-          class="mt-4 sm:mt-0"
+          class="mt-6 sm:mt-2"
           @change-quantity="debounceQuantity"
         />
       </div>
@@ -159,6 +160,10 @@ const deleteLoading = ref(false);
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
+const { getSetting } = useSiteSettings('bundleItemDisplay');
+const showBundleComponents = computed(() => {
+  return getSetting() !== '1';
+});
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;

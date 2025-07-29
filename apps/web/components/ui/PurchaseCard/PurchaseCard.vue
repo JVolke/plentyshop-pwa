@@ -86,6 +86,8 @@
           />
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
+          <UnitContentSelect v-if="productGetters.getAttributeMapVariations(product).length > 1" :product="product" />
+
           <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
           <div class="mt-4">
@@ -155,6 +157,11 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
+
+const { getSetting } = useSiteSettings('bundleItemDisplay');
+const showBundleComponents = computed(() => {
+  return getSetting() !== '1';
+});
 
 const { showNetPrices } = useCustomer();
 const viewport = useViewport();
@@ -283,9 +290,7 @@ const openReviewsAccordion = () => {
 
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
-
-
-const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product) && !isFirework.value && !isT1.value);
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
