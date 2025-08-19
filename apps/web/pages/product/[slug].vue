@@ -31,6 +31,10 @@
       </div>
 
       <section ref="recommendedSection" class="mx-4 mt-28 mb-20">
+        <NuxtLazyHydrate when-visible>
+          <ProductSlider v-if="crossSellingItems.products.length > 0" :items="crossSellingItems.products" title="Dazu passt:" />
+          <ProductSlider v-if="crossSellingItemsAccessory.products.length > 0" :items="crossSellingItemsAccessory.products" title="Ähnliche Artikel:" />
+        </NuxtLazyHydrate>
         <component
           :is="RecommendedProductsAsync"
           v-if="showRecommended"
@@ -73,6 +77,22 @@ definePageMeta({
 const RecommendedProductsAsync = defineAsyncComponent(
   async () => await import('@/components/RecommendedProducts/RecommendedProducts.vue'),
 );
+
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
+
+fetchCrossSelling({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Similar'
+});
+
+const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts('crossSelling' + productId + 'Accessory');
+
+fetchCrossSellingAccessory({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Accessory'
+});
 
 const showRecommended = ref(false);
 const recommendedSection = ref<HTMLElement | null>(null);

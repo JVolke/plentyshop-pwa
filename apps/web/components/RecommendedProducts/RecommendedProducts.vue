@@ -1,5 +1,5 @@
 <template>
-  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" title="Weitere Artikel aus der Kategorie:" />
 </template>
 
 <script setup lang="ts">

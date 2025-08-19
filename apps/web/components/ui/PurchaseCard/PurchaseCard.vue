@@ -31,7 +31,7 @@
               </WishlistButton>
             </div>
           </div>
-
+          <hr>
           <div class="mt-2 variation-properties">
             <div class="space-y-2">
               <div class="flex justify-between">
