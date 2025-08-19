@@ -8,7 +8,7 @@
       <div class="drift-zoom-image">
         <section class="p-4 xl:p-6">
           <div class="grid grid-cols-[2fr_1fr] mt-4">
-            <h1 class="font-bold typography-headline-4" data-testid="product-name">
+            <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
               {{ productGetters.getName(product) }}
             </h1>
             <div class="flex items-center justify-center">
@@ -261,6 +261,10 @@ const handleAddToCart = async (quickCheckout = true) => {
     quickCheckout
       ? openQuickCheckout(product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
+
+    if (getSetting() === '0') {
+      send({ message: t('error.notificationsItemBundleSplitted'), type: 'warning' });
+    }
   }
 
   return addedToCart;

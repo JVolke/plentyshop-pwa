@@ -21,7 +21,7 @@
           :aria-label="t('goToHomepage')"
           class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-primary-500 md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
-          <UiVsfLogo />
+          <UiLogo />
         </NuxtLink>
       </div>
 

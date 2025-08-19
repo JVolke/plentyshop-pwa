@@ -9,7 +9,6 @@
 import KrauseSohnBanner from '~/modules/krausesohn-module/runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue';
 
 definePageMeta({
-  middleware: ['confirmation-redirect'],
   pageType: 'static',
   isBlockified: true,
 });

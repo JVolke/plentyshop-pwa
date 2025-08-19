@@ -50,6 +50,7 @@ const { setCategoriesPageMeta } = useCanonical();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
+
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
 
@@ -67,6 +68,8 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
+const canonicalDb = productsCatalog.value.category?.details[0].canonicalLink;
+
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
 
@@ -78,7 +81,7 @@ const handleQueryUpdate = async () => {
   }
 };
 
-await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb));
 
 const { setPageMeta } = usePageMeta();
 const categoryName = computed(() => categoryGetters.getCategoryName(productsCatalog.value.category));
