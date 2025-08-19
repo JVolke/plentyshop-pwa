@@ -32,8 +32,8 @@
 
       <section ref="recommendedSection" class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductSlider v-if="crossSellingItems.products.length > 0" :items="crossSellingItems.products" title="Dazu passt:" />
-          <ProductSlider v-if="crossSellingItemsAccessory.products.length > 0" :items="crossSellingItemsAccessory.products" title="Ähnliche Artikel:" />
+          <ProductSlider  :items="crossSellingItems.products" />
+          <ProductSlider  :items="crossSellingItemsAccessory.products"  />
         </NuxtLazyHydrate>
         <component
           :is="RecommendedProductsAsync"
