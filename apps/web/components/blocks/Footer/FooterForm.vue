@@ -23,6 +23,17 @@
           </SfInput>
         </label>
       </div>
+      <div class="py-2">
+        <UiFormLabel>Beschreibung</UiFormLabel>
+        <SfTextarea
+          v-model="footerBlock.column1.description"
+          name="description"
+          type="text"
+          class="w-full min-h-[232px]"
+          placeholder="Beschreibung"
+          data-testid="input-text-column-1"
+        />
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
