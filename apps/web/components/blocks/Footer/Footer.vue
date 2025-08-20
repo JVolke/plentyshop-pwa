@@ -32,9 +32,9 @@
             </SfListItem>
           </ul>
           <div
-            v-if="column?.description"
+            v-if="resolvedContent.column1.description"
             class="custom-html ml-4 text-sm hover:cursor-pointer"
-            v-html="column.description"
+            v-html="resolvedContent.column1.description"
           />
         </div>
 
