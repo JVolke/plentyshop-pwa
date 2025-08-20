@@ -12,6 +12,7 @@
     <PreviewMode />
     <ClientOnly>
       <FooterBlock v-if="!route.meta.isBlockified" />
+      <!-- UiFooter /-->
     </ClientOnly>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>

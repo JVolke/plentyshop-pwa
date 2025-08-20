@@ -31,6 +31,11 @@
               </SfLink>
             </SfListItem>
           </ul>
+          <div
+            v-if="column?.description"
+            class="custom-html ml-4 text-sm hover:cursor-pointer"
+            v-html="column.description"
+          />
         </div>
 
         <div
