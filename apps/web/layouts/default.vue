@@ -11,8 +11,8 @@
     <Cookiebar />
     <PreviewMode />
     <NuxtLazyHydrate when-visible>
-      <!-- FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" /-->
-      <UiFooter  />
+      <FooterBlock v-if="runtimeConfig.public.isDev && !route.meta.isBlockified" />
+      <UiFooter v-if="!runtimeConfig.public.isDev" />
     </NuxtLazyHydrate>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
