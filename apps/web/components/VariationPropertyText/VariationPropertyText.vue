@@ -13,7 +13,7 @@
     />
     <a
       v-else-if="productPropertyGetters.getPropertyId(variationProperty) === 9"
-      class="underline"
+      class="underline float-right"
       href="/1/definition-feuerwerkskategorien"
       title="Definition der Feuerwerkskategorien"
       target="_blank"
@@ -28,7 +28,7 @@
     >
       Video abspielen
     </button>
-    <span v-else-if="productPropertyGetters.getPropertyId(variationProperty) !== 2">
+    <span v-else-if="productPropertyGetters.getPropertyId(variationProperty) !== 2" >
         {{ productPropertyGetters.getPropertyValue(variationProperty) }}
       </span>
   </template>

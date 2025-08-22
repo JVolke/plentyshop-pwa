@@ -1,7 +1,7 @@
 <template>
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
-      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex justify-between py-1">
+      <div v-if="propertyHasNameOrValue(variationProperty)" class="grid grid-cols-[150px_1fr] gap-2">
         <Component
           :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
           v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] && !excludeIds.includes(productPropertyGetters.getPropertyId(variationProperty))"

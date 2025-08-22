@@ -33,10 +33,10 @@
           </div>
           <hr>
           <div class="mt-2 variation-properties">
-            <div class="space-y-2">
-              <div class="flex justify-between">
+            <div class="grid gap-2">
+              <div class="grid grid-cols-[150px_1fr] gap-2">
                 <span class="font-semibold">Artikelnummer</span>
-                <span class="text-right">{{ product.variation.number }}</span>
+                <span >{{ product.variation.number }}</span>
               </div>
               <VariationProperties :product="product" />
             </div>
