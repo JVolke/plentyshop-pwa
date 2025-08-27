@@ -81,6 +81,26 @@
               </SfLink>
             </li>
           </div>
+          <!-- NEU: strukturierte Links (oder aus description geparst) -->
+          <ul v-if="columnLinks(column).length">
+            <SfListItem
+              v-for="(lnk, j) in columnLinks(column)"
+              :key="`col-${i+2}-link-${j}-${lnk.href}`"
+              class="py-2 !bg-transparent typography-text-sm"
+            >
+              <component
+                :is="isExternal(lnk.href) ? 'a' : NuxtLink"
+                :href="isExternal(lnk.href) ? lnk.href : undefined"
+                :to="!isExternal(lnk.href) ? localePath(lnk.href) : undefined"
+                :target="isExternal(lnk.href) ? '_blank' : undefined"
+                :rel="isExternal(lnk.href) ? 'noopener' : undefined"
+                :style="{ color: resolvedContent.colors?.text || undefined }"
+                class="no-underline text-neutral-600 hover:underline active:underline"
+              >
+                {{ lnk.text }}
+              </component>
+            </SfListItem>
+          </ul>
           <div
             v-if="column?.description"
             class="custom-html ml-4 text-sm hover:cursor-pointer"
@@ -125,6 +145,8 @@ const FOOTER_COLORS = {
 };
 
 const { resolvedContent } = useFooterBlock(props.content ?? null);
+type LinkItem = { text: string; href: string };
+
 // helper: ist Link extern?
 const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
@@ -150,6 +172,11 @@ const column1Links = computed(() => {
   // Fallback: Description-Zeilen parsen (Abwärtskompatibilität)
   return parseLinksFromDescription(resolvedContent.value?.column1?.description);
 });
+const columnLinks = (col?: { links?: LinkItem[]; description?: string }): LinkItem[] => {
+  const links = col?.links ?? [];
+  if (links.length) return links;
+  return parseLinksFromDescription(col?.description);
+};
 </script>
 
 <style scoped>

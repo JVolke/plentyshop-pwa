@@ -121,6 +121,41 @@
           data-testid="input-text-column-2"
         />
       </div>
+      <div class="py-2">
+        <div class="flex items-center justify-between mb-2">
+          <UiFormLabel>Links (Spalte 2)</UiFormLabel>
+          <SfButton
+            size="sm"
+            variant="primary"
+            @click="(footerBlock.column2.links ??= []).push({ text: '', href: '' })"
+          >
+            + Link
+          </SfButton>
+        </div>
+
+        <div
+          v-for="(link, idx) in (footerBlock.column2.links ?? [])"
+          :key="`c2-link-${idx}`"
+          class="grid grid-cols-1 md:grid-cols-12 gap-2 items-end mb-2"
+        >
+          <div class="md:col-span-5">
+            <UiFormLabel class="mb-1">Linktext</UiFormLabel>
+            <SfInput v-model="link.text" type="text" placeholder="z. B. Zahlungsarten" />
+          </div>
+          <div class="md:col-span-6">
+            <UiFormLabel class="mb-1">URL</UiFormLabel>
+            <SfInput v-model="link.href" type="text" placeholder="/zahlung" />
+          </div>
+          <div class="md:col-span-1 flex md:justify-end">
+            <SfButton
+              variant="tertiary"
+              @click="(footerBlock.column2.links ??= []).splice(idx, 1)"
+            >
+              Entfernen
+            </SfButton>
+          </div>
+        </div>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -163,6 +198,41 @@
           data-testid="input-text-column-3"
         />
       </div>
+      <div class="py-2">
+        <div class="flex items-center justify-between mb-2">
+          <UiFormLabel>Links (Spalte 3)</UiFormLabel>
+          <SfButton
+            size="sm"
+            variant="primary"
+            @click="(footerBlock.column3.links ??= []).push({ text: '', href: '' })"
+          >
+            + Link
+          </SfButton>
+        </div>
+
+        <div
+          v-for="(link, idx) in (footerBlock.column3.links ?? [])"
+          :key="`c3-link-${idx}`"
+          class="grid grid-cols-1 md:grid-cols-12 gap-2 items-end mb-2"
+        >
+          <div class="md:col-span-5">
+            <UiFormLabel class="mb-1">Linktext</UiFormLabel>
+            <SfInput v-model="link.text" type="text" placeholder="z. B. AGB" />
+          </div>
+          <div class="md:col-span-6">
+            <UiFormLabel class="mb-1">URL</UiFormLabel>
+            <SfInput v-model="link.href" type="text" placeholder="/agb" />
+          </div>
+          <div class="md:col-span-1 flex md:justify-end">
+            <SfButton
+              variant="tertiary"
+              @click="(footerBlock.column3.links ??= []).splice(idx, 1)"
+            >
+              Entfernen
+            </SfButton>
+          </div>
+        </div>
+      </div>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -204,6 +274,41 @@
           :placeholder="getEditorTranslation('column-4-description-placeholder')"
           data-testid="input-text-column-4"
         />
+      </div>
+      <div class="py-2">
+        <div class="flex items-center justify-between mb-2">
+          <UiFormLabel>Links (Spalte 4)</UiFormLabel>
+          <SfButton
+            size="sm"
+            variant="primary"
+            @click="(footerBlock.column4.links ??= []).push({ text: '', href: '' })"
+          >
+            + Link
+          </SfButton>
+        </div>
+
+        <div
+          v-for="(link, idx) in (footerBlock.column4.links ?? [])"
+          :key="`c4-link-${idx}`"
+          class="grid grid-cols-1 md:grid-cols-12 gap-2 items-end mb-2"
+        >
+          <div class="md:col-span-5">
+            <UiFormLabel class="mb-1">Linktext</UiFormLabel>
+            <SfInput v-model="link.text" type="text" placeholder="z. B. Widerruf" />
+          </div>
+          <div class="md:col-span-6">
+            <UiFormLabel class="mb-1">URL</UiFormLabel>
+            <SfInput v-model="link.href" type="text" placeholder="/widerruf" />
+          </div>
+          <div class="md:col-span-1 flex md:justify-end">
+            <SfButton
+              variant="tertiary"
+              @click="(footerBlock.column4.links ??= []).splice(idx, 1)"
+            >
+              Entfernen
+            </SfButton>
+          </div>
+        </div>
       </div>
     </UiAccordionItem>
 
