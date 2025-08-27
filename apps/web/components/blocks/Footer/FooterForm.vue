@@ -41,14 +41,14 @@
           <SfButton
             size="sm"
             variant="primary"
-            @click="resolvedContent.column1.links = [...(resolvedContent.column1.links ?? []), { text: '', href: '' }]"
+            @click="footerBlock.column1.links = [...(footerBlock.column1.links ?? []), { text: '', href: '' }]"
           >
             + Link
           </SfButton>
         </div>
 
         <div
-          v-for="(link, idx) in resolvedContent.column1.links ?? []"
+          v-for="(link, idx) in footerBlock.column1.links ?? []"
           :key="`c1-link-${idx}`"
           class="grid grid-cols-1 md:grid-cols-12 gap-2 items-end mb-2"
         >
@@ -61,7 +61,7 @@
             <SfInput v-model="link.href" type="text" placeholder="/versand" />
           </div>
           <div class="md:col-span-1 flex md:justify-end">
-            <SfButton variant="tertiary" @click="resolvedContent.column1.links.splice(idx, 1)">Entfernen</SfButton>
+            <SfButton variant="tertiary" @click="footerBlock.column1.links.splice(idx, 1)">Entfernen</SfButton>
           </div>
         </div>
 
