@@ -30,12 +30,66 @@
                 {{ t(`categories.${categories[0]?.key}.subcategories.${subcategoryKey}`) }}
               </SfLink>
             </SfListItem>
+            <!-- NEU: generierte Links aus column1.links ODER geparster description -->
+            <SfListItem
+              v-for="(lnk, i) in column1Links"
+              :key="`c1-extra-${i}-${lnk.href}`"
+              class="py-2 !bg-transparent typography-text-sm"
+            >
+              <!-- Interne Links über NuxtLink, externe als <a> -->
+              <component
+                :is="isExternal(lnk.href) ? 'a' : NuxtLink"
+                :href="isExternal(lnk.href) ? lnk.href : undefined"
+                :to="!isExternal(lnk.href) ? localePath(lnk.href) : undefined"
+                :target="isExternal(lnk.href) ? '_blank' : undefined"
+                :rel="isExternal(lnk.href) ? 'noopener' : undefined"
+                :style="{ color: resolvedContent.colors?.text || undefined }"
+                class="no-underline text-neutral-600 hover:underline active:underline"
+              >
+                {{ lnk.text }}
+              </component>
+            </SfListItem>
           </ul>
           <div
             v-if="resolvedContent.column1.description"
             class="custom-html ml-4 text-sm hover:cursor-pointer"
             v-html="resolvedContent.column1.description"
           />
+        </div>
+        <!-- Nach dem Description-Textarea ODER statt dessen (empfohlen statt HTML) -->
+        <div class="py-2">
+          <div class="flex items-center justify-between mb-2">
+            <UiFormLabel>Links (Spalte 1)</UiFormLabel>
+            <SfButton
+              size="sm"
+              variant="primary"
+              @click="resolvedContent.column1.links = [...(resolvedContent.column1.links ?? []), { text: '', href: '' }]"
+            >
+              + Link
+            </SfButton>
+          </div>
+
+          <div
+            v-for="(link, idx) in resolvedContent.column1.links ?? []"
+            :key="`c1-link-${idx}`"
+            class="grid grid-cols-1 md:grid-cols-12 gap-2 items-end mb-2"
+          >
+            <div class="md:col-span-5">
+              <UiFormLabel class="mb-1">Linktext</UiFormLabel>
+              <SfInput v-model="link.text" type="text" placeholder="z. B. Versand & Lieferung" />
+            </div>
+            <div class="md:col-span-6">
+              <UiFormLabel class="mb-1">URL</UiFormLabel>
+              <SfInput v-model="link.href" type="text" placeholder="/versand" />
+            </div>
+            <div class="md:col-span-1 flex md:justify-end">
+              <SfButton variant="tertiary" @click="resolvedContent.column1.links.splice(idx, 1)">Entfernen</SfButton>
+            </div>
+          </div>
+
+          <p class="text-xs text-neutral-500 mt-1">
+            Tipp: Interne Links mit „/…“ beginnen. Externe Links vollständig inkl. https:// eintragen.
+          </p>
         </div>
 
         <div
@@ -105,6 +159,31 @@ const FOOTER_COLORS = {
 };
 
 const { resolvedContent } = useFooterBlock(props.content ?? null);
+// helper: ist Link extern?
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
+
+// helper: Description -> Links (Zeilenweise "Text | URL")
+const parseLinksFromDescription = (desc?: string) => {
+  if (!desc) return [];
+  return desc
+    .split('\n')
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [text, href] = line.split('|').map((s) => s.trim());
+      if (!text || !href) return null;
+      return { text, href };
+    })
+    .filter(Boolean) as Array<{ text: string; href: string }>;
+};
+
+// computed: finale Links für Spalte 1
+const column1Links = computed(() => {
+  const links = (resolvedContent.value?.column1 as any)?.links as Array<{ text: string; href: string }> | undefined;
+  if (links?.length) return links;
+  // Fallback: Description-Zeilen parsen (Abwärtskompatibilität)
+  return parseLinksFromDescription(resolvedContent.value?.column1?.description);
+});
 </script>
 
 <style scoped>

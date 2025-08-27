@@ -13,7 +13,7 @@
     />
     <a
       v-else-if="productPropertyGetters.getPropertyId(variationProperty) === 9"
-      class="underline float-right"
+      class="underline"
       href="/1/definition-feuerwerkskategorien"
       title="Definition der Feuerwerkskategorien"
       target="_blank"

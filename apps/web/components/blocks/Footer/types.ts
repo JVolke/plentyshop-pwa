@@ -6,6 +6,10 @@ export interface FooterSettingsColumn {
   title: string;
   description?: string;
   showContactLink?: boolean;
+  links?: Array<{
+    text: string;
+    href: string;
+  }>;
 }
 
 export interface FooterSettingsColors {
