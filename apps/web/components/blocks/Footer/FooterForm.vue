@@ -61,7 +61,7 @@
             <SfInput v-model="link.href" type="text" placeholder="/versand" />
           </div>
           <div class="md:col-span-1 flex md:justify-end">
-            <SfButton variant="tertiary" @click="footerBlock.column1.links.splice(idx, 1)">Entfernen</SfButton>
+            <SfButton variant="tertiary" @click="(footerBlock.column1.links ??= []).splice(idx, 1)">Entfernen</SfButton>
           </div>
         </div>
 
