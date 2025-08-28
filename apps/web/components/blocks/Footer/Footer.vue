@@ -56,8 +56,6 @@
             v-html="resolvedContent.column1.description"
           />
         </div>
-
-
         <div
           v-for="(column, i) in [resolvedContent.column2, resolvedContent.column3, resolvedContent.column4]"
           :key="i"
@@ -109,6 +107,7 @@
         </div>
       </div>
     </div>
+
     <div>
       <div
         v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
