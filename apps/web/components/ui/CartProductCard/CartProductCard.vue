@@ -104,6 +104,7 @@
         >
           {{ format(currentFullPrice || 0) }}
         </span>
+
         <UiQuantitySelector
           ref="quantitySelectorReference"
           :disabled="disabled"
@@ -139,7 +140,7 @@ import { productGetters, cartGetters, manufacturerGetters, Manufacturer, product
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
-//import { debounce } from '../../../utils/debounce';
+import { debounce } from '../../../utils/debounce';
 
 const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
 const emit = defineEmits(['load']);
@@ -158,7 +159,7 @@ const deleteLoading = ref(false);
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
-const { getSetting } = useSiteSettings('bundleItemDisplay');
+const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
   return getSetting() !== '1';
 });
