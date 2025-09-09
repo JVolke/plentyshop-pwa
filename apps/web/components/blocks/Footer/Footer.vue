@@ -106,6 +106,11 @@
           />
         </div>
       </div>
+      <div class="w-100">
+        <a href="https://logo.haendlerbund.de/show.php?uuid=f8e294d2-3130-11e8-bcf5-9c5c8e4fb375-9183156061" target="_blank" >
+          <img src="https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/Logo/hb-logo.png" alt="Logo Händlerbund" width="150px" height="84px"  />
+        </a>
+      </div>
     </div>
 
     <div>
