@@ -4,8 +4,9 @@
       id="search-bar"
       ref="inputReference"
       v-model="inputModel"
-      :placeholder="t('search')"
+      data-testid="search-bar-input"
       :aria-label="t('krausesohn.search')"
+      :placeholder="t('search')"
       role="search"
       @focus="open"
     >

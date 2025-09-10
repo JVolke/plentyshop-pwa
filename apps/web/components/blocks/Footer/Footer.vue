@@ -112,7 +112,6 @@
         </a>
       </div>
     </div>
-
     <div>
       <div
         v-if="resolvedContent.footnote && resolvedContent.footnote.trim() !== ''"
@@ -148,7 +147,8 @@ const FOOTER_COLORS = {
   footnoteText: '#959795',
 };
 
-const { resolvedContent } = useFooterBlock(props.content ?? null);
+const { getFooterSettings } = useFooter();
+const resolvedContent = computed(() => props.content ?? getFooterSettings());
 type LinkItem = { text: string; href: string };
 
 // helper: ist Link extern?

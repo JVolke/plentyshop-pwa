@@ -124,6 +124,7 @@
     <UiButton
       v-else-if="!disabled"
       square
+      data-testid="remove-item-from-basket"
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
