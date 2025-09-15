@@ -67,7 +67,6 @@ export const useMatomoEcommerce = () => {
       window._paq.push(['trackAddToCart']);
     },
     trackRemoveFromCart: (id: string) => {
-      console.warn('useMatomoEcommerce: trackRemoveFromCart sollte in der Regel in Kombination mit removeEcommerceItem verwendet werden.');
       window._paq.push(['removeEcommerceItem', id]);
     },
   };
