@@ -57,9 +57,12 @@
         v-model="vatNumber"
         autocomplete="vatNumber"
         v-bind="vatNumberAttributes"
-        :invalid="Boolean(errors['vatNumber'])"
+        :invalid="invalidVAT"
+        @input="clearInvalidVAT"
       />
-      <ErrorMessage as="span" name="vatNumber" class="flex text-negative-700 text-sm mt-2" />
+      <span v-if="invalidVAT" class="flex text-negative-700 text-sm mt-2">
+        {{ t('storefrontError.address.vatInvalid') }}
+      </span>
     </label>
 
     <label class="md:col-span-2">
@@ -188,7 +191,7 @@ import type { AddressFormShippingProps } from './types';
 
 const { disabled, address, addAddress = false } = defineProps<AddressFormShippingProps>();
 
-const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
+const { isGuest, missingGuestCheckoutEmail, backToContactInformation, getSession } = useCustomer();
 const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
@@ -205,12 +208,14 @@ const {
   add: showNewForm,
   open: editing,
   addressToEdit,
+  defaultFormValues,
   hasCompany: hasShippingCompany,
   addressToSave: shippingAddressToSave,
   save: saveShippingAddress,
   validationSchema: shippingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Shipping);
+const { invalidVAT, clearInvalidVAT } = useCreateAddress(AddressType.Shipping);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
 const [firstName, firstNameAttributes] = defineField('firstName');
@@ -231,10 +236,19 @@ if (!addAddress && address) {
     ? true
     : Boolean(userAddressGetters.getCompanyName(address as Address));
 
+  const addressSource = invalidVAT.value ? shippingAddressToSave.value : address;
+
   setValues({
     ...address,
-    companyName: address?.companyName || shippingAddressToSave.value?.companyName || '',
-    vatNumber: address?.vatNumber || shippingAddressToSave.value?.vatNumber || '',
+    firstName: addressSource?.firstName || '',
+    lastName: addressSource?.lastName || '',
+    country: addressSource?.country || '',
+    streetName: addressSource?.streetName || '',
+    apartment: addressSource?.apartment || '',
+    city: addressSource?.city || '',
+    zipCode: addressSource?.zipCode || '',
+    companyName: addressSource.companyName || '',
+    vatNumber: addressSource.vatNumber || '',
   } as unknown as Record<string, string>);
 
   if (!hasShippingCompany.value) {
@@ -242,6 +256,20 @@ if (!addAddress && address) {
     vatNumber.value = '';
   }
 }
+
+const setDefaultFormValues = () => {
+  defaultFormValues.value = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    country: country.value,
+    streetName: streetName.value,
+    apartment: apartment.value,
+    city: city.value,
+    zipCode: zipCode.value,
+    companyName: companyName.value,
+    vatNumber: vatNumber.value,
+  };
+};
 
 const handleSaveShippingAsBilling = async (shippingAddressForm: Address) => {
   if (!restrictedAddresses.value && shippingAsBilling.value) {
@@ -294,13 +322,15 @@ const validateAndSubmitForm = async () => {
   if (missingGuestCheckoutEmail.value) return backToContactInformation();
 
   if (formData.valid) {
+    if (hasShippingCompany.value) setDefaultFormValues();
+
     try {
       setShippingSkeleton(true);
       await submitForm();
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === getErrorCode('1400')) {
-          await useCustomer().getSession();
+          await getSession();
           await submitForm();
         }
       } else if (error instanceof ApiError) {
@@ -310,7 +340,8 @@ const validateAndSubmitForm = async () => {
       setShippingSkeleton(false);
       formIsLoading.value = false;
     }
-    if (showNewForm.value) showNewForm.value = false;
+
+    if (showNewForm.value && !invalidVAT.value) showNewForm.value = false;
   }
 };
 

@@ -20,4 +20,7 @@ setPageMeta(t('homepage.title'), icon);
 const { getRobots, setRobotForStaticPage } = useRobots();
 getRobots();
 setRobotForStaticPage('Homepage');
+
+const { setBlocksListContext } = useBlockManager();
+setBlocksListContext('content');
 </script>
