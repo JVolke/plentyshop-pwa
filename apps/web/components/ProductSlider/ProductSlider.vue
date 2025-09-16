@@ -3,7 +3,7 @@
 
   <SfScrollable
     buttons-placement="floating"
-    class="pb-4 scrollbar-hidden"
+    class="scrollbar-hidden"
     :wrapper-class="wrapperClass"
     data-testid="product-slider"
   >
@@ -28,7 +28,7 @@
       class="max-w-48"
     />
   </SfScrollable>
-  <div class="mt-4 typography-text-xs flex gap-1">
+  <div class="mt-1 mb-2 typography-text-xs flex gap-1">
     <span>{{ t('asterisk') }}</span>
     <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
     <span v-else>{{ t('itemInclVAT') }}</span>

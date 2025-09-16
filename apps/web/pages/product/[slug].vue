@@ -72,24 +72,6 @@ definePageMeta({
   },
 });
 
-
-
-const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
-
-fetchCrossSelling({
-  itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'Similar'
-});
-
-const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts('crossSelling' + productId + 'Accessory');
-
-fetchCrossSellingAccessory({
-  itemId: productGetters.getItemId(product.value),
-  type: 'cross_selling',
-  crossSellingRelation: 'Accessory'
-});
-
 const RecommendedProductsAsync = defineAsyncComponent(
   async () => await import('@/components/RecommendedProducts/RecommendedProducts.vue'),
 );
@@ -106,6 +88,22 @@ await fetchProduct(productParams).then(() => {
   usePlentyEvent().emit('frontend:productLoaded', {
     product: product.value,
   });
+});
+
+const { fetchProducts: fetchCrossSelling, data: crossSellingItems } = useProducts('crossSelling' + productId + 'Similar');
+
+fetchCrossSelling({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Similar'
+});
+
+const { fetchProducts: fetchCrossSellingAccessory, data: crossSellingItemsAccessory } = useProducts('crossSelling' + productId + 'Accessory');
+
+fetchCrossSellingAccessory({
+  itemId: productGetters.getItemId(product.value),
+  type: 'cross_selling',
+  crossSellingRelation: 'Accessory'
 });
 
 if (Object.keys(product.value).length === 0) {
