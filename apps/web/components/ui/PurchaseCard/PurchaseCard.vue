@@ -38,7 +38,6 @@
                 <span class="font-semibold">Artikelnummer</span>
                 <span >{{ product.variation.number }}</span>
               </div>
-              <VariationProperties :product="product" />
             </div>
           </div>
           <div class="inline-flex items-center mt-4 mb-2">
@@ -145,6 +144,12 @@
             <client-only>
               <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1 && !isFirework && !isT1"/>
             </client-only>
+          </div>
+          <hr class="mt-2"/>
+          <div class="mt-2 variation-properties">
+            <div class="grid gap-2">
+              <VariationProperties :product="product" />
+            </div>
           </div>
         </section>
       </div>
