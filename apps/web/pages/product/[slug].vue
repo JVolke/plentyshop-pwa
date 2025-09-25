@@ -71,7 +71,6 @@ definePageMeta({
     return validateProductParams(route.params);
   },
 });
-
 const RecommendedProductsAsync = defineAsyncComponent(
   async () => await import('@/components/RecommendedProducts/RecommendedProducts.vue'),
 );
