@@ -34,10 +34,7 @@
           <CategoryDescription :category="productsCatalog.category"/>
         </template>
         <template #sidebar>
-          <!-- CategoryTree :category="productsCatalog.category" /-->
-          <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+          <BlocksSortFilter v-bind="sortFilter" />
         </template>
       </CategoryPageContent>
     </template>
@@ -45,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'], type: 'category' });
@@ -59,6 +56,9 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { open } = useDisclosure();
+const { getSortFilterCategoryTemplateBlock } = useCategoryTemplate();
+
+const sortFilter = getSortFilterCategoryTemplateBlock();
 
 const { buildCategoryLanguagePath } = useLocalization();
 const { isEditablePage } = useToolbar();
