@@ -7,9 +7,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { CategoryPageImageHeaderProps } from "~/modules/krausesohn-module/runtime/components/CategoryPageHeaderImage/types";
+import type { CategoryPageImageHeaderProps } from '#krause/components/CategoryPageHeaderImage/types'
 
-const props = defineProps<CategoryPageImageHeaderProps>();
+const props = defineProps<CategoryPageImageHeaderProps>()
 
 /** Definieren Sie ein Array (oder ein Objekt für direktere Zuordnung)
  *  Muss angepasst werden für jeden Mandanten
@@ -63,16 +63,21 @@ const categoryImageGroups: Record<string, number[]> = {
   // Fügen Sie hier weitere Gruppen hinzu
 };
 
-const image = computed(() => {
-  if (props.categoryId !== undefined) {
-    for (const imageUrl in categoryImageGroups) {
-      if (categoryImageGroups[imageUrl].includes(props.categoryId)) {
-        return imageUrl;
-      }
-    }
+// Hilfsfunktion zur klaren Typ-Narrowing
+function findImageForCategory(id: number): string | undefined {
+  for (const [imageUrl, ids] of Object.entries(categoryImageGroups)) {
+    // ids ist hier number[] (nicht undefined)
+    if (ids.includes(id)) return imageUrl
   }
-  return 'Deko-Banner-Desktop.webp'; // Fallback
-});
+  return undefined
+}
 
-const title = computed(() => props.title || ''); // Stellen Sie sicher, dass title
+// computed mit explizitem Rückgabetyp + Nullish-Checks
+const image = computed<string>(() => {
+  const id = props.categoryId
+  const resolved = id != null ? findImageForCategory(id) : undefined
+  return resolved ?? 'Deko-Banner-Desktop.webp'
+})
+
+const title = computed<string>(() => props.title ?? '')
 </script>

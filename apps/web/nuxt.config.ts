@@ -219,7 +219,8 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
-    '~/modules/matomo',
+    './modules/matomo',
+    './modules/krausesohn-module',
     'vuetify-nuxt-module',
   ],
   vuetify: {
@@ -424,4 +425,9 @@ export default defineNuxtConfig({
       }
     },
   },
+  alias: {
+    // Alias für direkten Zugriff auf alle runtime-Dateien des Moduls
+    '#krause': resolve('./modules/krausesohn-module/runtime'),
+    '#matomo': resolve('./modules/matomo/runtime'),
+  }
 });

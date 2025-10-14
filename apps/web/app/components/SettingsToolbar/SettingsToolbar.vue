@@ -32,8 +32,6 @@
 import { SfTooltip } from '@storefront-ui/vue';
 import pagesWhite from '~/assets/icons/paths/pages-white.svg';
 import pagesBlack from '~/assets/icons/paths/pages-black.svg';
-import pagesWhite from '~/assets/icons/paths/pages-white.svg';
-import pagesBlack from '~/assets/icons/paths/pages-black.svg';
 import bWhite from '~/assets/icons/paths/B-white.svg';
 import bBlack from '~/assets/icons/paths/B-black.svg';
 import mWhite from '~/assets/icons/paths/M-white.svg';

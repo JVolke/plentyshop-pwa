@@ -6,38 +6,14 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <template v-if="isEditablePage">
-      <narrow-container class="mb-20 px-4 md:px-0">
-        <CategoryDescription :category="productsCatalog.category"/>
-      </narrow-container>
-      <EditablePage :identifier="categoryGetters.getId(productsCatalog.category)" :type="'category'" />
-    </template>
-    <template v-else>
-      <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
-        <template #prefix>
-          <SfIconTune />
-        </template>
-        {{ t('listSettings') }}
-      </UiButton>
 
-      <CategoryPageHeaderImage
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :category-id="categoryGetters.getId(productsCatalog.category)"/>
-      <CategoryPageContent
-        v-if="productsCatalog?.products"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
-        <template #content>
-          <CategoryDescription :category="productsCatalog.category"/>
-        </template>
-        <template #sidebar>
-          <BlocksSortFilter v-bind="sortFilter" />
-        </template>
-      </CategoryPageContent>
-    </template>
+    <EditablePage
+      v-else
+      :has-enabled-actions="!!config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+      :identifier="identifier"
+      :type="'category'"
+      data-testid="category-page-content"
+    />
   </NuxtLayout>
 </template>
 

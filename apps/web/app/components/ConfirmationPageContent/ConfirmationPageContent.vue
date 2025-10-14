@@ -96,7 +96,6 @@ import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 import { paths } from '~/utils/paths';
-import ShopauskunftRBA from '~/modules/krausesohn-module/runtime/components/ShopauskunftRBA/ShopauskunftRBA.vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { order } = defineProps<ConfirmationPageContentProps>();

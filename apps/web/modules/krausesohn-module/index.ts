@@ -1,4 +1,4 @@
-import { defineNuxtModule, addComponent, createResolver, extendPages, addPlugin, updateRuntimeConfig } from '@nuxt/kit';
+import { defineNuxtModule, addComponentsDir, createResolver, extendPages, addPlugin, updateRuntimeConfig } from 'nuxt/kit';
 import type { NuxtPage } from '@nuxt/schema'
 
 export default defineNuxtModule({
@@ -29,39 +29,12 @@ export default defineNuxtModule({
 
 
     // Komponente hinzufügen
-    addComponent({
-      name: 'ShippingTimer',
-      filePath: resolve('./runtime/components/ShippingTimer.vue'),
-    });
-    addComponent({
-      name: 'CategoryPageHeaderImage',
-      filePath: resolve('./runtime/components/CategoryPageHeaderImage/CategoryPageHeaderImage.vue'),
-    });
-    addComponent({
-      name: 'CategoryDescription',
-      filePath: resolve('./runtime/components/CategoryDescription/CategoryDescription.vue'),
-    });
-
-    addComponent({
-      name: 'ShopAuskunft',
-      filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunft.vue'),
-    });
-    addComponent({
-      name: 'ShopAuskunftRBA',
-      filePath: resolve('./runtime/components/ShopAuskunft/ShopAuskunftRBA.vue'),
-    });
-    addComponent({
-      name: 'KrauseSohnBanner',
-      filePath: resolve('./runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue'),
-    });
-    addComponent({
-      name: 'KrauseSohnNotifyMessage',
-      filePath: resolve('./runtime/components/KrauseSohnNotifyMessage/KrauseSohnNotifyMessage.vue'),
-    });
-    addComponent({
-      name: 'FeuerwerkLink',
-      filePath: resolve('./runtime/components/FeuerwerkLink/FeuerwerkLink.vue'),
-    });
+    // Alle Komponenten unter runtime/components werden global nutzbar (<ShopAuskunft /> etc.)
+    addComponentsDir({
+      path: resolve('./runtime/components'),
+      pathPrefix: false, // Name = Dateiname, ohne Verzeichnispräfix
+      global: true       // überall nutzbar ohne Import
+    })
 
     nuxt.hook('components:extend', (components) => {
       const uiButton = components.find((c) => c.pascalName === 'AddressFormShipping');
@@ -82,6 +55,5 @@ export default defineNuxtModule({
       })
     })
 
-    //addPlugin(resolve('./runtime/plugins/shopauskunft.client'));
   },
 });

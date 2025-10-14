@@ -6,8 +6,6 @@
 </template>
 
 <script lang="ts" setup>
-import KrauseSohnBanner from '~/modules/krausesohn-module/runtime/components/KrauseSohnBanner/KrauseSohnBanner.vue';
-
 definePageMeta({
   pageType: 'static',
   isBlockified: true,

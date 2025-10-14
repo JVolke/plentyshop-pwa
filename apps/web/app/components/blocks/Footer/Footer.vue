@@ -140,7 +140,6 @@
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import type { FooterProps } from './types';
 import { categories } from '~/mocks';
-import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 const { t } = useI18n();
 const props = defineProps<FooterProps>();
 const localePath = useLocalePath();

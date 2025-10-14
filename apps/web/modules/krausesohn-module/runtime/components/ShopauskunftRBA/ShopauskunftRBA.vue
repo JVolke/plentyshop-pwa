@@ -2,7 +2,8 @@
   <div class="shopauskunft-widget-container"></div>
 </template>
 <script setup lang="ts">
-import type { shopauskunftPropsType } from '~/modules/krausesohn-module/runtime/components/ShopauskunftRBA/types';
+import type { shopauskunftPropsType } from '#krause/components/ShopauskunftRBA/types';
+
 import { orderGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<shopauskunftPropsType>();

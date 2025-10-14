@@ -8,7 +8,7 @@ import {
   usePlentyEvent
 } from '#imports'
 import { cartGetters, orderGetters, productGetters } from '@plentymarkets/shop-api'
-import matomoScriptContent from '~/modules/matomo/runtime/matomo.js?raw'
+import matomoScriptContent from '#matomo/matomo.js?raw'
 
 declare global { interface Window { _paq: any[] } }
 

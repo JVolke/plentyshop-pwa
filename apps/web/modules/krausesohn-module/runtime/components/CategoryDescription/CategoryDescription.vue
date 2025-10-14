@@ -5,7 +5,7 @@
 </template>
 <script setup lang="ts">
 import { categoryGetters } from '@plentymarkets/shop-api';
-import type { CategoryDescriptionProps } from '~/modules/krausesohn-module/runtime/components/CategoryDescription/types';
+import type { CategoryDescriptionProps } from '#krause/components/CategoryDescription/types';
 
 const { category } = defineProps<CategoryDescriptionProps>();
 let description: string | undefined;

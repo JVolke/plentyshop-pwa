@@ -162,7 +162,7 @@ import {
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { paths } from '~/utils/paths';
 import KrauseSohnNotifyMessage
-  from '~/modules/krausesohn-module/runtime/components/KrauseSohnNotifiyMessage/KrauseSohnNotifyMessage.vue';
+  from '#krause/components/KrauseSohnNotifiyMessage/KrauseSohnNotifyMessage.vue';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();

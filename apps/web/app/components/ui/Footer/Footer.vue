@@ -39,9 +39,8 @@
 </template>
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
-import { categories } from '~/modules/krausesohn-module/runtime/mocks';
+import { categories } from '#krause/mocks';
 import type { FooterProps } from './types';
-import ShopAuskunft from '~/modules/krausesohn-module/runtime/components/ShopAuskunft.vue';
 
 const storename: string = useRuntimeConfig().public.storename;
 const companyName: string = `© ${storename} ${new Date().getFullYear()}`;
