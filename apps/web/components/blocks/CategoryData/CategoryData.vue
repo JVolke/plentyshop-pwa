@@ -2,14 +2,14 @@
   <div :style="inlineStyle" data-testid="category-data">
     <template v-for="key in content.fieldsOrder" :key="key">
       <template v-if="content.fields[key]">
-        <h1
+        <!-- h1
           v-if="key === 'name' && name"
           :key="key"
           class="font-bold typography-headline-3 md:typography-headline-2"
           data-testid="category-name"
         >
           {{ name }}
-        </h1>
+        </h1 -->
 
         <p
           v-if="key === 'description1' && description1"
