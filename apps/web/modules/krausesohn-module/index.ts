@@ -1,5 +1,5 @@
-import { defineNuxtModule, addComponentsDir, createResolver, extendPages, addPlugin, updateRuntimeConfig } from 'nuxt/kit';
-import type { NuxtPage } from '@nuxt/schema'
+import { defineNuxtModule, addComponentsDir, createResolver, updateRuntimeConfig } from 'nuxt/kit';
+
 
 export default defineNuxtModule({
   setup(options, nuxt) {
@@ -43,6 +43,7 @@ export default defineNuxtModule({
       }
     });
 
+    // @ts-expect-error -- i18n Hook ist zur Laufzeit vorhanden, Typen fehlen nur lokal
     nuxt.hook('i18n:registerModule', (register) => {
       register({
         langDir: resolve('./runtime/lang'),

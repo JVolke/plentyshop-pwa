@@ -1,6 +1,5 @@
 // modules/matomo/index.ts
-import { addComponent, addPlugin, createResolver, defineNuxtModule, installModule, updateRuntimeConfig  } from '@nuxt/kit';
-import { defu } from 'defu';
+import { addPlugin, createResolver, defineNuxtModule, installModule, updateRuntimeConfig  } from 'nuxt/kit';
 
 export interface ModuleOptions {
   url: string;

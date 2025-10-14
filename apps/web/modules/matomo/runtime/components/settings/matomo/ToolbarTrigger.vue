@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import paintBrushWhite from 'assets/icons/paths/M-white.svg';
-import paintBrushBlack from 'assets/icons/paths/M-black.svg';
+import paintBrushWhite from '~/assets/icons/paths/M-white.svg';
+import paintBrushBlack from '~/assets/icons/paths/M-black.svg';
 
 defineProps({
   active: Boolean,
