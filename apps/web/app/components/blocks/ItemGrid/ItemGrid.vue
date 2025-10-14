@@ -63,6 +63,8 @@
       />
     </template>
   </div>
+  <CategoryDescription :category="productsCatalog.category"/>
+
 </template>
 
 <script setup lang="ts">

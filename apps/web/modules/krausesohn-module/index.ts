@@ -32,7 +32,7 @@ export default defineNuxtModule({
     // Alle Komponenten unter runtime/components werden global nutzbar (<ShopAuskunft /> etc.)
     addComponentsDir({
       path: resolve('./runtime/components'),
-      pathPrefix: false, // Name = Dateiname, ohne Verzeichnispräfix
+      pathPrefix: true, // Name = Dateiname, ohne Verzeichnispräfix
       global: true       // überall nutzbar ohne Import
     })
 
