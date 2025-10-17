@@ -6,7 +6,10 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-
+    <CategoryPageHeaderImage
+      v-if="productsCatalog.products.length > 0"
+      :title="categoryGetters.getCategoryName(productsCatalog.category)"
+      :category-id="categoryGetters.getId(productsCatalog.category)"/>
     <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
       <EditablePage
         :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
@@ -24,10 +27,6 @@
         {{ t('listSettings') }}
       </UiButton>
 
-      <CategoryPageHeaderImage
-        v-if="productsCatalog.products.length > 0"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :category-id="categoryGetters.getId(productsCatalog.category)"/>
       <CategoryPageContent
         v-if="productsCatalog?.products"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -35,6 +34,10 @@
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
       >
+        <CategoryPageHeaderImage
+          v-if="productsCatalog.products.length > 0"
+          :title="categoryGetters.getCategoryName(productsCatalog.category)"
+          :category-id="categoryGetters.getId(productsCatalog.category)"/>
         <template #sidebar>
           <CategoryTree :category="productsCatalog.category" />
           <CategorySorting />
