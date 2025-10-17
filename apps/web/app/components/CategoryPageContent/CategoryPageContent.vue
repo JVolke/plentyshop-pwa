@@ -84,6 +84,7 @@
         />
       </div>
     </div>
+    <slot name="content" />
   </NarrowContainer>
 </template>
 

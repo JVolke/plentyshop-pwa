@@ -10,13 +10,20 @@
       v-if="productsCatalog.products.length > 0"
       :title="categoryGetters.getCategoryName(productsCatalog.category)"
       :category-id="categoryGetters.getId(productsCatalog.category)"/>
-    <template v-if="config.enableCategoryEditing || productsCatalog.category?.type === 'content'">
+    <template v-if="!config.enableCategoryEditing ">
       <EditablePage
         :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
         :identifier="identifier"
         :type="'category'"
         data-testid="category-page-content"
       />
+    </template>
+    <template v-else-if="productsCatalog.category?.type === 'content'">
+      <NarrowContainer
+        class="mb-20 px-4 md:px-0" data-testid="category-layout">
+        <CategoryDescription
+          :category="productsCatalog.category"/>
+      </NarrowContainer>
     </template>
 
     <template v-else>
@@ -34,10 +41,6 @@
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
       >
-        <CategoryPageHeaderImage
-          v-if="productsCatalog.products.length > 0"
-          :title="categoryGetters.getCategoryName(productsCatalog.category)"
-          :category-id="categoryGetters.getId(productsCatalog.category)"/>
         <template #sidebar>
           <CategoryTree :category="productsCatalog.category" />
           <CategorySorting />
