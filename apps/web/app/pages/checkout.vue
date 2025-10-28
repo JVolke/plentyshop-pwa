@@ -7,8 +7,10 @@
         <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
         <UiDivider id="top-billing-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
-        <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <div v-if="showBillingAddressSection">
+          <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
+          <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        </div>
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :disabled="disableShippingPayment"
@@ -21,11 +23,12 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
           <PreferredDelivery v-if="countryHasDelivery" />
           <UiDivider v-if="preferredDeliveryAvailable" class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
       </div>
       <div class="col-span-6 xl:col-span-5">
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
@@ -72,9 +75,11 @@ const {
   persistBillingAddress,
   setBillingSkeleton,
   setShippingSkeleton,
+  showBillingAddressSection,
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
 const { fetchPaymentMethods } = usePaymentMethods();
+const { getScript } = usePayPal();
 const { paymentLoading, shippingLoading, handleShippingMethodUpdate, handlePaymentMethodUpdate } =
   useCheckoutPagePaymentAndShipping();
 useHead({
@@ -87,12 +92,7 @@ const checkPayPalPaymentsEligible = async () => {
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 
-    await Promise.all([
-      useGooglePay().checkIsEligible(),
-      useApplePay().checkIsEligible(),
-      usePayPal().updateAvailableAPMs(currency.value, true),
-    ]);
-    await fetchPaymentMethods();
+    await getScript(currency.value, true);
   }
 };
 await callOnce(async () => {

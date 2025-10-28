@@ -69,6 +69,7 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
+const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
 
 const { open } = useDisclosure();
@@ -83,6 +84,10 @@ definePageMeta({
   type: 'category',
   isBlockified: false,
   identifier: 0,
+});
+
+watchEffect(() => {
+  route.meta.isBlockified = isEditablePage.value;
 });
 
 const breadcrumbs = computed(() => {
