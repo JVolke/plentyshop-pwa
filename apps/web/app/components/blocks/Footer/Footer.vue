@@ -157,7 +157,6 @@ const getColumnSwitches = (column: FooterSettingsColumn) => {
     state: true,
   }));
 };
-const resolvedContent = computed(() => props.content ?? getFooterSettings());
 type LinkItem = { text: string; href: string };
 
 // helper: ist Link extern?

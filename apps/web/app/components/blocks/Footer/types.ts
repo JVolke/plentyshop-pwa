@@ -4,6 +4,8 @@ export type FooterProps = {
   content?: FooterSettings;
 };
 
+type Link = { text: string; href: string }
+
 export interface FooterSwitchDefinition {
   columnGroup: 'legal' | 'services';
   key: string;
@@ -16,10 +18,7 @@ export interface FooterSettingsColumn {
   title: string;
   description?: string;
   showContactLink?: boolean;
-  links?: Array<{
-    text: string;
-    href: string;
-  }>;
+  links?: Link[];
   showRegisterLink?: boolean;
   showTermsAndConditions?: boolean;
   showCancellationRights?: boolean;
@@ -27,7 +26,7 @@ export interface FooterSettingsColumn {
   showLegalDisclosure?: boolean;
   showPrivacyPolicy?: boolean;
   showDeclarationOfAccessibility?: boolean;
-  [key: string]: string | boolean | undefined;
+  [key: string]: string | boolean | Link[] | undefined;
 }
 
 export interface FooterSettingsColors {
