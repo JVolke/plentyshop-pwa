@@ -10,13 +10,14 @@
       v-if="productsCatalog.products.length > 0"
       :title="categoryGetters.getCategoryName(productsCatalog.category)"
       :category-id="categoryGetters.getId(productsCatalog.category)"/>
-    <template v-if="!config.enableCategoryEditing ">
-      <EditablePage
+    <template v-if="!config.enableCategoryEditing">
+      <!-- Testing -->
+      <!-- EditablePage
         :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
         :identifier="identifier"
         :type="'category'"
         data-testid="category-page-content"
-      />
+      / -->
     </template>
     <template v-else-if="productsCatalog.category?.type === 'content'">
       <NarrowContainer
