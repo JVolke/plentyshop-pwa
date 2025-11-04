@@ -206,6 +206,7 @@ const priceWithProperties = computed(
   () =>
     (productGetters.getSpecialOffer(product) ||
       productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
+      productGetters.getPrice(product) ||
       0) + getPropertiesPrice(product),
 );
 
