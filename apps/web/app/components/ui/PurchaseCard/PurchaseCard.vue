@@ -160,11 +160,65 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters, manufacturerGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
-import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
-const { product, reviewAverage } = defineProps<PurchaseCardProps>();
+const props = withDefaults(defineProps<PurchaseCardProps>(), {
+  configuration: () => ({
+    fields: {
+      itemName: true,
+      price: true,
+      tags: true,
+      availability: true,
+      starRating: true,
+      orderProperties: true,
+      variationProperties: true,
+      previewText: true,
+      attributes: true,
+      itemBundle: false,
+      graduatedPrices: true,
+      addToWishlist: true,
+      quantityAndAddToCart: true,
+      itemText: false,
+      technicalData: false,
+    },
+    fieldsOrder: [
+      'itemName',
+      'price',
+      'tags',
+      'availability',
+      'starRating',
+      'variationProperties',
+      'orderProperties',
+      'previewText',
+      'attributes',
+      'itemBundle',
+      'graduatedPrices',
+      'addToWishlist',
+      'quantityAndAddToCart',
+      'itemText',
+      'technicalData',
+    ],
+    fieldsDisabled: ['quantityAndAddToCart', 'price', 'itemBundle', 'attributes'],
+    wishlistSize: 'small',
+
+    dropShadow: true,
+    borders: true,
+    borderColor: '#EFF4F1',
+    layout: {
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
+  }),
+});
+
+const { currentProduct } = useProducts();
+
+const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
+const reviewAverage = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 const { getSetting } = useSiteSettings('dontSplitItemBundle');
 const showBundleComponents = computed(() => {
@@ -184,12 +238,24 @@ const {
 const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
+const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(props?.product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
-const { crossedPrice } = useProductPrice(product);
-const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
+const { crossedPrice } = useProductPrice(props?.product);
+const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const localePath = useLocalePath();
+
+const inlineStyle = computed(() => {
+  const layout = props?.configuration?.layout || ({} as PriceCardPadding);
+
+  return {
+    paddingTop: layout.paddingTop ? `${layout.paddingTop}px` : 0,
+    paddingBottom: layout.paddingBottom ? `${layout.paddingBottom}px` : 0,
+    paddingLeft: layout.paddingLeft ? `${layout.paddingLeft}px` : 0,
+    paddingRight: layout.paddingRight ? `${layout.paddingRight}px` : 0,
+    borderColor: props?.configuration?.borderColor || 'transparent',
+  };
+});
 
 onMounted(() => {
   resetInvalidFields();
@@ -204,10 +270,10 @@ onBeforeRouteLeave(() => {
 
 const priceWithProperties = computed(
   () =>
-    (productGetters.getSpecialOffer(product) ||
-      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
-      productGetters.getPrice(product) ||
-      0) + getPropertiesPrice(product),
+    (productGetters.getSpecialOffer(props?.product) ||
+      productGetters.getGraduatedPriceByQuantity(props?.product, quantitySelectorValue.value)?.unitPrice.value ||
+      productGetters.getPrice(props?.product) ||
+      0) + getPropertiesPrice(props?.product),
 );
 
 
@@ -229,8 +295,8 @@ const isT1 = computed(()=>{
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
-    productGetters.getDefaultBasePrice(product),
+    productGetters.getGraduatedPriceByQuantity(props?.product, quantitySelectorValue.value)?.basePrice ??
+    productGetters.getDefaultBasePrice(props?.product),
 );
 
 const handleValidationErrors = (): boolean => {
@@ -263,14 +329,14 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   const addedToCart = await addToCart({
-    productId: Number(productGetters.getId(product)),
+    productId: Number(productGetters.getId(props?.product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
   });
 
   if (addedToCart) {
     quickCheckout
-      ? openQuickCheckout(product, quantitySelectorValue.value)
+      ? openQuickCheckout(props?.product, quantitySelectorValue.value)
       : send({ message: t('addedToCart'), type: 'positive' });
 
     if (getSetting() === '0') {
@@ -303,9 +369,9 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
+const isSalableText = computed(() => (productGetters.isSalable(props?.product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
-const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(props?.product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

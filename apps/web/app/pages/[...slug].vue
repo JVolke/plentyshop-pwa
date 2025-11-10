@@ -10,12 +10,13 @@
       v-if="productsCatalog.products.length > 0"
       :title="categoryGetters.getCategoryName(productsCatalog.category)"
       :category-id="categoryGetters.getId(productsCatalog.category)"/>
-    <template v-if="!config.enableCategoryEditing">
+    <template v-if="!isBlockified">
       <EditablePage
-        :has-enabled-actions="config.enableCategoryEditing || productsCatalog.category?.type === 'content'"
+        :has-enabled-actions="isBlockified"
         :identifier="identifier"
         :type="'category'"
         data-testid="category-page-content"
+        :prevent-blocks-request="productsCatalog.category?.type === 'item'"
       />
     </template>
     <template v-else-if="productsCatalog.category?.type === 'content'">
@@ -69,7 +70,6 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const { isEditablePage } = useToolbar();
 const config = useRuntimeConfig().public;
 
 const { open } = useDisclosure();
@@ -78,16 +78,14 @@ const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
 );
 
+const isBlockified = computed(() => config.enableCategoryEditing || productsCatalog.value.category?.type === 'content');
+
 definePageMeta({
   layout: false,
   middleware: ['category-guard'],
   type: 'category',
   isBlockified: false,
   identifier: 0,
-});
-
-watchEffect(() => {
-  route.meta.isBlockified = isEditablePage.value;
 });
 
 const breadcrumbs = computed(() => {
@@ -170,6 +168,11 @@ watch(
     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
   },
 );
+
+watchEffect(() => {
+  route.meta.isBlockified = isBlockified.value;
+  route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
+});
 
 useHead({
   title: headTitle,

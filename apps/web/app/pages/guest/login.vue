@@ -20,7 +20,7 @@
           <OrDivider />
         </template>
 
-        <form :class="{ 'mt-4': isAvailable }" @submit.prevent="loginUser">
+        <form :class="{ 'mt-4': isAvailable('guestLoginPage').value }" @submit.prevent="loginUser">
           <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
 
           <label>
@@ -91,7 +91,7 @@ const isAuthenticationOpen = ref(false);
 const { login, loading } = useCustomer();
 const { send } = useNotification();
 const { data: cart } = useCart();
-const { isAvailable, loadConfig, loadedConfig } = usePayPal();
+const { loadConfig, loadedConfig, isAvailable } = usePayPal();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
