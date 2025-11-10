@@ -15,8 +15,8 @@
 
         <OrDivider />
 
-        <template v-if="loadedConfig && isAvailable">
-          <PayPalExpressButton class="mt-4" type="CartPreview" />
+        <template v-if="loadedConfig && isAvailable('guestLoginPage').value">
+          <PayPalExpressButton class="mt-4" location="guestLoginPage" type="CartPreview" />
           <OrDivider />
         </template>
 

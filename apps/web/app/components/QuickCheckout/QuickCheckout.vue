@@ -119,7 +119,7 @@
         >
           {{ t('goToCheckout') }}
         </UiButton>
-        <OrDivider v-if="isPaypalAvailable" class="my-4" />
+        <OrDivider v-if="isPaypalAvailable('quickCheckout')" class="my-4" />
         <PayPalExpressButton
           class="w-full text-center"
           location="quickCheckout"

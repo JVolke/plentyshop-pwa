@@ -15,12 +15,12 @@
 
         <OrDivider />
 
-        <template v-if="loadedConfig && isAvailable">
+        <template v-if="loadedConfig && isAvailable('guestLoginPage').value">
           <PayPalExpressButton class="mt-4" type="CartPreview" />
           <OrDivider />
         </template>
 
-        <form :class="{ 'mt-4': isAvailable }" @submit.prevent="loginUser">
+        <form :class="{ 'mt-4': isAvailable('guestLoginPage').value }" @submit.prevent="loginUser">
           <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
 
           <label>

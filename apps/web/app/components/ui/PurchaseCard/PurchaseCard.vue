@@ -277,7 +277,7 @@ const priceWithProperties = computed(
 );
 
 
-const getFireworkProperty = productGetters.getPropertyById(4, product);
+const getFireworkProperty = productGetters.getPropertyById(4, props?.product);
 const isFirework = computed(()=>{
   if (getFireworkProperty)
   {
