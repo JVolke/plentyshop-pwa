@@ -6,52 +6,18 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <CategoryPageHeaderImage
-      v-if="productsCatalog.products.length > 0"
-      :title="categoryGetters.getCategoryName(productsCatalog.category)"
-      :category-id="categoryGetters.getId(productsCatalog.category)"/>
-    <template v-if="!isBlockified">
-      <EditablePage
-        :has-enabled-actions="isBlockified"
-        :identifier="identifier"
-        :type="'category'"
-        data-testid="category-page-content"
-        :prevent-blocks-request="productsCatalog.category?.type === 'item'"
-      />
-    </template>
-    <template v-else-if="productsCatalog.category?.type === 'content'">
-      <NarrowContainer
-        class="mb-20 px-4 md:px-0" data-testid="category-layout">
-        <CategoryDescription
-          :category="productsCatalog.category"/>
-      </NarrowContainer>
-    </template>
 
-    <template v-else>
-      <CategoryPageContent
-        v-if="productsCatalog?.products"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
-        <template #sidebar>
-          <CategoryTree :category="productsCatalog.category" />
-          <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
-        </template>
-        <template #content>
-          <CategoryDescription
-            :category="productsCatalog.category"/>
-        </template>
-      </CategoryPageContent>
-    </template>
+    <EditablePage
+      :identifier="identifier"
+      :type="'category'"
+      data-testid="category-page-content"
+      :prevent-blocks-request="productsCatalog.category?.type === 'item'"
+    />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const { t, locale } = useI18n();
@@ -60,22 +26,19 @@ const router = useRouter();
 const { setCategoriesPageMeta } = useCanonical();
 const { setBlocksListContext } = useBlockManager();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { fetchProducts, data: productsCatalog, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-const config = useRuntimeConfig().public;
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
 );
 
-const isBlockified = computed(() => config.enableCategoryEditing || productsCatalog.value.category?.type === 'content');
-
 definePageMeta({
   layout: false,
   middleware: ['category-guard'],
   type: 'category',
-  isBlockified: false,
+  isBlockified: true,
   identifier: 0,
 });
 
@@ -108,12 +71,7 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
-  setBlocksListContext(
-    categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getId(productsCatalog.value.category))
-      ?.type === 'item'
-      ? 'productCategory'
-      : 'content',
-  );
+  setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
 });
 
 const { setPageMeta } = usePageMeta();
@@ -161,7 +119,6 @@ watch(
 );
 
 watchEffect(() => {
-  route.meta.isBlockified = isBlockified.value;
   route.meta.identifier = productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0;
 });
 
