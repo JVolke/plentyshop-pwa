@@ -170,6 +170,9 @@
                     </template>
                   </i18n-t>
                 </div>
+                <client-only>
+                  <ShippingTimer v-if="productGetters.getAvailabilityId(product) === 1 && !isFirework && !isT1"/>
+                </client-only>
                 <template v-if="showPayPalButtons">
                   <PayPalExpressButton
                     type="SingleItem"
@@ -417,4 +420,20 @@ const scrollToReviews = () => {
     reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   }
 };
+
+const getFireworkProperty = productGetters.getPropertyById(4, props?.product);
+const isFirework = computed(()=>{
+  if (getFireworkProperty)
+  {
+    return getFireworkProperty.values.selectionId === 5;
+  }
+  return false;
+});
+const isT1 = computed(()=>{
+  if (getFireworkProperty)
+  {
+    return getFireworkProperty.values.selectionId === 12;
+  }
+  return false;
+});
 </script>
