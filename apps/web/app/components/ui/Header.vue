@@ -9,7 +9,8 @@
           class="group relative hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
-          :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
+          :style="{ color: iconColor }"
+          :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
           variant="tertiary"
           square
           data-testid="wishlist-page-navigation"
@@ -29,7 +30,7 @@
           class="group relative  hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.cart)"
-          :aria-label="t('numberInCart', { count: cartItemsCount })"
+          :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
           variant="tertiary"
           square
         >
@@ -83,7 +84,7 @@
           v-else
           class="group relative text-primary-500  hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          :aria-label="t('auth.login.openLoginForm')"
+          :aria-label="t('authentication.login.openLoginForm')"
           square
           @click="navigateToLogin"
         >
@@ -100,7 +101,7 @@
   >
     <header>
       <UiButton
-        :aria-label="t('closeDialog')"
+        :aria-label="t('common.navigation.closeDialog')"
         square
         variant="tertiary"
         class="absolute right-2 top-2"
@@ -128,7 +129,7 @@
     >
       <header class="mb-4">
         <UiButton
-          :aria-label="t('closeDialog')"
+          :aria-label="t('common.navigation.closeDialog')"
           square
           variant="tertiary"
           class="absolute right-4 top-2"
@@ -137,7 +138,7 @@
           <SfIconClose class="text-neutral-500" />
         </UiButton>
         <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
-          {{ t('search') }}
+          {{ t('common.actions.search') }}
         </h3>
       </header>
       <UiSearch :close="searchModalClose" />
@@ -176,7 +177,7 @@ const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { t, localeCodes } = useI18n();
+const { localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

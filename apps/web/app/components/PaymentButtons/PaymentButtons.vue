@@ -43,7 +43,7 @@
       <template v-if="createOrderLoading || additionalInformationLoading">
         <SfLoaderCircular class="flex justify-center items-center" size="sm" />
       </template>
-      <template v-else>{{ t('buy') }}</template>
+      <template v-else>{{ t('common.actions.buy') }}</template>
     </UiButton>
   </div>
 
@@ -81,7 +81,6 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { keyBy } from '~/utils/keyBy';
 import type { PaymentButtonComponent } from '@plentymarkets/shop-core';
 
-const { t } = useI18n();
 const { components } = useDynamicPaymentButtons();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
@@ -198,12 +197,12 @@ const order = async () => {
 
 const readyToBuy = () => {
   if (anyAddressFormIsOpen.value) {
-    send({ type: 'secondary', message: t('unsavedAddress') });
+    send({ type: 'secondary', message: t('address.unsavedWarning') });
     return backToFormEditing();
   }
 
   if (!hasShippingAddress.value || !hasBillingAddress.value) {
-    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }

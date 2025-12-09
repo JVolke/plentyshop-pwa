@@ -188,7 +188,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ t('saveAddress') }}
+          {{ t('common.actions.saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -197,7 +197,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="t('closeAddressForm')"
+          :aria-label="t('common.navigation.closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
@@ -217,7 +217,6 @@ const { disabled, address, addAddress = false } = defineProps<AddressFormShippin
 
 const { isGuest, missingGuestCheckoutEmail, backToContactInformation } = useCustomer();
 const { fetchSession } = useFetchSession();
-const { t } = useI18n();
 const { default: shippingCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { handleCartTotalChanges } = useCartTotalChange();
