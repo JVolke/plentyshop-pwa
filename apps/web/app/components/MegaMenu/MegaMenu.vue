@@ -47,7 +47,7 @@
             ref="triggerReference"
             data-testid="category-button"
             class="inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2
-                !text-white hover:!bg-neutral-50 hover:!text-primary-500
+                !text-white hover:!bg-neutral-50 hover:!text-primary-500 hover:cursor-pointer
                 active:!bg-neutral-50 active:!text-primary-500"
             @click="onCategoryTap(menuNode)"
           >

@@ -162,7 +162,7 @@
           variant="secondary"
           type="submit"
         >
-          {{ t('saveAddress') }}
+          {{ t('common.actions.saveAddress') }}
         </UiButton>
 
         <UiButton
@@ -171,7 +171,7 @@
           variant="secondary"
           class="ml-2"
           :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="t('closeAddressForm')"
+          :aria-label="t('common.navigation.closeAddressForm')"
           @click="edit"
         >
           <SfIconClose />
