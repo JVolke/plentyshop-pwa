@@ -10,8 +10,7 @@
           variant="tertiary"
           square
           :aria-label="t('common.navigation.closeMenu')"
-          class="mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-700 active:text-primary-500 "
-          :style="{ color: iconColor }"
+          class="mr-5 bg-transparent hover:bg-primary-800 hover:!text-white active:bg-primary-700 active:text-primary-500 "
           @click="openMenu([])"
         >
           <SfIconMenu class="text-primary-500" />
