@@ -122,22 +122,11 @@ if (Object.keys(product.value).length === 0) {
     statusMessage: 'Product not found',
   });
 }
+
 setCurrentProduct(productForEditor.value || ({} as Product));
-
-watch(
-  disableActions,
-  () => {
-    setCurrentProduct(productForEditor.value || ({} as Product));
-  },
-  { immediate: true },
-);
-
 setProductMeta();
 setBlocksListContext('product');
-
-onBeforeRouteLeave(() => {
-  setCurrentProduct({} as Product);
-});
+setBreadcrumbs();
 
 onBeforeRouteLeave(() => {
   setCurrentProduct({} as Product);
@@ -149,7 +138,13 @@ async function fetchReviews() {
 }
 await fetchReviews();
 
-setBreadcrumbs();
+watch(
+  disableActions,
+  () => {
+    setCurrentProduct(productForEditor.value || ({} as Product));
+  },
+  { immediate: true },
+);
 
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
@@ -219,6 +214,7 @@ const observeRecommendedSection = () => {
 
 onBeforeRouteLeave(() => {
   resetNotification();
+  setCurrentProduct({} as Product);
 });
 
 onNuxtReady(() => observeRecommendedSection());
