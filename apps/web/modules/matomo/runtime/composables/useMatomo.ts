@@ -5,28 +5,32 @@ export const useMatomo = () => {
   const config = useRuntimeConfig().public;
   const route = useRoute();
   const { $matomoEcommerce } = useNuxtApp();
-  const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
+
+  const canTrack = () =>
+    import.meta.client &&
+    typeof window !== 'undefined' &&
+    Array.isArray(window._paq) &&
+    config?.matomoEnabled !== false;
 
   const trackPageView = (documentTitle?: string, customUrl?: string) => {
-    if (import.meta.client && window._paq && config?.matomoEnabled && matomoConsentGiven.value) {
-      if (customUrl) {
-        window._paq.push(['setCustomUrl', customUrl]);
-      } else {
-        window._paq.push(['setCustomUrl', config.matomoUrl + route.fullPath]);
-      }
-      if (documentTitle) {
-        window._paq.push(['setDocumentTitle', documentTitle]);
-      } else {
-        window._paq.push(['setDocumentTitle', document.title]);
-      }
-      window._paq.push(['trackPageView']);
+    if (!canTrack()) return;
+
+    if (customUrl) {
+      window._paq.push(['setCustomUrl', customUrl]);
+    } else {
+      window._paq.push(['setCustomUrl', route.fullPath]);
     }
+
+    if (documentTitle) {
+      window._paq.push(['setDocumentTitle', documentTitle]);
+    }
+
+    window._paq.push(['trackPageView']);
   };
 
   const trackSearch = (keyword: string, category?: string) => {
-    if (import.meta.client && window._paq && config?.matomoEnabled && config?.matomoTrackSiteSearch && matomoConsentGiven.value) {
-      window._paq.push(['trackSiteSearch', keyword, category]);
-    }
+    if (!canTrack() || !config?.matomoTrackSiteSearch) return;
+    window._paq.push(['trackSiteSearch', keyword, category]);
   };
 
   return {
@@ -37,9 +41,8 @@ export const useMatomo = () => {
 
 export const useMatomoEcommerce = () => {
   const config = useRuntimeConfig().public;
-  const matomoConsentGiven = useState<boolean>('matomoConsentGiven');
 
-  if (!import.meta.client || !window._paq || !config?.matomoEnabled || !config?.matomoTrackEcommerce || !matomoConsentGiven.value) {
+  if (!import.meta.client || !window._paq || !config?.matomoEnabled || !config?.matomoTrackEcommerce) {
     return {
       addEcommerceItem: () => {},
       removeEcommerceItem: () => {},

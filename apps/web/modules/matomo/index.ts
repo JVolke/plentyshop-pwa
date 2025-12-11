@@ -40,7 +40,7 @@ export default defineNuxtModule<ModuleOptions>({
         matomoEnabled: true,
         matomoDebug: true,
         matomoDisableCookies: true,
-        matomoRequireConsent: 'cookie',
+        matomoRequireConsent: options.requireConsent ? 'cookie' : 'off',
         matomoTrackPageView: true,
         matomoTrackSiteSearch: true,
         matomoTrackEcommerce: true,

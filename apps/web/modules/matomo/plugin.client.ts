@@ -2,8 +2,6 @@
 import {
   defineNuxtPlugin,
   useRuntimeConfig,
-  useState, watch,
-  useCookieConsent,
   useRouter,
   usePlentyEvent
 } from '#imports'
@@ -16,44 +14,15 @@ export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig().public
   const router = useRouter()
 
-  // Read consent flag from your cookie banner
-  const { consent } = useCookieConsent('matomo_consent')
-  const matomoConsentGiven = useState<boolean>('matomoConsentGiven', () => Boolean(consent.value))
-
-  // Parse consent mode from runtime config:
-  //  - 'cookie'   -> track WITHOUT cookies until consent (requireCookieConsent)
-  //  - 'tracking' -> do not track at all until consent (requireConsent)
-  //  - anything else / empty -> track normally (not recommended if you need consent)
-  const rawRequire = (config.matomoRequireConsent ?? '').toString().toLowerCase()
-  const consentMode: 'cookie'|'tracking'|'off' =
-    rawRequire === 'cookie' ? 'cookie'
-      : (rawRequire === '1' || rawRequire === 'true' || rawRequire === 'tracking') ? 'tracking'
-        : 'off'
-  const allowCookieless = consentMode === 'cookie'
-
-  // --- Matomo bootstrap MUST happen immediately (not gated by consent) ---
   window._paq = window._paq || []
 
   if (config.matomoDebug) {
     window._paq.push(['enableJSErrorTracking'])
   }
 
-  if (config.matomoDisableCookies) {
-    // Optional: hard-disable cookies even after consent
-    window._paq.push(['disableCookies'])
-  }
-
-  // Set consent strategy commands BEFORE any tracking calls
-  if (consentMode === 'cookie') {
-    // Track cookieless until consent is given
-    window._paq.push(['requireCookieConsent'])
-  } else if (consentMode === 'tracking') {
-    // Do not track anything until consent
-    window._paq.push(['requireConsent'])
-  }
-
   // Initialize tracker and inject script immediately
   if (config.matomoUrl && config.matomoId) {
+    window._paq.push(['disableCookies'])
     window._paq.push(['setTrackerUrl', `${config.matomoUrl}/matomo.php`])
     window._paq.push(['setSiteId', config.matomoId])
     window._paq.push(['setExcludedQueryParams', ['ReferrerID']])
@@ -61,29 +30,21 @@ export default defineNuxtPlugin(() => {
 
     const script = document.createElement('script')
     script.type = 'text/javascript'
-    script.textContent = matomoScriptContent
+    //script.textContent = matomoScriptContent
+    script.src = "https://statistik.krause-sohn.de/matomo.js"
     document.head.appendChild(script)
   }
 
-  // Consent watcher: only remember/forget, do NOT add/remove the script
-  watch(consent, (value) => {
-    matomoConsentGiven.value = Boolean(value)
-    if (!window._paq) return
-    if (value) {
-      window._paq.push(['rememberCookieConsentGiven'])
-      window._paq.push(['rememberConsentGiven'])
-    } else {
-      window._paq.push(['forgetCookieConsentGiven'])
-      window._paq.push(['forgetConsentGiven'])
-    }
-  }, { immediate: true })
 
   // Helper for all events
-  const canTrackNow = () => (matomoConsentGiven.value || allowCookieless) && Boolean(window._paq)
+  const canTrack = () =>
+    typeof window !== 'undefined' &&
+    Array.isArray(window._paq) &&
+    config?.matomoEnabled !== false
 
   // Track first pageview if there is no route change on initial load
   queueMicrotask(() => {
-    if (canTrackNow()) {
+    if (canTrack()) {
       window._paq.push(['setCustomUrl', location.pathname + location.search + location.hash])
       window._paq.push(['setDocumentTitle', document.title])
       if (config.matomoTrackPageView) window._paq.push(['trackPageView'])
@@ -92,7 +53,7 @@ export default defineNuxtPlugin(() => {
 
   // SPA route changes
   router.afterEach((to) => {
-    if (canTrackNow()) {
+    if (canTrack()) {
       window._paq.push(['setCustomUrl', to.fullPath])
       document.title = (to.meta.title as string) || document.title
       window._paq.push(['setDocumentTitle', document.title])
@@ -104,7 +65,7 @@ export default defineNuxtPlugin(() => {
   const { on } = usePlentyEvent()
 
   on('frontend:orderCreated', (order: any) => {
-    if (!canTrackNow() || !order?.order || !order?.totals) return
+    if (!canTrack() || !order?.order || !order?.totals) return
 
     // Add each item first
     order.order.orderItems.forEach((item: any) => {
@@ -134,7 +95,7 @@ export default defineNuxtPlugin(() => {
   })
 
   on('frontend:addToCart', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['trackEcommerceCartUpdate', data.cart.basketAmountNet])
     window._paq.push(['addEcommerceItem',
       cartGetters.getVariationId(data.item),
@@ -146,13 +107,13 @@ export default defineNuxtPlugin(() => {
   })
 
   on('frontend:removeFromCart', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['removeEcommerceItem', data.deleteItemParams.cartItemId])
     window._paq.push(['trackEcommerceCartUpdate', cartGetters.getTotals(data.cart)])
   })
 
   on('frontend:productLoaded', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['setEcommerceView',
       productGetters.getVariationId(data.product),
       productGetters.getName(data.product),
@@ -162,22 +123,22 @@ export default defineNuxtPlugin(() => {
   })
 
   on('frontend:addToWishlist', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['trackEvent', 'Wishlist', 'Add To Wishlist', data.variationId])
   })
 
   on('frontend:signUp', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Sign Up', data.method])
   })
 
   on('frontend:login', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Login', data.method])
   })
 
   on('frontend:searchProduct', (data: any) => {
-    if (!canTrackNow()) return
+    if (!canTrack()) return
     if (config.matomoTrackSiteSearch) window._paq.push(['trackSiteSearch', data])
   })
 })
