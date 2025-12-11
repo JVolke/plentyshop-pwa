@@ -9,7 +9,6 @@
           class="group relative hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
-          :style="{ color: iconColor }"
           :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
           variant="tertiary"
           square
