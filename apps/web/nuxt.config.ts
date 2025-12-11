@@ -248,7 +248,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     './modules/matomo',
     './modules/krausesohn-module',
-    'vuetify-nuxt-module',
+    'vuetify-nuxt-module'
   ],
   vuetify: {
     moduleOptions: {
