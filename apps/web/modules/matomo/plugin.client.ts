@@ -31,7 +31,7 @@ export default defineNuxtPlugin(() => {
     const script = document.createElement('script')
     script.type = 'text/javascript'
     //script.textContent = matomoScriptContent
-    script.src = "https://statistik.krause-sohn.de/matomo.js"
+    script.src = "https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/matomo.js"
     document.head.appendChild(script)
   }
 
