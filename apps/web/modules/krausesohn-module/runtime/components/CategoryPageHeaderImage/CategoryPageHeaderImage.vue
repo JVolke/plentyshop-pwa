@@ -1,5 +1,5 @@
 <template>
-  <div class="relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 px-4 mb-2">
+  <div class="relative max-w-screen-3xl mx-auto px-0.5 mb-2">
     <img :src="'https://cdn02.plentymarkets.com/d5bn3yt8owq2/frontend/Kategorie-Banner/' + image" class="w-full" :alt="'Kategoriebild für ' + title"/>
     <div class="absolute top-2 left-12 text-white shadow-gray-50">
       <h1 class="[text-shadow:_2px_2px_2px_rgb(0_0_0_/_75%)] font-bold lg:text-5xl ">{{ title }}</h1>
