@@ -1,5 +1,95 @@
 <template>
-  <category-page-header-image :category-id="category.id" :title="details.name"/>
+  <div :style="inlineStyle" data-testid="category-data">
+    <template
+      v-if="props.content.displayCategoryImage === 'off' || (!imageUrl && props.content.displayCategoryImage !== 'off')"
+    >
+      <div
+        v-if="shouldShowTextBlock"
+        data-testid="text-card"
+        :class="['w-full']"
+        :style="{
+          color: props.content.text.color,
+          backgroundColor: props.content.text.bgColor,
+        }"
+      >
+        <div
+          v-if="showNoTextMessage"
+          class="text-center"
+          role="alert"
+          aria-live="polite"
+          data-testid="no-text-selected"
+        >
+          {{ getEditorTranslation('no-text-fields-selected') }}
+        </div>
+        <FieldsOrder
+          v-else-if="detailsReady"
+          :fields="props.content.fields"
+          :fields-order="props.content.fieldsOrder"
+          :texts="texts"
+        />
+      </div>
+    </template>
+    <template v-else>
+      <div class="relative">
+        <!-- NuxtImg
+          v-if="imageUrl"
+          :src="imageUrl"
+          :alt="props.content.image?.alt ?? ''"
+          :class="['object-cover', 'w-full']"
+          :style="{
+            filter: props.content.image?.brightness ? 'brightness(' + (props.content.image?.brightness ?? 1) + ')' : '',
+            aspectRatio: 'auto 640 / 360',
+            width: '100%',
+            height: 'auto',
+          }"
+          :loading="'lazy'"
+          :data-testid="'category-data-image-' + meta.uuid"
+        / -->
+        <category-page-header-image :category-id="category.id" :title="details.name"/>
+
+        <div
+          v-if="shouldShowTextBlock"
+          :class="[
+            'absolute max-w-screen-3xl mx-auto inset-0 p-4 flex flex-col md:basis-2/4',
+            { 'md:p-10': props.content.text.bgColor },
+          ]"
+          :style="{
+            color: props.content.text.color,
+            textAlign: getTextAlignment(props.content.text.textAlignment ?? ''),
+            alignItems: getContentPosition(props.content.text.align ?? ''),
+            justifyContent: getContentPosition(props.content.text.justify ?? ''),
+          }"
+          :data-testid="'category-data-overlay-' + meta.uuid"
+        >
+          <div
+            :class="categoryDataContentClass"
+            :style="{
+              backgroundColor: props.content.text.background
+                ? hexToRgba(props.content.text.bgColor, props.content.text.bgOpacity)
+                : '',
+            }"
+            :data-testid="'category-data-content-' + meta.uuid"
+          >
+            <div
+              v-if="showNoTextMessage"
+              class="text-center"
+              role="alert"
+              aria-live="polite"
+              data-testid="no-text-selected"
+            >
+              {{ getEditorTranslation('no-text-fields-selected') }}
+            </div>
+            <FieldsOrder
+              v-else-if="detailsReady"
+              :fields="props.content.fields"
+              :fields-order="props.content.fieldsOrder"
+              :texts="texts"
+            />
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
