@@ -178,7 +178,7 @@
                 </SfListItem>
               </li>
               <li v-else>
-                <SfListItem size="lg" tag="button" type="button" class="!p-0">
+                <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
                   <div class="flex items-center w-100">
                     <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
                       <div class="flex items-center">

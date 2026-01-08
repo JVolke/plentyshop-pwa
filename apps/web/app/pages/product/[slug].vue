@@ -8,7 +8,12 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
+import type { Locale } from '#i18n';
 import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+
+defineI18nRoute({
+  locales: process.env.LANGUAGELIST?.split(',') as Locale[],
+});
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
 const { setBlocksListContext } = useBlocksList();
@@ -18,11 +23,12 @@ const { productParams, productId } = createProductParams(route.params);
 const { productForEditor, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const product = productForEditor;
 const { disableActions } = useEditor();
-const { fetchProductReviews } = useProductReviews(Number(productId));
+const { fetchProductReviews, fetchProductAuthenticatedReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
 const { open } = useProductLegalDetailsDrawer();
 const { setPageMeta } = usePageMeta();
 const { resetNotification } = useEditModeNotification(disableActions);
+const { isAuthorized } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -67,6 +73,9 @@ onBeforeRouteLeave(() => {
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
   await fetchProductReviews(Number(productId), productVariationId);
+  if (isAuthorized.value) {
+    await fetchProductAuthenticatedReviews(Number(productId), productVariationId);
+  }
 }
 await fetchReviews();
 
