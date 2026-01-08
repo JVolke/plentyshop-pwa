@@ -1078,7 +1078,7 @@
   },
   "item-category": {
     "category": "item-category",
-    "accessControl": ["productCategory"],
+    "accessControl": ["content", "productCategory"],
     "title": "Item Category",
     "blockName": "ItemGrid",
     "variations": [
