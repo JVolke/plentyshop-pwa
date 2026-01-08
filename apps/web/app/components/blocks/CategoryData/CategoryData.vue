@@ -149,7 +149,7 @@ const imagePath = computed(() => {
 });
 
 const imageUrl = computed(() => {
-  return imagePath.value ? `${runtimeConfig.public.domain}/documents/${imagePath.value}` : '';
+  return imagePath.value ? `${runtimeConfig.public.domain}/documents/${imagePath.value}` : '#';
 });
 
 const inlineStyle = computed(() => {
