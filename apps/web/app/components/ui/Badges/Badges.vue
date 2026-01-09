@@ -31,7 +31,7 @@
         {{ productGetters.getAvailabilityName(product) }}
       </SfListItem>
       <SfListItem
-        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && !hasVariations"
+        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && !hasVariations && !isItem"
         size="sm"
         class="text-xs font-medium select-none rounded-md !px-2 grid mt-2"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
@@ -40,7 +40,7 @@
         {{ productGetters.getAvailabilityName(product) }}
       </SfListItem>
       <SfListItem
-        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && hasVariations"
+        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && hasVariations && !isItem"
         size="sm"
         class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-white bg-primary-500 w-full"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
@@ -55,6 +55,11 @@
 import { SfListItem } from '@storefront-ui/vue';
 import { type ProductTag, productGetters, tagGetters } from '@plentymarkets/shop-api';
 import type { BadgesProps } from '~/components/ui/Badges/types';
+
+const route = useRoute();
+const isItem = computed(() => {
+  return typeof route.params.itemId === 'string';
+});
 
 const localePath = useLocalePath();
 
