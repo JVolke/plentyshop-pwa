@@ -17,7 +17,6 @@
           {{ tagGetters.getTagName(tag) }}
         </SfListItem>
       </template>
-
       <SfListItem
         v-if="useAvailability && productGetters.getAvailabilityName(product) && !inCategory"
         size="sm"

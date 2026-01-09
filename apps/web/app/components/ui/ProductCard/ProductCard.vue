@@ -148,9 +148,10 @@
             class="w-fit"
           >
             <span>{{ t('common.actions.showOptions') }}</span>
-          </UiButton>
+          </UiButton >
         </template>
       </template>
+      <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true"/>
     </div>
   </div>
 </template>
@@ -161,6 +162,7 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
+import Badges from '~/components/ui/Badges/Badges.vue';
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({
