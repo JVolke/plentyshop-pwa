@@ -1,5 +1,5 @@
 <template>
-  <div v-if="haveBadges" data-testid="badges" class="z-[2]">
+  <div v-if="haveBadges && useTags" data-testid="badges" class="z-[2]">
     <ul>
       <template v-if="useTags && productTags.length > 0">
         <SfListItem
@@ -17,6 +17,10 @@
           {{ tagGetters.getTagName(tag) }}
         </SfListItem>
       </template>
+    </ul>
+    </div>
+    <div v-if="haveBadges && useAvailability" data-testid="badges" class="z-[2] w-full text-center">
+    <ul>
       <SfListItem
         v-if="useAvailability && productGetters.getAvailabilityName(product) && !inCategory"
         size="sm"
@@ -27,13 +31,21 @@
         {{ productGetters.getAvailabilityName(product) }}
       </SfListItem>
       <SfListItem
-        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory"
+        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && !hasVariations"
         size="sm"
-        class="text-xs font-medium select-none rounded-md !cursor-text !px-2 grid mt-2"
+        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
         :style="availabilityStyles"
       >
         {{ productGetters.getAvailabilityName(product) }}
+      </SfListItem>
+      <SfListItem
+        v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && hasVariations"
+        size="sm"
+        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-white bg-primary-500 w-full"
+        :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
+      >
+        Zum Artikel
       </SfListItem>
     </ul>
   </div>
@@ -51,6 +63,11 @@ const { product, useTags = true, useAvailability = false } = defineProps<BadgesP
 const productTags = computed(() => {
   if (!useTags) return [];
   return tagGetters.getTags(product);
+});
+
+const hasVariations = computed( () =>{
+  return !(product.item.salableVariationCount === 1 || product.item.salableVariationCount === 0);
+
 });
 
 const availabilityStyles = computed(() => {
