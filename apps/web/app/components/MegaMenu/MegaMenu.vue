@@ -48,7 +48,7 @@
             class="inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2
                 !text-white hover:!bg-neutral-50 hover:!text-primary-500 hover:cursor-pointer
                 active:!bg-neutral-50 active:!text-primary-500"
-            @click="onCategoryTap(menuNode)"
+            @click="onCategoryClickCapture($event, menuNode)"
           >
             <template v-if="menuNode.childCount > 0">
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
