@@ -1,7 +1,8 @@
 <template>
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0  border-neutral-200"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
+      :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
@@ -10,16 +11,17 @@
           variant="tertiary"
           square
           :aria-label="t('common.navigation.openMenu')"
-          class="mr-5 bg-transparent hover:bg-primary-800 hover:!text-white active:bg-primary-700 active:text-primary-500 "
+          class="mr-5 hover:!bg-header-400"
+          :style="{ color: iconColor }"
           @click="openMenu([])"
         >
-          <SfIconMenu class="text-primary-500" aria-hidden="true" />
+          <SfIconMenu aria-hidden="true" />
         </UiButton>
 
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-primary-500 md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -30,7 +32,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
-        class="flex px-6 py-2 bg-primary-500 border-b border-b-neutral-200 border-b-solid"
+        class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -42,40 +44,56 @@
         <li v-if="categoryTree.length === 0" class="h-10" />
 
         <li v-for="(menuNode, index) in categoryTree" v-else :key="index" @mouseenter="onCategoryMouseEnter(menuNode)">
-          <div
+          <NuxtLink
+            v-if="menuNode.childCount > 0"
             ref="triggerReference"
+            :to="localePath(generateCategoryLink(menuNode))"
             data-testid="category-button"
-            class="inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2
-                !text-white hover:!bg-neutral-50 hover:!text-primary-500 hover:cursor-pointer
-                active:!bg-neutral-50 active:!text-primary-500"
-            @click="onCategoryClickCapture($event, menuNode)"
+            :class="categoryButtonClasses"
+            tabindex="0"
+            aria-haspopup="true"
+            :aria-expanded="isOpen && activeNode[0] === menuNode.id ? 'true' : 'false'"
+            @touchstart="onTouchStart"
+            @mousedown="onMouseDown"
+            @click.capture="onCategoryClickCapture($event, menuNode)"
+            @keydown.enter="onEnterKey"
+            @keydown.space.prevent="openMenuAndFocusFirst(menuNode)"
+            @keydown.down.prevent="openMenuAndFocusFirst(menuNode)"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
           >
-            <template v-if="menuNode.childCount > 0">
-              <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              <SfIconChevronRight
-                class="rotate-90 text-white group-hover:text-neutral-700 group-active:text-neutral-900"
-              />
-            </template>
-            <template v-else>
-              <NuxtLink :to="localePath(generateCategoryLink(menuNode))" class="flex items-center gap-2 w-full">
-                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              </NuxtLink>
-            </template>
-          </div>
-          <!-- Angepasst für Krause und Sohn -->
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+            <SfIconChevronRight
+              aria-hidden="true"
+              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+            />
+          </NuxtLink>
+
+          <NuxtLink
+            v-else
+            ref="triggerReference"
+            :to="localePath(generateCategoryLink(menuNode))"
+            data-testid="category-button"
+            :class="categoryButtonClasses"
+            tabindex="0"
+            @keydown.left="focusPreviousCategory(index)"
+            @keydown.right="focusNextCategory(index)"
+          >
+            <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+          </NuxtLink>
+
           <div
             v-if="
-                isOpen &&
-                activeMenu &&
-                activeNode.length === 1 &&
-                activeNode[0] === menuNode.id &&
-                menuNode.childCount > 0
-              "
+              isOpen &&
+              activeMenu &&
+              activeNode.length === 1 &&
+              activeNode[0] === menuNode.id &&
+              menuNode.childCount > 0
+            "
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:inline-block columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
-            tabindex="0"
+            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
@@ -85,14 +103,16 @@
             <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
                 <ul>
-                  <SfListItem
-                    :tag="NuxtLink"
-                    size="sm"
-                    :href="localePath(generateCategoryLink(node))"
-                    class="typography-text-sm mb-2 font-bold"
-                  >
-                    {{ categoryTreeGetters.getName(node) }}
-                  </SfListItem>
+                  <li>
+                    <SfListItem
+                      :tag="NuxtLink"
+                      size="sm"
+                      :href="localePath(generateCategoryLink(node))"
+                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                    >
+                      {{ categoryTreeGetters.getName(node) }}
+                    </SfListItem>
+                  </li>
                 </ul>
               </template>
               <div v-else>
@@ -100,18 +120,18 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid"
+                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
-                <ul class="mt-2 flex-col">
+                <ul class="mt-2 mb-3">
                   <li v-for="child in node.children" :key="child.id">
                     <SfListItem
                       v-if="categoryTreeGetters.getName(child)"
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5"
+                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>
@@ -120,17 +140,6 @@
               </div>
             </template>
           </div>
-        </li>
-        <li class="ml-auto flex items-center">
-          <NuxtLink
-            to="https://www.feuerwerk-onlineshop.de/"
-            target="_blank"
-            title="Zum Feuerwerk Shop"
-            aria-label="Zum Feuerwerk Shop"
-            class="flex items-center text-white hover:text-neutral-50 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm transition-colors duration-200"
-          >
-            <FeuerwerkLink class="w-48 h-auto" />
-          </NuxtLink>
         </li>
       </ul>
     </nav>
@@ -162,7 +171,7 @@
                 size="lg"
                 tag="button"
                 type="button"
-                class="border-b border-b-neutral-200 border-b-solid"
+                class="border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100"
                 :aria-label="t('common.actions.back') + ' - ' + categoryTreeGetters.getName(activeMenu)"
                 @click="goBack()"
               >
@@ -174,7 +183,13 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))" @click="close()">
+                <SfListItem
+                  size="lg"
+                  :tag="NuxtLink"
+                  :href="localePath(generateCategoryLink(node))"
+                  class="hover:bg-secondary-100"
+                  @click="close()"
+                >
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -182,19 +197,26 @@
                 </SfListItem>
               </li>
               <li v-else>
-                <SfListItem size="lg" tag="button" type="button" class="!p-0 hover:bg-secondary-100">
-                  <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
-                      <div class="flex items-center">
-                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                      </div>
-                    </NuxtLink>
-                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
-                      <SfIconChevronRight class="text-neutral-500" />
+                <div class="flex items-center hover:bg-secondary-100">
+                  <NuxtLink
+                    class="flex-1 m-0 px-4 py-3 text-left"
+                    :to="localePath(generateCategoryLink(node))"
+                    @click="close()"
+                  >
+                    <div class="flex items-center">
+                      <p class="text-left typography-text-lg">{{ categoryTreeGetters.getName(node) }}</p>
+                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                     </div>
-                  </div>
-                </SfListItem>
+                  </NuxtLink>
+                  <button
+                    type="button"
+                    class="flex justify-center items-center h-full w-16 px-4"
+                    :aria-label="t('common.navigation.showSubcategories') + ' - ' + categoryTreeGetters.getName(node)"
+                    @click="goNext(node.id)"
+                  >
+                    <SfIconChevronRight aria-hidden="true" class="text-neutral-500" />
+                  </button>
+                </div>
               </li>
             </template>
           </ul>
