@@ -26,13 +26,8 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const isGlobalProductCategoryTemplate = computed(() => {
     const route = useRoute();
     const slugParam = route.params.slug;
-
-    if (slugParam === undefined) {
-      return false;
-    }
-
-    const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
-    return `/${slug}` === paths.globalItemCategory;
+    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+    return parts.join('/') === paths.globalItemCategory;
   });
 
   /**
@@ -52,8 +47,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     const route = useRoute();
-    const { $i18n } = useNuxtApp();
-    const { isInEditor } = useEditorState();
+    const { $i18n, $isPreview } = useNuxtApp();
     const {
       data: blockData,
       setupBlocks,
@@ -64,11 +58,11 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
-    if (isGlobalProductCategoryTemplate.value && isInEditor.value) {
+    if (isGlobalProductCategoryTemplate.value && $isPreview) {
       const fakeFacet = $i18n.locale.value === 'en' ? fakeFacetCallEN : fakeFacetCallDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const fakeBlocks = blockData.value?.length ? blockData.value : useCategoryTemplateData();
+      const fakeBlocks = blockData.value ?? useCategoryTemplateData();
 
       state.value.data = {
         category: fakeFacet['data'].category,

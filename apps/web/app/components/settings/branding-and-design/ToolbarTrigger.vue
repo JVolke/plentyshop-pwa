@@ -3,7 +3,6 @@
     :label="getEditorUITranslation('branding-and-design-tooltip')"
     placement="right"
     class="inline-grid font-editor"
-    data-testid="branding-tooltip"
     :show-arrow="true"
   >
     <button

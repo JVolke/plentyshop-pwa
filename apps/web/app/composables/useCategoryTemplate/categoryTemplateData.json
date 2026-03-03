@@ -35,7 +35,8 @@
         "paddingTop": 40,
         "paddingBottom": 40,
         "paddingLeft": 0,
-        "paddingRight": 0
+        "paddingRight": 0,
+        "narrowContainer": true
       }
     }
   },
@@ -73,16 +74,7 @@
             "availability": true,
             "customizedFilters": true
           },
-          "filtersOrder": [
-            "category",
-            "sortBy",
-            "perPage",
-            "itemRating",
-            "manufacturer",
-            "price",
-            "availability",
-            "customizedFilters"
-          ],
+          "filtersOrder": ["category", "sortBy", "perPage", "itemRating", "manufacturer", "price", "availability", "customizedFilters"],
           "filtersDisabled": [],
           "showAllFiltersImmediately": true,
           "numberOfFiltersToShowInitially": 0

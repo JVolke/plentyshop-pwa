@@ -1,9 +1,9 @@
-import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { Block } from '@plentymarkets/shop-api';
 
 export type CarouselStructureProps = {
   name: string;
   type: string;
-  content: BannerProps[];
+  content: Block[];
   configuration: {
     controls: {
       color: string;
@@ -12,7 +12,6 @@ export type CarouselStructureProps = {
     layout?: {
       fullWidth?: boolean;
     };
-    visible?: boolean;
   };
   index: number;
   meta: {

@@ -26,11 +26,11 @@ onBeforeUnmount(() => {
 <i18n lang="json">
 {
   "en": {
-    "label": "Custom JavaScript",
+    "label": "Custom Js",
     "description": ""
   },
   "de": {
-    "label": "Custom JavaScript",
+    "label": "Custom Js",
     "description": ""
   }
 }

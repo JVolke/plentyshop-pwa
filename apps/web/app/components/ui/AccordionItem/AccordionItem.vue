@@ -6,7 +6,7 @@
       </slot>
       <SfIconChevronLeft :class="['text-neutral-500', internalModelValue ? 'rotate-90' : '-rotate-90']" />
     </template>
-    <div :class="contentPaddingClass"><slot /></div>
+    <div class="py-2 px-4"><slot /></div>
   </SfAccordionItem>
 </template>
 
@@ -15,9 +15,7 @@ import { SfAccordionItem, SfIconChevronLeft } from '@storefront-ui/vue';
 import { useVModel } from '@vueuse/core';
 import type { AccordionItemProps } from '~/components/ui/AccordionItem/types';
 
-const props = withDefaults(defineProps<AccordionItemProps>(), {
-  contentPaddingClass: 'py-2 px-4',
-});
+const props = defineProps<AccordionItemProps>();
 const { summary = '', summaryClass = '', summaryActiveClass = '' } = props;
 const emit = defineEmits(['update:modelValue']);
 

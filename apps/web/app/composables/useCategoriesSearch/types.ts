@@ -1,7 +1,5 @@
 import type { CategoryEntry, CategoryData, CategorySearchCriteria } from '@plentymarkets/shop-api';
 
-export type CategoryType = 'item' | 'content';
-
 export interface UseCategoriesSearchState {
   data: CategoryData;
   contentItems: CategoryEntry[];
@@ -30,7 +28,7 @@ export interface UseCategoriesSearchMethods {
   loadingItem: Readonly<Ref<boolean>>;
   hasMoreContent: Readonly<Ref<boolean>>;
   hasMoreItem: Readonly<Ref<boolean>>;
-  fetchCategories: (categoryType: CategoryType) => Promise<void>;
+  fetchCategories: (categoryType: 'item' | 'content') => Promise<void>;
   usePaginatedChildren: (category: CategoryEntry) => PaginatedChildren;
   addNewPageToTree: (newPage: CategoryEntry) => void;
   deletePageFromTree: (id: number) => void;

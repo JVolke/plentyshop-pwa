@@ -8,7 +8,7 @@ permissions:
   contents: read
   packages: read
 
-concurrency:
+concurrency: 
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
@@ -43,33 +43,32 @@ jobs:
         run: npm run build
 
       - name: E2E Features
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-feature
         env:
-          NUXT_PUBLIC_SHOW_NOTIFY_ME: 'true'
-          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+          NUXT_PUBLIC_CONFIG_ID: 1
           MOLLIE_TEST_MODE: true
-
+      
       - name: E2E Editor
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-editor
         env:
           NUXT_PUBLIC_IS_PREVIEW: true
-          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+          NUXT_PUBLIC_CONFIG_ID: 1
 
       - name: E2E External
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: npm run test:cypress-external
         env:
-          NUXT_PUBLIC_CONFIG_ID: ${{ vars.CONFIG_ID }}
+          NUXT_PUBLIC_CONFIG_ID: 1
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: cypress-screenshots

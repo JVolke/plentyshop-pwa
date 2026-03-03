@@ -14,10 +14,10 @@
     </UiButton>
   </SfTooltip>
 
-  <Teleport v-if="isOpen" to="body">
+  <Teleport to="body">
     <UiModal
+      v-if="isOpen"
       v-model="isOpen"
-      data-testid="notify-me-modal"
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -30,7 +30,6 @@
           square
           variant="tertiary"
           class="absolute right-2 top-2"
-          data-testid="notify-me-modal-close"
           :aria-label="t('notifyMe.aria.closeForm')"
           @click="close"
         >
@@ -99,7 +98,6 @@
           type="submit"
           size="lg"
           class="w-full"
-          data-testid="notify-me-submit"
           :disabled="!email || !agreedToPolicy || (turnstileSiteKey.length > 0 && !turnstileToken) || loading"
           :aria-busy="loading"
           :aria-label="t('notifyMe.aria.subscribeButton')"
@@ -128,6 +126,7 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import { offset } from '@floating-ui/vue';
+import { ref } from 'vue';
 import type { NotifyMeComponentProps } from './types';
 
 const props = defineProps<NotifyMeComponentProps>();

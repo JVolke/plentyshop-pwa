@@ -117,12 +117,7 @@
     },
     "content": {
       "categoryId": "73",
-      "text": {
-        "pretitle": "",
-        "title": "",
-        "subtitle": "",
-        "htmlDescription": ""
-      }
+      "text": {}
     }
   },
   {
@@ -183,16 +178,12 @@
       "isGlobalTemplate": false
     },
     "content": {
+      "categoryId": "49",
       "text": {
         "pretitle": "Mehr als nur Technik",
         "title": "Entdecken Sie unsere Modekollektion",
         "subtitle": "Sportive Mode und Accessories für alle.",
         "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/kleidung' target='_self'>Zu unserer kompletten Kollektion.</a>"
-      },
-      "source": {
-        "type": "category",
-        "itemId": "",
-        "categoryId": ""
       }
     }
   },

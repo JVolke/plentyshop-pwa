@@ -216,9 +216,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const canonical = productSeoSettingsGetters.getCanonical(product);
 
     if (canonical) {
-      const canonicalUrl = productSeoSettingsGetters.getCanonicalHref(canonical);
       useHead({
-        link: [{ rel: 'canonical', href: canonicalUrl }],
+        link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
       });
 
       const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
@@ -232,10 +231,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
       useHead({
         link: alternateLocales,
-      });
-
-      useSeoMeta({
-        ogUrl: canonicalUrl,
       });
     }
     state.value.loading = false;

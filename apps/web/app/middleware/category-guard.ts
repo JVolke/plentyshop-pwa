@@ -5,38 +5,33 @@
  */
 import { categoryTreeGetters, type CategoryTreeItem } from '@plentymarkets/shop-api';
 
-const pathCategoryMap = new Map<string, CategoryTreeItem>();
-let cachedTreeReference: CategoryTreeItem[] | null = null;
-
 export default defineNuxtRouteMiddleware(async (to) => {
   const { data: categoryTree } = useCategoryTree();
-
-  if (!categoryTree.value?.length) return;
-
   const localePath = useLocalePath();
   const { buildCategoryMenuLink } = useLocalization();
   const { isAuthorized } = useCustomer();
 
-  if (cachedTreeReference !== categoryTree.value) {
-    pathCategoryMap.clear();
-    cachedTreeReference = categoryTree.value;
-
-    const buildPathMap = (items: CategoryTreeItem[]) => {
-      for (const item of items) {
-        pathCategoryMap.set(localePath(buildCategoryMenuLink(item, categoryTree.value)), item);
-        if (item.children?.length) buildPathMap(item.children);
+  const findCategoryByPath = (items: CategoryTreeItem[], targetPath: string): CategoryTreeItem => {
+    for (const item of items) {
+      if (localePath(buildCategoryMenuLink(item, categoryTree.value)) === targetPath) {
+        return item;
       }
-    };
 
-    buildPathMap(categoryTree.value);
-  }
+      if (item.children?.length) {
+        const found = findCategoryByPath(item.children, targetPath);
+        if (Object.keys(found).length) return found;
+      }
+    }
+    return {} as CategoryTreeItem;
+  };
 
-  const category = pathCategoryMap.get(to.path);
+  const category = findCategoryByPath(categoryTree.value, to.path);
 
-  if (category && !isAuthorized.value && categoryTreeGetters.getCategoryRight(category) === 'customer') {
+  if (category && categoryTreeGetters.getCategoryRight(category) === 'customer' && !isAuthorized.value) {
+    const targetUrl = to.fullPath;
     return navigateTo({
       path: localePath(paths.authLogin),
-      query: { redirect: to.fullPath },
+      query: { redirect: targetUrl },
     });
   }
 });

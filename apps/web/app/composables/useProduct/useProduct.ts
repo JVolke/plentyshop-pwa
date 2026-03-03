@@ -28,17 +28,9 @@ export const useProduct: UseProductReturn = (slug) => {
 
   const isGlobalProductDetailsTemplate = computed(() => {
     const route = useRoute();
-    const slugParam = route.params.slug;
-    const itemIdParam = route.params.itemId;
-
-    if (slugParam === undefined || itemIdParam === undefined) {
-      return false;
-    }
-
-    const slug = Array.isArray(slugParam) ? slugParam.join('/') : slugParam;
-    const itemId = Array.isArray(itemIdParam) ? itemIdParam.join('/') : itemIdParam;
-
-    return `/${slug}_${itemId}` === paths.globalItemDetails;
+    const slugParam = `${route.params.slug}_${route.params.itemId}`;
+    const parts = Array.isArray(slugParam) ? slugParam : slugParam ? [slugParam] : [];
+    return parts.join('/') === paths.globalItemDetails;
   });
 
   /** Function for fetching product data.
@@ -55,8 +47,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     const route = useRoute();
-    const { $i18n } = useNuxtApp();
-    const { isInEditor } = useEditorState();
+    const { $i18n, $isPreview } = useNuxtApp();
     const {
       data: blockData,
       setupBlocks,
@@ -69,11 +60,11 @@ export const useProduct: UseProductReturn = (slug) => {
 
     state.value.loading = true;
 
-    if (isGlobalProductDetailsTemplate.value && isInEditor.value) {
+    if (isGlobalProductDetailsTemplate.value && $isPreview) {
       const fakeProduct = $i18n.locale.value === 'en' ? fakeProductEN : fakeProductDE;
 
       await getBlocksServer(route.meta.identifier as string, route.meta.type as string);
-      const blocks = blockData.value?.length ? blockData.value : useProductTemplateData();
+      const blocks = blockData.value ?? useProductTemplateData();
 
       state.value.data = {
         blocks: blocks,
@@ -138,10 +129,12 @@ export const useProduct: UseProductReturn = (slug) => {
       ],
     });
   };
+  const { disableActions } = useEditor();
+  const { $isPreview } = useNuxtApp();
 
-  const { shouldUseFakeData } = useEditorState();
-
-  const productForEditor = computed(() => (shouldUseFakeData.value ? state.value.fakeData : state.value.data));
+  const productForEditor = computed(() =>
+    $isPreview && disableActions.value ? state.value.fakeData : state.value.data,
+  );
 
   return {
     setProductMeta,

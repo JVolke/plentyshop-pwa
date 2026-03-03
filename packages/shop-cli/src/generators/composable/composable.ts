@@ -21,19 +21,13 @@ class ComposableGenerator extends BaseGenerator {
   }
 
   createActions(_data: PromptAnswers): GeneratorAction[] {
-    const skipTests = _data.skipTests ?? process.env.PLENTYSHOP_SKIP_TESTS === 'true';
-
-    const builder = ActionBuilder.forGenerator('composable', _data.name, this.pathResolver)
+    return ActionBuilder.forGenerator('composable', _data.name, this.pathResolver)
       .withData(_data)
       .addMainFile()
       .addTypes()
-      .addIndex();
-
-    if (!skipTests) {
-      builder.addTests();
-    }
-
-    return builder.build();
+      .addIndex()
+      .addTests()
+      .build();
   }
 
   validateInput(data: PromptAnswers): string | true {

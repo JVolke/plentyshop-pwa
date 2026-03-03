@@ -1,5 +1,4 @@
 import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
-import { reviewGetters } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   FetchProductAuthenticatedReviews,
@@ -9,6 +8,7 @@ import type {
   SetProductReview,
   CreateProductReview,
 } from './types';
+import { reviewGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data
@@ -60,11 +60,10 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       state.value.data.feedbacks = data?.value?.data?.feedbacks ?? state.value.data.feedbacks;
       state.value.data.pagination = data?.value?.data?.pagination ?? state.value.data.pagination;
       state.value.data.counts = data?.value?.data?.counts ?? state.value.data.counts;
+      state.value.loading = false;
       return state.value.data;
     } catch (error: unknown) {
       useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
     }
     return state.value.data;
   };
@@ -113,13 +112,15 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     try {
       await useSdk().plentysystems.doReview(params);
       send({ type: 'positive', message: t('review.notification.success') });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
     } catch (error) {
       useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
+      return state.value.data;
     }
+
+    await fetchReviews();
+    await fetchAuthenticatedReviews();
+
+    state.value.loading = false;
   };
 
   const deleteProductReview: DeleteProductReview = async () => {
@@ -130,13 +131,14 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       const feedbackId = Number(reviewGetters.getReviewId(state?.value?.review || ({} as ReviewItem)));
 
       await useSdk().plentysystems.deleteReview({ feedbackId });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
     } catch (error) {
       useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
     }
+
+    await fetchReviews();
+    await fetchAuthenticatedReviews();
+
+    state.value.loading = false;
   };
 
   const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
@@ -147,14 +149,17 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
 
     try {
       await useSdk().plentysystems.setReview(params);
+
       send({ type: 'positive', message: t('review.notification.success') });
-      await fetchReviews();
-      await fetchAuthenticatedReviews();
     } catch (error) {
       useHandleError(error as ApiError);
-    } finally {
-      state.value.loading = false;
+      return state.value.data;
     }
+
+    await fetchReviews();
+    await fetchAuthenticatedReviews();
+
+    state.value.loading = false;
   };
 
   const openReviewModal = (modalType: string, review?: ReviewItem) => {

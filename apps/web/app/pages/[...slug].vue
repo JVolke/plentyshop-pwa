@@ -28,7 +28,7 @@ defineI18nRoute({
 const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { setCategoriesPageMeta } = useUrlPageMeta();
+const { setCategoriesPageMeta } = useCanonical();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, loading } = useProducts();

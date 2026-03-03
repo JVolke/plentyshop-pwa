@@ -11,9 +11,8 @@ describe('SiteSettings', () => {
   const font = 'Almarai';
   const primaryColor = '#11ff00';
   const secondaryColor = '#c3c3c3';
-  const horizontalSpacing = 'm';
-  const horizontalClass = 'max-w-screen-2xl';
-  const verticalSpacing = 'm';
+  const blockSpacing = 'l';
+  const blockSpacingMargin = '30';
 
   beforeEach(() => {
     cy.clearCookies();
@@ -69,29 +68,9 @@ describe('SiteSettings', () => {
       .delay(500)
       .openDesignSubcategory()
       .toggleBlockSpacing()
-      .changeBlockVerticalSpacing(verticalSpacing)
-      .changeBlockHorizontalSpacing(horizontalSpacing)
-      .checkBlockVerticalSpacingPreview(verticalSpacing)
-      .checkBlockHorizontalSpacingPreview(horizontalClass)
+      .changeBlockSpacing(blockSpacing)
+      .checkBlockSpacingPreview(blockSpacingMargin)
       .checkSaveButtonEnabled()
-      .back()
-      .closeDrawer();
-
-    siteSettings.checkDrawerNotVisible();
-  });
-
-  it('should change custom scripts', () => {
-    editor.isToolbarVisible();
-    siteSettings
-      .toggleCustomScriptsSettings()
-      .checkDrawerVisible()
-      .checkSaveButtonDisabled()
-      .delay(500)
-      .checkCustomCodeHeader()
-      .changeCustomScript()
-      .checkScriptPlacementFooter()
-      .checkSaveButtonEnabled()
-      .checkScriptPlacementHeader()
       .back()
       .closeDrawer();
 

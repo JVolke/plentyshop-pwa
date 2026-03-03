@@ -1,13 +1,7 @@
 import type { Block } from '@plentymarkets/shop-api';
 
-export type FooterProps = Partial<Omit<Block, 'content'>> & {
-  content?: FooterContent;
-};
-
-export type FooterBlock = Block & {
-  name: 'Footer';
-  type: 'content';
-  content: FooterContent;
+export type FooterProps = {
+  content?: FooterSettings;
 };
 
 type Link = { text: string; href: string }
@@ -20,7 +14,7 @@ export interface FooterSwitchDefinition {
   link: string;
 }
 
-export interface FooterColumn {
+export interface FooterSettingsColumn {
   title: string;
   description?: string;
   showContactLink?: boolean;
@@ -35,26 +29,30 @@ export interface FooterColumn {
   [key: string]: string | boolean | Link[] | undefined;
 }
 
-export interface FooterColors {
+export interface FooterSettingsColors {
   background: string;
   text: string;
   footnoteBackground: string;
   footnoteText: string;
 }
 
-export interface FooterContent {
-  column1: FooterColumn;
-  column2: FooterColumn;
-  column3: FooterColumn;
-  column4: FooterColumn;
+export interface FooterSettings {
+  meta: {
+    uuid: string;
+    isGlobalTemplate?: boolean;
+  };
+  column1: FooterSettingsColumn;
+  column2: FooterSettingsColumn;
+  column3: FooterSettingsColumn;
+  column4: FooterSettingsColumn;
   footnote: string;
   footnoteAlign: 'left' | 'center' | 'right';
-  colors: FooterColors;
+  colors: FooterSettingsColors;
 }
 
 type AddFooterBlockOptions = {
   data: Ref<Block[]>;
-  cachedFooter: Ref<FooterBlock | null>;
+  cachedFooter: Ref<unknown>;
   cleanData?: Ref<Block[]>;
 };
 

@@ -18,7 +18,6 @@
         :to="productPath"
         :class="[{ 'size-48': isFromSlider }, 'relative group/image flex items-center justify-center']"
         as="image"
-        data-testid="product-card-link"
       >
         <NuxtImg
           :src="imageUrl"
@@ -149,7 +148,7 @@
             class="w-fit"
           >
             <span>{{ t('common.actions.showOptions') }}</span>
-          </UiButton>
+          </UiButton >
         </template>
       </template>
       <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true"/>
@@ -164,7 +163,6 @@ import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 import Badges from '~/components/ui/Badges/Badges.vue';
-import type { BasketItemOrderParamsProperty, Product, DoAddItemParams } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   configuration: () => ({
@@ -209,23 +207,13 @@ const { send } = useNotification();
 const loading = ref(false);
 const config = useRuntimeConfig();
 const useTagsOnCategoryPage = config.public.useTagsOnCategoryPage;
-const name = computed(
-  () => productGetters.getName(product.value) + productGetters.getGroupedAttributesString(product.value),
-);
+
+const name = computed(() => productGetters.getName(product.value) ?? '');
 const manufacturer = computed(() => productGetters.getManufacturer(product.value));
 const ratingCount = computed(() => productGetters.getTotalReviews(product.value));
 const rating = computed(() => productGetters.getAverageRating(product.value, 'half'));
 const shortDescription = computed(() => productGetters.getShortDescription(product.value) || '');
-const autoOrderParams = computed(() => {
-  return productGetters.hasOrderPropertiesRequiredAndPreselected(product.value)
-    ? buildAutoBasketItemOrderParams(product.value)
-    : undefined;
-});
-const canAddFromCategory = computed(
-  () =>
-    productGetters.canBeAddedToCartFromCategoryPage(product.value) ||
-    productGetters.hasOrderPropertiesRequiredAndPreselected(product.value),
-);
+const canAddFromCategory = computed(() => productGetters.canBeAddedToCartFromCategoryPage(product.value));
 const showFromText = computed(() => productGetters.showFromText(product.value));
 
 const cover = computed(() => productGetters.getCoverImage(product.value));
@@ -256,11 +244,8 @@ const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
     return paths.globalItemDetails;
   }
-  if (config.public.enableCallistoUrlScheme) {
-    return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
-  }
   const basePath = `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`;
-  const shouldAppendVariation = productGetters.shouldAppendVariationToLink(product.value);
+  const shouldAppendVariation = variationId.value && productGetters.getSalableVariationCount(product.value) === 1;
   return localePath(shouldAppendVariation ? `${basePath}_${variationId.value}` : basePath);
 });
 
@@ -283,58 +268,15 @@ const getHeight = () => {
   return '';
 };
 
-/**
- * Builds basket order parameters for products that have
- * required and preselected order properties.
- *
- * This helper extracts only order properties that are marked as required
- * and converts them into the structure expected by the basket API.
- *
- * It is intended to be used only when the product is already validated
- * by `hasOrderPropertiesRequiredAndPreselected`, meaning no user input
- * is needed before adding the product to the basket.
- *
- * @param product - The product from which order properties are extracted.
- * @returns An array of basket order parameter objects if required order
- *          properties exist, otherwise `undefined`.
- */
-const buildAutoBasketItemOrderParams = (product: Product): BasketItemOrderParamsProperty[] | undefined =>
-  product.properties
-    ?.filter((p) => p?.property?.isOderProperty && p.property.isRequired)
-    .map((p) => {
-      const pr = p.property;
-
-      return {
-        property: {
-          id: p.propertyId ?? pr.id,
-          names: { name: pr.names?.name ?? '' },
-          valueType: pr.valueType,
-          value: '1',
-        },
-      };
-    }) || undefined;
-
 const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
   try {
-    const isRequiredAndPreselected = productGetters.hasOrderPropertiesRequiredAndPreselected(product.value);
-    const params = isRequiredAndPreselected ? autoOrderParams.value : undefined;
-
-    if (isRequiredAndPreselected && !params) {
-      await navigateTo(productPath.value);
-      return;
+    await addToCart({ productId, quantity: 1 });
+    if (quickCheckout) {
+      openQuickCheckout(product.value, 1);
+    } else {
+      send({ message: t('cart.itemAdded'), type: 'positive' });
     }
-
-    const addToCartObject: DoAddItemParams = {
-      productId,
-      quantity: 1,
-      ...(params ? { basketItemOrderParams: params } : {}),
-    };
-
-    await addToCart(addToCartObject);
-
-    if (quickCheckout) openQuickCheckout(product.value, 1);
-    else send({ message: t('cart.itemAdded'), type: 'positive' });
   } finally {
     loading.value = false;
   }

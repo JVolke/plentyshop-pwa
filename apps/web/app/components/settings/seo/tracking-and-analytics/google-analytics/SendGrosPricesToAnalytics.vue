@@ -17,7 +17,7 @@ import { SfSwitch } from '@storefront-ui/vue';
 const { updateSetting, getSetting } = useSiteSettings('sendGrossPricesToGoogleAnalytics');
 
 const sendGrossPricesToGoogleAnalytics = computed({
-  get: () => !!getSetting(),
+  get: () => getSetting() === 'true',
   set: (value) => updateSetting(value.toString()),
 });
 </script>

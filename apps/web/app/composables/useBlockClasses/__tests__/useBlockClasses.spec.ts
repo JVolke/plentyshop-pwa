@@ -23,7 +23,6 @@ const contentBlock = (name = 'TextCard', fullWidth?: boolean): Block =>
   ({
     name,
     type: 'content',
-    meta: { uuid: 'test-uuid' },
     content: fullWidth === undefined ? {} : { layout: { fullWidth } },
   }) as unknown as Block;
 
