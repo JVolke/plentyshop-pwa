@@ -428,7 +428,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = (
     isFooterBlock,
     FOOTER_BLOCK_NAME,
     FOOTER_SWITCH_DEFINITIONS,
-    footerCache: readonly(footerCache),
+    footerCache: shallowReadonly(footerCache),
     data: computed(() => state.value.data),
     cleanData: computed(() => state.value.cleanData),
     loading: computed(() => state.value.loading),
