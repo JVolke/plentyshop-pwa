@@ -183,7 +183,7 @@ const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisc
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
-const { data: categoryTree } = useCategoryTree();
+const { data: categoryTree, getCategoryTree } = useCategoryTree();
 const { user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
@@ -191,7 +191,9 @@ const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
 const isActive = computed(() => isLanguageSelectOpen);
 
-onNuxtReady(() => {
+onNuxtReady(async () => {
+  if (categoryTree.value.length === 0) await getCategoryTree();
+
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
 });
 
@@ -212,9 +214,7 @@ watch(
 
 watch(
   () => isAuthenticationOpen.value,
-  async () => {
-    isLogin.value = true;
-  },
+  () => (isLogin.value = true),
 );
 
 const logOut = () => handleLogout({ logout, toggle: accountDropdownToggle });
