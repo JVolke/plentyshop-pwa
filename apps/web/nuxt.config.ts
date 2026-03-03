@@ -7,6 +7,7 @@ import { paths } from './app/utils/paths';
 import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
+import { resolve } from 'pathe';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -37,6 +38,7 @@ export default defineNuxtConfig({
       },
     },
     plugins: [FailOnLargeChunksPlugin],
+
     optimizeDeps: {
       include: [
         '@codemirror/lang-css',
