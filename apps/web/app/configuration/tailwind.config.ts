@@ -7,6 +7,7 @@ const fontFamilyText = process.env.NUXT_PUBLIC_FONT || 'Red Hat Text';
 
 export default {
   presets: [tailwindConfig],
+  darkMode: 'class',
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   safelist: [
     {
@@ -57,6 +58,7 @@ export default {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
         editor: ['Red Hat Text', ...defaultTheme.fontFamily.sans],
       },
+
       colors: {
         primary: {
           '50': 'rgb(var(--colors-2-primary-50) / <alpha-value>)',

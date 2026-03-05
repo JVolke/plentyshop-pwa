@@ -2,7 +2,6 @@
   <header ref="referenceRef" :class="headerClass" class="relative w-full md:sticky md:shadow-md z-10">
     <div
       class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full border-0 border-neutral-200"
-      :style="{ backgroundColor: headerBackgroundColor }"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
@@ -11,17 +10,16 @@
           variant="tertiary"
           square
           :aria-label="t('common.navigation.openMenu')"
-          class="mr-5 hover:!bg-header-400"
-          :style="{ color: iconColor }"
+          class="mr-5 bg-transparent hover:bg-primary-800 hover:!text-white active:bg-primary-700 active:text-primary-500"
           @click="openMenu([])"
         >
-          <SfIconMenu aria-hidden="true" />
+          <SfIconMenu class="text-primary-500" aria-hidden="true" />
         </UiButton>
 
         <NuxtLink
           :to="localePath(paths.home)"
           :aria-label="t('common.actions.goToHomepage')"
-          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full lg:w-48 items-center mr-auto text-primary-500 md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiLogo />
         </NuxtLink>
@@ -30,9 +28,9 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef" >
       <ul
-        class="flex flex-wrap px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        class="flex px-6 py-2 border-b border-b-neutral-200 border-b-solid bg-primary-500"
         @blur="
           (event: FocusEvent) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -65,7 +63,7 @@
             <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
             <SfIconChevronRight
               aria-hidden="true"
-              class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+              class="rotate-90 text-neutral-100 group-hover:text-neutral-700 group-active:text-neutral-900"
             />
           </NuxtLink>
 
@@ -93,7 +91,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 pt-5 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto"
+            class="hidden md:inline-block columns-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40 max-h-[calc(100vh-300px)] overflow-y-auto text-"
             @mouseleave="onMouseLeave"
             @keydown.esc="focusTrigger(index)"
             @keydown.up="navigateDropdownItems($event, 'up')"
@@ -108,7 +106,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base"
+                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base text-neutral-900"
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -131,7 +129,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded"
+                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded text-neutral-900"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>
@@ -272,7 +270,7 @@ const triggerReference = ref();
 const tappedCategories = ref<Map<number, boolean>>(new Map());
 const TOUCH_DETECTION_THRESHOLD = 500;
 const categoryButtonClasses =
-  'inline-flex items-center justify-center gap-2 font-medium text-base rounded-md py-2 px-4 group mr-2 !text-neutral-900 hover:bg-secondary-100 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900';
+  'inline-flex items-center justify-center gap-2 font-medium rounded-md py-2 px-4 group mr-2 !text-white hover:!bg-neutral-50 hover:!text-primary-500 hover:cursor-pointer active:!bg-neutral-50 active:!text-primary-500';
 let removeHook: () => void;
 
 const trapFocusOptions = {
