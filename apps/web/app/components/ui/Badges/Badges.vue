@@ -42,7 +42,7 @@
       <SfListItem
         v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && hasVariations && !isItem"
         size="sm"
-        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-white bg-primary-500 w-full"
+        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-white bg-primary-500 w-full hover:text-primary-500"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
       >
         Zum Artikel

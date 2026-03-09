@@ -36,7 +36,9 @@
         {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
-      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
+        <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+      </SfLink>
       <div v-if="!cartItem.variation?.bundleComponents && showBundleComponents">
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
