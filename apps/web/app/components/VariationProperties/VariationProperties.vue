@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2">
+  <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2 mt-2 ">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
       <div v-if="propertyHasNameOrValue(variationProperty)" class="grid grid-cols-[200px_1fr] gap-2">
         <Component

@@ -70,11 +70,10 @@
           </i18n-t>
         </div>
 
-        <ul class="  sm:typography-text-sm">
-          <li>
-            <span class="font-semibold mr-1">Artikelnummer:</span>
+          <div class="grid grid-cols-[200px_1fr] gap-2 mt-2">
+            <span class="font-semibold">Artikelnummer:</span>
             <span>{{ props.product.variation.number }}</span>
-          </li>
+          </div>
           <!--
           <li v-for="attribute in productGetters.getAttributes(lastUpdatedProduct)" :key="attribute.name">
             <span class="font-semibold mr-1">{{ attribute.label }}:</span>
@@ -85,7 +84,6 @@
             <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
             <span>{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
           </li>-->
-        </ul>
 
         <VariationProperties :product="lastUpdatedProduct" />
       </div>
@@ -119,7 +117,7 @@
         >
           {{ t('common.actions.goToCheckout') }}
         </UiButton>
-        <OrDivider v-if="isPaypalAvailable('quickCheckout')" class="my-4" />
+        <!-- OrDivider v-if="isPaypalAvailable('quickCheckout')" class="my-4" / -->
         <PayPalExpressButton
           class="w-full text-center"
           location="quickCheckout"

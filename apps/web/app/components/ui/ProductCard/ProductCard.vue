@@ -123,7 +123,8 @@
             </span>
           </div>
         </template>
-        <template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
+        <!-- Bis Option für Produktlisten da ist, dann wieder reinnehmen -->
+        <!--template v-if="key === 'addToCart' && configuration?.fields?.addToCart">
           <UiButton
             v-if="canAddFromCategory"
             size="sm"
@@ -150,7 +151,7 @@
           >
             <span>{{ t('common.actions.showOptions') }}</span>
           </UiButton>
-        </template>
+        </template-->
       </template>
       <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true"/>
     </div>
