@@ -13,7 +13,8 @@
         :disabled="disableBuyButton"
         type="Checkout"
         location="checkoutPage"
-        @validation-callback="handlePreparePayment" />
+        @validation-callback="handlePreparePaymentPayPal"
+      />
     </div>
     <PayPalCreditCardBuyButton
       v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
@@ -23,14 +24,14 @@
     <ApplePayButton
       v-else-if="selectedPaymentId === paypalApplePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handlePreparePayment"
+      @button-clicked="handlePreparePaymentPayPal"
     />
     <GooglePayButton
       v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
       :style="disableBuyButton ? 'pointer-events: none;' : ''"
-      @button-clicked="handlePreparePayment"
+      @button-clicked="handlePreparePaymentPayPal"
     />
-    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="disableBuyButton" @validation-callback="handlePreparePayment" />
+    <PayPalAPM v-else-if="PayPalIsAPM" :disabled="disableBuyButton" @validation-callback="handlePreparePaymentPayPal" />
 
     <UiButton
       v-else
@@ -48,25 +49,26 @@
     </UiButton>
   </div>
 
-  <UiModal
-    v-if="payPalPayUponInvoice"
-    v-model="payPalPayUponInvoice"
-    class="h-full w-full md:w-[600px] md:h-fit"
-    tag="section"
-    disable-click-away
-  >
-    <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
-  </UiModal>
-
-  <UiModal
-    v-if="paypalCardDialog"
-    v-model="paypalCardDialog"
-    class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-    tag="section"
-    disable-click-away
-  >
-    <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
-  </UiModal>
+  <Teleport to="body">
+    <UiModal
+      v-if="payPalPayUponInvoice"
+      v-model="payPalPayUponInvoice"
+      class="h-full w-full md:w-[600px] md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalPayUponInvoiceForm @confirm-cancel="handlePayUponInvoiceModalClosing" />
+    </UiModal>
+    <UiModal
+      v-if="paypalCardDialog"
+      v-model="paypalCardDialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
+    </UiModal>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -174,19 +176,23 @@ const handlePayUponInvoiceModalClosing = () => {
   usePayUponInvoice().resetState();
 };
 
-const handlePreparePayment = async (callback?: PayPalAddToCartCallback) => {
-  if (!readyToBuy()) {
-    if (typeof callback === 'function' && callback) callback(false);
-    return;
-  }
-
-  await doAdditionalInformation({
+const validateAndProceed = async (): Promise<boolean> => {
+  if (!readyToBuy()) return false;
+  return await doAdditionalInformation({
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
     orderContactWish: customerWish.value,
     orderCustomerSign: customerSign.value,
   });
+};
 
-  typeof callback === 'function' && callback ? callback(true) : await order();
+const handlePreparePaymentPayPal = async (callback?: PayPalAddToCartCallback) => {
+  const canProceed = await validateAndProceed();
+  if (typeof callback === 'function') callback(canProceed);
+};
+
+const handlePreparePayment = async () => {
+  const canProceed = await validateAndProceed();
+  if (canProceed) await order();
 };
 
 const order = async () => {
@@ -220,13 +226,7 @@ const readyToBuy = () => {
 };
 
 const openPayPalCardDialog = async () => {
-  if (!readyToBuy()) return;
-  await doAdditionalInformation({
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-    orderContactWish: customerWish.value,
-    orderCustomerSign: customerSign.value,
-  });
-
+  if (!(await validateAndProceed())) return;
   paypalCardDialog.value = true;
 };
 
@@ -267,12 +267,7 @@ const validateOnClickComponents = async (event: MouseEvent, component: PaymentBu
   if (component.disableClickEvent) {
     return;
   }
-  await doAdditionalInformation({
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-    orderContactWish: customerWish.value,
-    orderCustomerSign: customerSign.value,
-  });
-  if (readyToBuy() && event.target) {
+  if (event.target && (await validateAndProceed())) {
     event.target.dispatchEvent(new CustomEvent('validated-click'));
   }
 };
