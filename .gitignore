@@ -22,7 +22,7 @@ cache
 .temp
 dist
 .data
-
+dev.log
 # testing
 apps/web/coverage/*
 !apps/web/coverage/coverage-summary.json
