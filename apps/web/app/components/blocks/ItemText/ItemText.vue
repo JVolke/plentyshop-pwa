@@ -15,7 +15,7 @@
         <div
           v-if="text"
           data-testid="item-text-innertext"
-          class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0"
+          class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0 description"
           v-html="text"
         />
       </UiAccordionItem>

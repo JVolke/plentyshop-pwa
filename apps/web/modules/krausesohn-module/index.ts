@@ -1,4 +1,5 @@
 import { defineNuxtModule, addComponentsDir, createResolver, updateRuntimeConfig } from 'nuxt/kit';
+import type { NuxtPage } from '@nuxt/schema'
 
 
 export default defineNuxtModule({
@@ -27,6 +28,55 @@ export default defineNuxtModule({
      }
     });
 
+    const routeOverrides: Record<
+      string,
+      {
+        path: string
+        name?: string
+        alias?: string[]
+      }
+    > = {
+      'shipping.vue': {
+        path: '/versand',
+        name: 'shipping',
+        alias: ['/shipping']
+      },
+      'contact.vue': {
+        path: '/kontakt',
+        name: 'contact'
+      }
+    }
+
+    nuxt.hook('pages:extend', (pages) => {
+      const applyOverrides = (pages: NuxtPage[]) => {
+        for (const page of pages) {
+          if (page.file) {
+            const matchedEntry = Object.entries(routeOverrides).find(([fileName]) =>
+              page.file?.endsWith(`/pages/${fileName}`)
+            )
+
+            if (matchedEntry) {
+              const [, override] = matchedEntry
+              page.path = override.path
+
+              if (override.name) {
+                page.name = override.name
+              }
+
+              if (override.alias) {
+                page.alias = override.alias
+              }
+            }
+          }
+
+          if (page.children?.length) {
+            applyOverrides(page.children)
+          }
+        }
+      }
+
+      applyOverrides(pages)
+    })
 
     // Komponente hinzufügen
     // Alle Komponenten unter runtime/components werden global nutzbar (<ShopAuskunft /> etc.)
