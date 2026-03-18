@@ -78,6 +78,9 @@ export default defineNuxtModule({
       applyOverrides(pages)
     })
 
+    // add simple css for some minor rules
+    nuxt.options.css.push(resolve('./runtime/assets/css/main.css'))
+
     // Komponente hinzufügen
     // Alle Komponenten unter runtime/components werden global nutzbar (<ShopAuskunft /> etc.)
     addComponentsDir({

@@ -1,0 +1,156 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+/* Header */
+table.table thead th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* Cells */
+table.table td {
+    padding: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Stripe Effekt (Bootstrap-like) */
+table.table-striped tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Hover (optional, Bootstrap ähnlich) */
+table.table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Leere Zeilen etwas dezenter */
+table.table td:empty {
+    background-color: transparent;
+    border: none;
+}
+
+[data-testid="category-description-1"] {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Überschriften */
+[data-testid="category-description-1"] h1 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em;
+    font-weight: 700;
+}
+
+[data-testid="category-description-1"] h2 {
+    font-size: 1.6rem;
+    margin: 1.4em 0 0.5em;
+    font-weight: 600;
+}
+
+[data-testid="category-description-1"] h3 {
+    font-size: 1.3rem;
+    margin: 1.3em 0 0.4em;
+    font-weight: 600;
+}
+
+[data-testid="category-description-1"] h4 {
+    font-size: 1.1rem;
+    margin: 1.2em 0 0.4em;
+    font-weight: 600;
+}
+
+/* Absätze */
+[data-testid="category-description-1"] p {
+    margin: 0 0 1em;
+}
+
+/* Listen */
+[data-testid="category-description-1"] ul,
+[data-testid="category-description-1"] ol {
+    margin: 0 0 1em 1.5em;
+}
+
+[data-testid="category-description-1"] li {
+    margin-bottom: 0.4em;
+}
+
+/* Links */
+[data-testid="category-description-1"] a {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+[data-testid="category-description-1"] a:hover {
+    text-decoration: none;
+}
+
+/* Bilder */
+[data-testid="category-description-1"] img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+/* Tabellen (gleich mit abgedeckt) */
+[data-testid="category-description-1"] table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+[data-testid="category-description-1"] th,
+[data-testid="category-description-1"] td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+[data-testid="category-description-1"] th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+
+[data-testid='item-text-block'] table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+/* Header */
+[data-testid='item-text-block'] table thead th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* Cells */
+[data-testid='item-text-block'] table td {
+    padding: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Stripe Effekt (Bootstrap-like) */
+[data-testid='item-text-block'] table-striped tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Hover (optional, Bootstrap ähnlich) */
+[data-testid='item-text-block'] table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Leere Zeilen etwas dezenter */
+[data-testid='item-text-block'] table td:empty {
+    background-color: transparent;
+    border: none;
+}
