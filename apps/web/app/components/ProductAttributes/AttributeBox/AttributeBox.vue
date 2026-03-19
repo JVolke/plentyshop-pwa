@@ -60,8 +60,6 @@ if (!shouldUseFakeData.value) {
   registerValidator(validate);
 }
 
-registerValidator(validate);
-
 const [selectedValue] = defineField('selectedValue');
 
 const doUpdateValue = (value: number) => {
@@ -87,6 +85,7 @@ watch(
   () => meta.value,
   () => {
     if (shouldUseFakeData.value) return;
+
     registerInvalidFields(
       meta.value.valid,
       `prop-${productAttributeGetters.getAttributeId(props.attribute)}`,

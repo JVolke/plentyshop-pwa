@@ -53,6 +53,12 @@
 
         <ProductPrice :product="props.product" />
 
+        <div
+          class="mb-4 font-normal typography-text-sm no-preflight"
+          data-testid="product-description"
+          v-html="productGetters.getShortDescription(props.product)"
+        />
+
         <div class="mt-4 typography-text-xs flex gap-1">
           <span>{{ t('common.labels.asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('product.priceExclVAT') }}</span>
