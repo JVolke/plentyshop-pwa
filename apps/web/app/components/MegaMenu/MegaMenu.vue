@@ -139,6 +139,18 @@
             </template>
           </div>
         </li>
+        <!-- Feuerwerk Link -->
+        <li class="ml-auto flex items-center">
+          <NuxtLink
+            to="https://www.feuerwerk-onlineshop.de/"
+            target="_blank"
+            title="Zum Feuerwerk Shop"
+            aria-label="Zum Feuerwerk Shop"
+            class="flex items-center text-white hover:text-neutral-50 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm transition-colors duration-200"
+          >
+            <FeuerwerkLink class="w-48 h-auto" />
+          </NuxtLink>
+        </li>
       </ul>
     </nav>
 

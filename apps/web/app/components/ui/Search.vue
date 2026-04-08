@@ -37,6 +37,13 @@
     >
       <div class="w-full @2xl:col-span-1">
         <div v-if="results?.suggestions?.length" class="mb-8">
+          <NuxtLink
+            v-if="isFeuerwerkQuery"
+            to="https://www.feuerwerk-onlineshop.de"
+            class="block px-4 py-2 font-semibold text-primary"
+          >
+            Zum Feuerwerk Shop
+          </NuxtLink>
           <h3 class="sr-only uppercase tracking-widest text-sm font-bold text-neutral-700">
             {{ t('searchBar.searchSuggestions') }}
           </h3>
@@ -134,6 +141,10 @@ const {
 } = useSearchSuggestions();
 const { emit } = usePlentyEvent();
 const { t } = useI18n();
+
+const isFeuerwerkQuery = computed(() =>
+  searchTerm.value.toLowerCase().includes('feuerwerk')
+);
 
 const searchLinkParts = computed(() => {
   const translated = t('searchBar.showAllResults', {
