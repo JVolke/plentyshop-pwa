@@ -1,6 +1,13 @@
 <template>
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <!-- class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1 -->
+    <h1 class="mt-8 mb-2 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
+    <NuxtLink
+      v-if="isFeuerwerkQuery"
+      to="https://www.feuerwerk-onlineshop.de"
+      class="block px-4 py-2 text-center font-semibold text-primary-500 mb-2"
+    >
+      Zum Feuerwerk Shop geht es hier lang
+    </NuxtLink>
     <div class="md:flex gap-6" data-testid="category-page-content">
       <CategorySidebar class="md:w-[303px]" :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
@@ -106,6 +113,10 @@ const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
+
+const isFeuerwerkQuery = computed(() =>
+  title.toLowerCase().includes('feuerwerk')
+);
 
 if (viewport.isLessThan('md')) close();
 </script>
