@@ -15,9 +15,9 @@
 <script setup lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
-const zielBestellZeitStunde = 14;
+const zielBestellZeitStunde = 13;
 const zielBestellZeitMinute = 0;
-const lieferZeitTage = 1;
+const lieferZeitTage = 2;
 
 const zielDatum = ref(new Date());
 const zielDatumEnde = ref(new Date()); // Neues Enddatum für den Zeitraum
