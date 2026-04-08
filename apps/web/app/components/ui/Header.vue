@@ -91,6 +91,18 @@
         </UiButton>
       </nav>
     </template>
+    <div v-if="viewport.isLessThan('lg')">
+      <UiButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md md:hidden"
+        square
+        :style="{ color: iconColor }"
+        :aria-label="t('common.navigation.openSearchModal')"
+        @click="searchModalOpen"
+      >
+        <SfIconSearch />
+      </UiButton>
+    </div>
   </MegaMenu>
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
