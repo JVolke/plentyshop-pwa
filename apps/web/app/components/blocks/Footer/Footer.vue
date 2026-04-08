@@ -106,10 +106,9 @@
               </component>
             </SfListItem>
           </ul>
-          <div
+          <TextContent
             v-if="column?.description"
-            class="custom-html ml-4 text-sm hover:cursor-pointer no-preflight"
-            v-html="column.description"
+            v-bind="mapToTextContentProps({ htmlDescription: column.description })"
           />
         </div>
       </div>
