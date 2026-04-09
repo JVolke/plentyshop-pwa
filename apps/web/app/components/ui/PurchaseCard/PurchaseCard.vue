@@ -44,7 +44,7 @@
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <hr class="mt-2" />
               <div class="mb-2 variation-properties">
-                <div class="grid grid-cols-[200px_1fr] gap-2 mt-1">
+                <div class="flex justify-between">
                   <span class="font-semibold mr-2">Artikelnummer:</span>
                   <span>{{ productGetters.getVariationNumber(product) }}</span>
                 </div>
