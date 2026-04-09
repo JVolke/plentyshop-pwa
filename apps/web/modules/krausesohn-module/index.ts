@@ -25,6 +25,8 @@ export default defineNuxtModule({
       secondaryBanner2Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER2_ALT || '',
       secondaryBanner3Alt: process.env.NUXT_PUBLIC_SECONDARY_BANNER3_ALT || '',
       notifyMessage: process.env.NUXT_PUBLIC_NOTIFY_MESSAGE || '',
+      cutOff: process.env.NUXT_PUBLIC_CUT_OFF || 13,
+      deliveryTime: process.env.NUXT_PUBLIC_DELIVERY_TIME || 2,
      }
     });
 

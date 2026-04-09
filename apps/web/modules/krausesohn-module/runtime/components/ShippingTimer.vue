@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-primary-200 rounded-md hover:shadow-lg flex flex-col mt-2">
+  <div v-if="zielBestellZeitStunde > 0" class="border border-primary-200 rounded-md hover:shadow-lg flex flex-col mt-2">
     <div class="p-2  typography-text-sm flex flex-col flex-auto">
       <div>
         <p>
@@ -15,9 +15,14 @@
 <script setup lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 
-const zielBestellZeitStunde = 13;
+const { getSetting: getCutOff } = useSiteSettings('cutOff');
+const cutOff = computed(() => getCutOff() );
+const { getSetting: getDeliveryTime } = useSiteSettings('deliveryTime');
+const deliveryTime = computed(() => getDeliveryTime() );
+
+const zielBestellZeitStunde = Number(cutOff.value);
 const zielBestellZeitMinute = 0;
-const lieferZeitTage = 2;
+const lieferZeitTage = Number(deliveryTime.value);
 
 const zielDatum = ref(new Date());
 const zielDatumEnde = ref(new Date()); // Neues Enddatum für den Zeitraum
@@ -50,11 +55,11 @@ function istFeiertag(datum: Date): boolean {
   );
 }
 
-function berechneZielDatum(startDatum: Date, tageHinzufügen: number): Date {
+function berechneZielDatum(startDatum: Date, tageHinzufuegen: number): Date {
   const lieferDatum = new Date(startDatum);
   let lieferTageZaehler = 0;
 
-  while (lieferTageZaehler < tageHinzufügen) {
+  while (lieferTageZaehler < tageHinzufuegen) {
     lieferDatum.setDate(lieferDatum.getDate() + 1);
     if (lieferDatum.getDay() !== 0 && !istFeiertag(lieferDatum)) {
       lieferTageZaehler++;
