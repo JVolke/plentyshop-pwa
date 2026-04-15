@@ -20,15 +20,15 @@
     >
       {{ productPropertyGetters.getPropertyValue(variationProperty) }}
     </a>
-    <button
+    <a
       v-else-if="productPropertyGetters.getPropertyId(variationProperty) === 2 && productPropertyGetters.getPropertyValue(variationProperty)"
       type="button"
       class="text-primary-700"
       @click="openVideoModal"
     >
       Video abspielen
-    </button>
-    <span v-else-if="productPropertyGetters.getPropertyId(variationProperty) !== 2" >
+    </a>
+    <span v-else-if="productPropertyGetters.getPropertyId(variationProperty) !== 2" :class="isWarn">
         {{ productPropertyGetters.getPropertyValue(variationProperty) }}
       </span>
   </template>
@@ -62,13 +62,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyTextProps } from './types';
 
 const props = defineProps<VariationPropertyTextProps>();
 const variationProperty = props.variationProperty;
 
+const isWarn = computed(() => {
+  if (productPropertyGetters.getPropertyName(variationProperty) == "Warnhinweise")
+  {
+    return "text-right"
+  }
+  return "";
+});
 const selectionImageMap: Record<number, string> = {
   170: '/piktos/acid_red_aetzend_korrosiv.gif',
   171: '/piktos/rondflam.gif',

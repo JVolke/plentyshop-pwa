@@ -20,7 +20,7 @@
           variant="tertiary"
           @click="close"
         >
-          <SfIconClose />
+          Weiter Shoppen <SfIconClose />
         </UiButton>
       </div>
     </header>
