@@ -22,6 +22,10 @@
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
     <div v-else>
+      <YoutubeVideo
+        v-if="videoUrl.values.value"
+        :video-url="videoUrl.values.value"
+      />
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
         {{ content.text.title }}
       </h2>
@@ -51,6 +55,8 @@ const inlineStyle = computed(() => {
 });
 
 const { registerBlockVisibility } = useBlocksVisibility();
+
+const videoUrl = productGetters.getPropertyById(2,currentProduct.value)
 
 watch(
   text,
