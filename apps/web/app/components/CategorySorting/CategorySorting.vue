@@ -29,9 +29,29 @@ const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSear
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const route = useRoute();
+const categorySpecificDefault = computed(() => {
+  const path = route.path;
+  //variation.createdAt_desc
+  if (path == "/fackeln/wachsfackeln")
+      return 'variation.position_desc';
+  else if (path == "/fasching/neuheiten-karneval/" || path == '/neuheiten-feuerwerk/')
+    return 'variation.createdAt_desc'
+  else
+      return isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption();
+});
+
+
 const useSelectionModeCompact = computed(() => props.selectionModeCompact);
 watch(useSelectionModeCompact, (on) => {
   if (on) updateSorting('');
+});
+watchEffect(() => {
+  const sortQueryParam = route.query.sort;
+  const hasSortInQuery = typeof sortQueryParam === 'string' && sortQueryParam.length > 0;
+
+  if (!hasSortInQuery && categorySpecificDefault.value) {
+    updateSorting(categorySpecificDefault.value);
+  }
 });
 const options = computed<string[]>(() => availableSortingOptions());
 const defaultOption = computed<string | undefined>(() =>
@@ -47,8 +67,9 @@ const selected = computed<string>({
     if (currentSort && options.value.includes(currentSort)) return currentSort;
 
     return (
-      (defaultOption.value && options.value.includes(defaultOption.value) ? defaultOption.value : options.value[0]) ??
-      ''
+      (categorySpecificDefault.value && options.value.includes(categorySpecificDefault.value)
+        ? categorySpecificDefault.value
+        : options.value[0]) ?? ''
     );
   },
   set: (val) => {

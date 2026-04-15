@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto max-w-screen-3xl mt-2 px-4 md:px-6 lg:px-10">
-    <div class="relative mb-3 overflow-hidden rounded-lg shadow-md">
-      <a :href="mainBanner.link" class="block w-full h-full relative">
+    <a :href="mainBanner.link" class="block w-full h-full relative">
+    <div class="relative mb-3 overflow-hidden rounded-lg shadow-md bg-primary-500 hover:bg-primary-600">
         <img
           :src="mainBanner.desktopUrl"
           :srcset="`${mainBanner.mobileUrl} 400w, ${mainBanner.desktopUrl} 768w, ${mainBanner.desktopUrl} 992w`"
@@ -12,30 +12,44 @@
           style="max-height: 480px"
           :alt="mainBanner.alt"
         />
-        <div class="absolute bottom-0 left-0 w-full p-2 bg-primary-500 bg-opacity-85 bg-opa text-white hover:bg-opacity-100 transition-colors duration-300">
+        <div
+          v-if="bannerLabelOverlay"
+          class="absolute bottom-0 left-0 w-full p-2 bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
           <h2 class="text-xl md:text-2xl font-bold">
             {{ mainBanner.title }}
           </h2>
         </div>
-      </a>
+        <div v-else class="p-2">
+          <h2 class="text-base md:text-lg font-bold  text-white">
+            {{ mainBanner.title }}
+          </h2>
+        </div>
     </div>
+    </a>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
       <div
         v-for="(banner, index) in secondaryBanners"
         :key="index"
-        class="relative overflow-hidden rounded-lg shadow-md"
+        class="relative overflow-hidden rounded-lg shadow-md bg-primary-500 text-center hover:bg-primary-600"
       >
-        <a :href="banner.link" class="block w-full h-full relative">
-          <img
+        <a :href="banner.link" class="block w-full h-full relative ">
+        <img
             :src="banner.desktopUrl"
             width="383"
             height="229"
             class="w-full h-auto object-cover rounded-lg"
             :alt="banner.alt"
           />
-          <div class="absolute bottom-0 left-0 w-full p-2 bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
+          <div
+            v-if="bannerLabelOverlay"
+            class="absolute bottom-0 left-0 w-full p-2  bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
             <h2 class="text-base md:text-lg font-bold">
+              {{ banner.title }}
+            </h2>
+          </div>
+          <div v-else class="p-2">
+            <h2 class="text-base md:text-lg font-bold text-white">
               {{ banner.title }}
             </h2>
           </div>
@@ -55,7 +69,8 @@ interface Banner {
   title: string;
   alt: string;
 }
-
+const { getSetting: getBannerLabelOverlay } = useSiteSettings('bannerLabelOverlay');
+const bannerLabelOverlay = computed(() => getBannerLabelOverlay());
 
 const { getSetting: getMainBannerDesktopUrl } = useSiteSettings('mainBannerDesktopUrl');
 const mainBannerDesktopUrl = computed(() => getMainBannerDesktopUrl() );

@@ -7,6 +7,7 @@ export default defineNuxtModule({
     const {resolve} = createResolver(import.meta.url);
    updateRuntimeConfig({
      public: {
+       bannerLabelOverlay: process.env.NUXT_PUBLIC_BANNER_LABEL_OVERLAY || true,
       mainBannerDesktopUrl: process.env.NUXT_PUBLIC_MAIN_BANNER_DESKTOP_URL || '',
       mainBannerMobileUrl: process.env.NUXT_PUBLIC_MAIN_BANNER_MOBILE_URL || '',
       mainBannerLink: process.env.NUXT_PUBLIC_MAIN_BANNER_LINK || '',

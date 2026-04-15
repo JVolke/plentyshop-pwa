@@ -42,10 +42,10 @@
       <SfListItem
         v-if="useAvailability && productGetters.getAvailabilityName(product) && inCategory && hasVariations && !isItem"
         size="sm"
-        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-white bg-primary-500 w-full hover:text-primary-500"
+        class="text-xs font-medium select-none rounded-md !px-2 grid mt-2 text-primary-500 w-full"
         :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
       >
-        Zum Artikel
+        <span>Optionen wählen</span>
       </SfListItem>
     </ul>
   </div>
@@ -60,6 +60,7 @@ const route = useRoute();
 const isItem = computed(() => {
   return typeof route.params.itemId === 'string';
 });
+const toProduct = "Zum Artikel";
 
 const localePath = useLocalePath();
 
@@ -79,7 +80,7 @@ const availabilityStyles = computed(() => {
   if (!useAvailability) return {};
 
   return {
-    backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
+    //backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
     color: productGetters.getAvailabilityTextColor(product),
   };
 });
