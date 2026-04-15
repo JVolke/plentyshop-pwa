@@ -154,32 +154,34 @@
         <SfCheckbox v-model="shippingAsBilling" data-testid="use-shipping-as-billing" />
         <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
       </label>
-
-      <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
-        <UiButton
-          :data-testid="`save-address-${AddressType.Shipping}`"
-          :disabled="formIsLoading"
-          variant="secondary"
-          type="submit"
-        >
-          {{ t('common.actions.saveAddress') }}
-        </UiButton>
-
-        <UiButton
-          v-if="hasShippingAddress"
-          :disabled="formIsLoading || disabled"
-          variant="secondary"
-          class="ml-2"
-          :data-testid="`close-address-${AddressType.Shipping}`"
-          :aria-label="t('common.navigation.closeAddressForm')"
-          @click="edit"
-        >
-          <SfIconClose />
-        </UiButton>
-      </div>
     </div>
-    <p class="text-right w-full">Bitte speichern Sie die Adresse, bevor Sie fortfahren.</p>
+    <div
+      v-if="!restrictedAddresses || showAddressSaveButton"
+      class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
+    >
+    <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
+      <UiButton
+        :data-testid="`save-address-${AddressType.Shipping}`"
+        :disabled="formIsLoading"
+        variant="secondary"
+        type="submit"
+      >
+        {{ t('krausesohn.saveAddress') }}
+      </UiButton>
 
+      <UiButton
+        v-if="hasShippingAddress"
+        :disabled="formIsLoading || disabled"
+        variant="secondary"
+        class="ml-2"
+        :data-testid="`close-address-${AddressType.Shipping}`"
+        :aria-label="t('common.navigation.closeAddressForm')"
+        @click="edit"
+      >
+        <SfIconClose />
+      </UiButton>
+    </div>
+    </div>
   </form>
 </template>
 

@@ -78,7 +78,6 @@
         </div>
         <UiDivider class="mt-4 w-auto" />
       </div>
-
       <div v-if="showNetPrices" class="flex justify-between typography-text-base mb-1">
         <h2 data-testid="total-net-label">{{ t('common.labels.total') }} ({{ t('common.labels.netPrice') }})</h2>
         <h2 data-testid="total-net">{{ format(cartGetters.getBasketAmountNet(cart)) }}</h2>
@@ -115,6 +114,8 @@ const totals = computed(() => {
 const getShippingAmount = (amount: number) => {
   return amount === 0 ? t('shipping.method.free') : format(Number(amount));
 };
+
+
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const orderPropertiesWithoutVat = computed(() => cartGetters.getOrderPropertiesWithoutVat(props.cart));
