@@ -76,7 +76,7 @@
         </div>
       </form>
 
-      <div v-else class="mb-3">
+      <div v-else class="mb-3" :class="facetGetters.getName(facet)">
         <SfListItem
           v-for="(filter, index) in facetGetters.getFilters(facet)"
           :key="index"
@@ -91,6 +91,7 @@
               v-model="models[filter.id]"
               :value="filter"
               class="flex items-center"
+              :class="'option-'+filter.id"
               @change="facetChange"
             />
           </template>

@@ -142,7 +142,7 @@
         <!-- Feuerwerk Link -->
         <li class="ml-auto flex items-center">
           <NuxtLink
-            to="https://www.feuerwerk-onlineshop.de/"
+            to="https://www.feuerwerk-onlineshop.de/?mtm_campaign=feuerwerkmenu&mtm_source=krause-sohn"
             target="_blank"
             title="Zum Feuerwerk Shop"
             aria-label="Zum Feuerwerk Shop"
