@@ -17,7 +17,7 @@
               <SfIconFavorite />
               <SfBadge
                 :content="wishlistItemIds.length"
-                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:text-white group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                 data-testid="wishlist-badge"
                 placement="top-right"
                 :max="99"
@@ -36,7 +36,7 @@
               <SfIconShoppingCart />
               <SfBadge
                 :content="cartItemsCount"
-                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:text-white group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                 data-testid="cart-badge"
                 placement="top-right"
                 :max="99"

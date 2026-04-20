@@ -63,7 +63,7 @@
             <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
             <SfIconChevronRight
               aria-hidden="true"
-              class="rotate-90 text-neutral-100 group-hover:text-neutral-700 group-active:text-neutral-900"
+              class="rotate-90 text-neutral-100 group-hover:text-primary-500 group-active:text-primary-500"
             />
           </NuxtLink>
 
