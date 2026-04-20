@@ -5,10 +5,9 @@
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <UiButton
-            class="group relative hover:!bg-header-400 active:bg-header-400 mr-1 -ml-0.5 rounded-md"
+            class="group relative hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.wishlist)"
-            :style="{ color: resolvedIconColor }"
             :aria-label="t('cart.numberInWishlist', { count: wishlistItemIds.length })"
             variant="tertiary"
             square
@@ -18,12 +17,7 @@
               <SfIconFavorite />
               <SfBadge
                 :content="wishlistItemIds.length"
-                :style="{
-                  backgroundColor: resolvedIconColor,
-                  outlineColor: resolvedBackgroundColor,
-                  color: resolvedBackgroundColor,
-                }"
-                class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                 data-testid="wishlist-badge"
                 placement="top-right"
                 :max="99"
@@ -31,9 +25,8 @@
             </template>
           </UiButton>
           <UiButton
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+            class="group relative  hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
-            :style="{ color: resolvedIconColor }"
             :to="localePath(paths.cart)"
             :aria-label="t('cart.numberInCart', { count: cartItemsCount })"
             variant="tertiary"
@@ -43,12 +36,7 @@
               <SfIconShoppingCart />
               <SfBadge
                 :content="cartItemsCount"
-                :style="{
-                  backgroundColor: resolvedIconColor,
-                  outlineColor: resolvedBackgroundColor,
-                  color: resolvedBackgroundColor,
-                }"
-                class="outline group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
                 data-testid="cart-badge"
                 placement="top-right"
                 :max="99"
@@ -59,8 +47,7 @@
             <template #trigger>
               <UiButton
                 variant="tertiary"
-                class="relative hover:bg-header-400 active:bg-header-400 rounded-md"
-                :style="{ color: resolvedIconColor }"
+                class="relative text-primary-500 hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md"
                 :class="{ 'bg-primary-700': isAccountDropdownOpen }"
                 data-testid="account-dropdown-button"
                 @click="accountDropdownToggle()"
@@ -98,8 +85,7 @@
           </SfDropdown>
           <UiButton
             v-else
-            :style="{ color: resolvedIconColor }"
-            class="group relative hover:!bg-header-400 active:!bg-header-400 mr-1 -ml-0.5 rounded-md"
+            class="group relative text-primary-500  hover:text-white active:text-white hover:bg-primary-500 active:bg-primary-500 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
             :aria-label="t('authentication.login.openLoginForm')"
             square
