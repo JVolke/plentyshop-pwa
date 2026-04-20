@@ -460,12 +460,7 @@ import { migrateImageContent } from '~/utils/migrate-image-content';
 import { clamp } from '@storefront-ui/shared';
 
 const { placeholderImg, labels, imageDimensions, imageTypes, deleteImage } = usePickerHelper();
-const route = useRoute();
-const { data } = useBlockTemplates(
-  route?.meta?.identifier as string,
-  route.meta.type as string,
-  useNuxtApp().$i18n.locale.value,
-);
+const { allBlocks } = useBlocks()
 const { blockUuid } = useSiteConfiguration();
 const { findOrDeleteBlockByUuid } = useBlockManager();
 
@@ -479,7 +474,7 @@ const DEFAULT_LAYOUT = {
 };
 
 const uiImageTextBlock = computed(() => {
-  const rawContent = findOrDeleteBlockByUuid(data.value, props.uuid || blockUuid.value)?.content || {};
+  const rawContent = findOrDeleteBlockByUuid(allBlocks.value, props.uuid || blockUuid.value)?.content || {};
   const migrated = migrateImageContent(rawContent as ImageContent | OldContent);
 
   if (!migrated.layout) {

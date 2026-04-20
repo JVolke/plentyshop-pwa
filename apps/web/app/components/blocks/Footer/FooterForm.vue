@@ -542,17 +542,6 @@ const columnTwoSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => config.co
     }),
   }),
 );
-
-watch(
-  footerBlock,
-  (updatedFooterBlock) => {
-    const block = getSourceBlock();
-    if (block) {
-      block.content = updatedFooterBlock.content;
-    }
-  },
-  { deep: true },
-);
 </script>
 
 <i18n lang="json">
