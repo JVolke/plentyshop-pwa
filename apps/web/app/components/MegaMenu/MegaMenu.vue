@@ -106,7 +106,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(node))"
-                      class="mb-2 hover:bg-secondary-100 rounded font-medium typography-text-base text-neutral-900"
+                      class="mb-2 hover:bg-primary-500 hover:text-white rounded font-medium typography-text-base text-neutral-900 "
                     >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
@@ -118,7 +118,7 @@
                   :tag="NuxtLink"
                   size="sm"
                   :href="localePath(generateCategoryLink(node))"
-                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-secondary-100 rounded whitespace-normal break-words"
+                  class="typography-text-base font-medium text-neutral-900 px-4 py-1.5 border-b border-b-neutral-200 border-b-solid hover:bg-primary-500 hover:text-white rounded whitespace-normal break-words"
                 >
                   {{ categoryTreeGetters.getName(node) }}
                 </SfListItem>
@@ -129,7 +129,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 hover:bg-secondary-100 rounded text-neutral-900"
+                      class="typography-text-sm py-1.5 hover:bg-primary-500 hover:text-white rounded text-neutral-900"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>
