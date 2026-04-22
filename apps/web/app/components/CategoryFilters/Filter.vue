@@ -1,9 +1,10 @@
 <template>
   <SfAccordionItem v-if="facet" v-model="open">
     <template #summary>
-      <div class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-50/50">
+      <div class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-500 text-white">
         <div class="py-1 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none">
           {{ facetGetters.getName(facet) }}
+          {{ facet.cssClass }}
         </div>
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
@@ -124,7 +125,6 @@ const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models = ref({} as Filters);
-
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
 const maxPrice = ref(getFacetsFromURL().priceMax ?? '');

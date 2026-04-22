@@ -2,7 +2,7 @@
   <div class="w-full" data-testid="category-sorting">
     <div
       v-if="!selectionModeCompact"
-      class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
+      class="bg-primary-500 text-white mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('common.labels.sortBy') }}
     </div>
@@ -29,29 +29,9 @@ const { getSetting: defaultSortingSearch } = useSiteSettings('defaultSortingSear
 const { getSetting: defaultSortingOption } = useSiteSettings('defaultSortingOption');
 
 const route = useRoute();
-const categorySpecificDefault = computed(() => {
-  const path = route.path;
-  //variation.createdAt_desc
-  if (path == "/fackeln/wachsfackeln")
-      return 'variation.position_desc';
-  else if (path == "/fasching/neuheiten-karneval/" || path == '/neuheiten-feuerwerk/')
-    return 'variation.createdAt_desc'
-  else
-      return isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption();
-});
-
-
 const useSelectionModeCompact = computed(() => props.selectionModeCompact);
 watch(useSelectionModeCompact, (on) => {
   if (on) updateSorting('');
-});
-watchEffect(() => {
-  const sortQueryParam = route.query.sort;
-  const hasSortInQuery = typeof sortQueryParam === 'string' && sortQueryParam.length > 0;
-
-  if (!hasSortInQuery && categorySpecificDefault.value) {
-    updateSorting(categorySpecificDefault.value);
-  }
 });
 const options = computed<string[]>(() => availableSortingOptions());
 const defaultOption = computed<string | undefined>(() =>
@@ -67,9 +47,8 @@ const selected = computed<string>({
     if (currentSort && options.value.includes(currentSort)) return currentSort;
 
     return (
-      (categorySpecificDefault.value && options.value.includes(categorySpecificDefault.value)
-        ? categorySpecificDefault.value
-        : options.value[0]) ?? ''
+      (defaultOption.value && options.value.includes(defaultOption.value) ? defaultOption.value : options.value[0]) ??
+      ''
     );
   },
   set: (val) => {

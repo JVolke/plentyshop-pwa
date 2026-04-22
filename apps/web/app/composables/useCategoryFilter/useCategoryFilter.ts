@@ -64,7 +64,22 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
 
     const currentRoute = getRoute();
 
-    const defaultOption = isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption();
+    // Sortierlogik
+    let routeSortingOption;
+
+    switch (currentRoute.path)
+    {
+      case "/fackeln/wachsfackeln":
+        routeSortingOption = "variation.position_desc";
+        break;
+      case "/fasching/neuheiten-karneval":
+      case "/neuheiten-feuerwerk":
+        routeSortingOption = "variation.createdAt_desc";
+        break;
+    }
+
+    const defaultOption = routeSortingOption ??
+      (isPageOfType('search') ? defaultSortingSearch() : defaultSortingOption());
 
     return {
       categoryUrlPath: getCategoryUrlFromRoute(currentRoute.fullPath),

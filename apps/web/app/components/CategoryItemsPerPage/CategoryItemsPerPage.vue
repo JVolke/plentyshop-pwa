@@ -2,7 +2,7 @@
   <div class="w-full" data-testid="category-items-per-page">
     <div
       v-if="!selectionModeCompact"
-      class="bg-primary-50/50 mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
+      class="bg-primary-500 text-white mb-4 px-4 py-2 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none"
     >
       {{ t('common.labels.perPage') }}
     </div>
