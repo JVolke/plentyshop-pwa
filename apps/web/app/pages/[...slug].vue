@@ -122,6 +122,7 @@ const robotsContent = computed((): string =>
   productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
 );
 
+
 watch(
   () => route.query,
   async () => {

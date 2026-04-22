@@ -269,6 +269,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    * checkFiltersInURL();
    * ```
    */
+  /**
   const checkFiltersInURL = (): void => {
     const { data: productsCatalog } = useProducts();
     const facetsFromUrl = getFacetsFromURL();
@@ -287,6 +288,31 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
       });
 
       updateQuery({ facets: updatedFacets.join(',') });
+    }
+  };*/
+  const checkFiltersInURL = (): void => {
+    const { data: productsCatalog } = useProducts();
+    const facetsFromUrl = getFacetsFromURL();
+    const facetsFromResponse = productsCatalog.value.facets;
+
+    if (facetsFromUrl.facets) {
+      const facets = facetsFromUrl.facets.split(',');
+
+      const updatedFacets = facets.filter((facet) => {
+        return facetsFromResponse.some((facetItem) => {
+          if (facetItem.values) {
+            return facetItem.values.some((facetValue) => facetValue.id.toString() === facet);
+          }
+          return false;
+        });
+      });
+
+      const newFacets = updatedFacets.join(',');
+      const currentFacets = facetsFromUrl.facets ?? '';
+
+      if (newFacets !== currentFacets) {
+        updateQuery({ facets: newFacets || null });
+      }
     }
   };
 
