@@ -104,7 +104,6 @@ export default defineNuxtPlugin(() => {
       cartGetters.getItemPrice(data.item),
       data.addItemParams.quantity
     ])
-    window._paq.push(['trackPageView'])
   })
 
   on('frontend:removeFromCart', (data) => {
