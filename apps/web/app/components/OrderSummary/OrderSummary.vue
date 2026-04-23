@@ -101,6 +101,7 @@ import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 const props = defineProps<OrderSummaryPropsType>();
 const { showNetPrices } = useCart();
 const { format } = usePriceFormatter();
+const route = useRoute();
 
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
@@ -111,11 +112,18 @@ const totals = computed(() => {
   };
 });
 
+// Different Texts in case of shipping free based
 const getShippingAmount = (amount: number) => {
-  return amount === 0 ? t('shipping.method.free') : format(Number(amount));
+  if (route.path == "/cart" && amount === 0)
+  {
+    return t('shipping.method.free');
+  } else if (amount === 0)
+  {
+    return "Kostenlos"
+  }
+
+  return format(Number(amount))
 };
-
-
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const orderPropertiesWithoutVat = computed(() => cartGetters.getOrderPropertiesWithoutVat(props.cart));

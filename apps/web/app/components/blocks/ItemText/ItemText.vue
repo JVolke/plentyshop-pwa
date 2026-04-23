@@ -23,7 +23,7 @@
     </div>
     <div v-else>
       <YoutubeVideo
-        v-if="videoUrl.values.value"
+        v-if="videoUrl"
         :video-url="videoUrl.values.value"
       />
       <h2 class="font-bold text-lg leading-6 md:text-2xl">
@@ -56,7 +56,9 @@ const inlineStyle = computed(() => {
 
 const { registerBlockVisibility } = useBlocksVisibility();
 
-const videoUrl = productGetters.getPropertyById(2,currentProduct.value)
+const videoUrl = computed(()=>{
+  return productGetters.getPropertyById(2,currentProduct.value) ? productGetters.getPropertyById(2,currentProduct.value) : 0;
+})
 
 watch(
   text,

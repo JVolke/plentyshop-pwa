@@ -39,9 +39,10 @@ export default defineNuxtPlugin(() => {
   // Helper for all events
   const canTrack = () =>
     typeof window !== 'undefined' &&
-    Array.isArray(window._paq) &&
+    !!window._paq &&
+    typeof window._paq.push === 'function' &&
     config?.matomoEnabled !== false
-
+  console.log("can Track", canTrack())
   // Track first pageview if there is no route change on initial load
   queueMicrotask(() => {
     if (canTrack()) {
@@ -64,11 +65,11 @@ export default defineNuxtPlugin(() => {
   // Plenty events
   const { on } = usePlentyEvent()
 
-  on('frontend:orderCreated', (order: any) => {
+  on('frontend:orderCreated', (order) => {
     if (!canTrack() || !order?.order || !order?.totals) return
 
     // Add each item first
-    order.order.orderItems.forEach((item: any) => {
+    order.order.orderItems.forEach((item) => {
       window._paq.push(['addEcommerceItem',
         orderGetters.getItemVariationId(item),
         orderGetters.getItemName(item),
@@ -79,7 +80,7 @@ export default defineNuxtPlugin(() => {
     })
 
     const subtotal = order.order.orderItems
-      .map((item: any) => orderGetters.getItemNetPrice(item))
+      .map((item) => orderGetters.getItemNetPrice(item))
       .reduce((sum: number, price: number) => sum + price, 0)
 
     const totalVat = (order.totals.vats || [])
@@ -92,9 +93,11 @@ export default defineNuxtPlugin(() => {
       order.totals.shippingNet,          // shipping
       totalVat                           // tax
     ])
+    window._paq.push(['trackPageView']);
   })
 
-  on('frontend:addToCart', (data: any) => {
+  on('frontend:addToCart', (data) => {
+    console.log("Add To Cart fired", canTrack())
     if (!canTrack()) return
     window._paq.push(['trackEcommerceCartUpdate', data.cart.basketAmountNet])
     window._paq.push(['addEcommerceItem',
@@ -104,15 +107,17 @@ export default defineNuxtPlugin(() => {
       cartGetters.getItemPrice(data.item),
       data.addItemParams.quantity
     ])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:removeFromCart', (data: any) => {
+  on('frontend:removeFromCart', (data) => {
     if (!canTrack()) return
     window._paq.push(['removeEcommerceItem', data.deleteItemParams.cartItemId])
     window._paq.push(['trackEcommerceCartUpdate', cartGetters.getTotals(data.cart)])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:productLoaded', (data: any) => {
+  on('frontend:productLoaded', (data) => {
     if (!canTrack()) return
     window._paq.push(['setEcommerceView',
       productGetters.getVariationId(data.product),
@@ -120,25 +125,30 @@ export default defineNuxtPlugin(() => {
       '',
       productGetters.getPrice(data.product)
     ])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:addToWishlist', (data: any) => {
+  on('frontend:addToWishlist', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'Wishlist', 'Add To Wishlist', data.variationId])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:signUp', (data: any) => {
+  on('frontend:signUp', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Sign Up', data.method])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:login', (data: any) => {
+  on('frontend:login', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Login', data.method])
+    window._paq.push(['trackPageView'])
   })
 
-  on('frontend:searchProduct', (data: any) => {
+  on('frontend:searchProduct', (data) => {
     if (!canTrack()) return
     if (config.matomoTrackSiteSearch) window._paq.push(['trackSiteSearch', data])
+    window._paq.push(['trackPageView'])
   })
 })
