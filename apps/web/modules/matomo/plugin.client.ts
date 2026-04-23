@@ -42,7 +42,6 @@ export default defineNuxtPlugin(() => {
     !!window._paq &&
     typeof window._paq.push === 'function' &&
     config?.matomoEnabled !== false
-  console.log("can Track", canTrack())
   // Track first pageview if there is no route change on initial load
   queueMicrotask(() => {
     if (canTrack()) {
@@ -67,7 +66,6 @@ export default defineNuxtPlugin(() => {
 
   on('frontend:orderCreated', (order) => {
     if (!canTrack() || !order?.order || !order?.totals) return
-
     // Add each item first
     order.order.orderItems.forEach((item) => {
       window._paq.push(['addEcommerceItem',
@@ -97,7 +95,6 @@ export default defineNuxtPlugin(() => {
   })
 
   on('frontend:addToCart', (data) => {
-    console.log("Add To Cart fired", canTrack())
     if (!canTrack()) return
     window._paq.push(['trackEcommerceCartUpdate', data.cart.basketAmountNet])
     window._paq.push(['addEcommerceItem',
