@@ -13,7 +13,7 @@
   >
     <div class="px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div v-if="getColumnSwitches(resolvedContent.column1).length" class="max-w-[280px] break-words">
+        <div v-if="hasColumn1Content" class="max-w-[280px] break-words">
           <div class="ml-4 text-lg font-medium leading-7">
             {{ resolvedContent.column1?.title }}
           </div>
@@ -85,6 +85,17 @@
                 </SfLink>
               </SfListItem>
             </ul>
+            <div v-if="hasColumn1Button" class="px-4 pt-2 flex">
+              <UiButton
+                :tag="NuxtLink"
+                :to="localePath(paths.cancellationForm)"
+                size="sm"
+                class="text-xs leading-5"
+                data-testid="footer-cancellation-button"
+              >
+                {{ t('legal.withdrawButton') }}
+              </UiButton>
+            </div>
           </div>
           <!-- NEU: strukturierte Links (oder aus description geparst) -->
           <ul v-if="columnLinks(column).length">
