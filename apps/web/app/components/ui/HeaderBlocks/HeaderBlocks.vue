@@ -1,12 +1,11 @@
 <template>
   <div :class="headerBlocksClasses">
-    <blocks-header />
-    <!--EditableBlocks
+    <EditableBlocks
       v-if="headerBlock"
       :has-enabled-actions="enableHeaderActionsOnlyForIndex"
       :blocks="[headerBlock]"
       read-only
-    /-->
+    />
   </div>
 </template>
 
