@@ -95,10 +95,13 @@ export const useBlocks: UseBlocksReturn = () => {
         enableGlobalBlocks: true,
       });
 
+      state.value.hasSnapshot = true;
+
       const assembled = assembleBlocks(
         (response?.data as unknown as GetBlocksResponse) ?? state.value.data,
         type,
         identifier,
+        state.value.hasSnapshot,
       );
       setBlocks(assembled);
 
