@@ -66,7 +66,7 @@ export const useBlocks: UseBlocksReturn = () => {
       console.warn('Failed to fetch blocks:', error.value.message);
     }
 
-    state.value.hasSnapshot = data.value?.hasSnapshot ?? false;
+    state.value.hasSnapshot = data.value?.meta?.hasSnapshot ?? false;
     const assembled = assembleBlocks(
       data.value?.data || ({} as GetBlocksResponse),
       type,
