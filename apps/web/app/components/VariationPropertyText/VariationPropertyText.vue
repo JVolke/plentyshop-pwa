@@ -40,7 +40,6 @@ const isLongText = computed(() => {
   return value?.length && value.length > 100;
 });
 
-const props = defineProps<VariationPropertyTextProps>();
 const variationProperty = props.variationProperty;
 
 const isWarn = computed(() => {
