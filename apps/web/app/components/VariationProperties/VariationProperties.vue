@@ -2,11 +2,13 @@
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`" class="mb-2 mt-2 ">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
       <div v-if="propertyHasNameOrValue(variationProperty)" class="flex justify-between">
-        <Component
-          :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] && !excludeIds.includes(productPropertyGetters.getPropertyId(variationProperty))"
-          :variation-property="variationProperty"
-        />
+        <ClientOnly>
+          <Component
+            :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+            v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] && !excludeIds.includes(productPropertyGetters.getPropertyId(variationProperty))"
+            :variation-property="variationProperty"
+          />
+        </ClientOnly>
       </div>
     </template>
   </div>

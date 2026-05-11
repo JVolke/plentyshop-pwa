@@ -34,6 +34,13 @@ import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyTextProps } from './types';
 
 const props = defineProps<VariationPropertyTextProps>();
+
+const isLongText = computed(() => {
+  const value = productPropertyGetters.getPropertyValue(props.variationProperty);
+  return value?.length && value.length > 100;
+});
+
+const props = defineProps<VariationPropertyTextProps>();
 const variationProperty = props.variationProperty;
 
 const isWarn = computed(() => {

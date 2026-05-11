@@ -34,7 +34,6 @@ const { setCategoriesPageMeta } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
-const routeDataReady = useState<Promise<void> | null>('routeDataReady');
 const { buildCategoryLanguagePath } = useLocalization();
 const contentType = productsCatalog.value.category?.type;
 
@@ -60,10 +59,6 @@ const breadcrumbs = computed(() => {
 const canonicalDb = productsCatalog.value.category?.details?.[0]?.canonicalLink;
 
 const handleQueryUpdate = async () => {
-  if (routeDataReady.value) {
-    await routeDataReady.value;
-  }
-
   if (!productsCatalog.value.category) {
     throw createError({
       statusCode: 404,
