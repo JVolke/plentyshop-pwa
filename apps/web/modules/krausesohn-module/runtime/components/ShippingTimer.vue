@@ -33,18 +33,19 @@ const intervalId = ref<ReturnType<typeof setInterval> | number>(0);
 
 
 // Feiertagsliste (Beispiel)
+// 0 = Januar
 const feiertage = ref([
-  new Date(2025, 0, 1), // Neujahr
-  new Date(2025, 3, 18), // Karfreitag
-  new Date(2025, 3, 21), // Ostermontag
-  new Date(2025, 4, 1), // Tag der Arbeit
-  new Date(2025, 4, 29), // Himmelfahrt
-  new Date(2025, 5, 9), // Pfingstmontag
-  new Date(2025, 9, 3), // Tag der Einheit
-  new Date(2025, 9, 31), // Reformationstag
-  new Date(2025, 10, 19), // Buß- und Bettag
-  new Date(2025, 11, 25), // 1. Weihnachtstag
-  new Date(2025, 11, 26), // 2. Weihnachtstag
+  new Date(2026, 0, 1), // Neujahr
+  new Date(2026, 3, 3), // Karfreitag
+  new Date(2026, 3, 6), // Ostermontag
+  new Date(2026, 4, 1), // Tag der Arbeit
+  new Date(2026, 4, 14), // Himmelfahrt
+  new Date(2026, 4, 25), // Pfingstmontag
+  new Date(2026, 9, 3), // Tag der Einheit
+  new Date(2026, 9, 31), // Reformationstag
+  new Date(2026, 10, 18), // Buß- und Bettag
+  new Date(2026, 11, 25), // 1. Weihnachtstag
+  new Date(2026, 11, 26), // 2. Weihnachtstag
 ]);
 
 function istFeiertag(datum: Date): boolean {
