@@ -53,7 +53,7 @@
               </component>
             </SfListItem>
           </ul>
-          <div
+                <div
             v-if="resolvedContent.column1.description"
             class="custom-html ml-4 text-sm hover:cursor-pointer"
             v-html="resolvedContent.column1.description"
@@ -122,6 +122,17 @@
             v-bind="mapToTextContentProps({ htmlDescription: column.description })"
           />
         </div>
+      </div>
+      <div v-if="hasColumn1Button" class="px-4 pt-2 flex mb-2">
+        <UiButton
+          :tag="NuxtLink"
+          :to="localePath(paths.cancellationForm)"
+          size="sm"
+          class="text-xs leading-5"
+          data-testid="footer-cancellation-button"
+        >
+          {{ t('legal.withdrawButton') }}
+        </UiButton>
       </div>
       <div class="w-100">
         <a href="https://logo.haendlerbund.de/show.php?uuid=f8e294d2-3130-11e8-bcf5-9c5c8e4fb375-9183156061" target="_blank" >
