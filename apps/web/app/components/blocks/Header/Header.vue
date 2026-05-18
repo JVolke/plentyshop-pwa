@@ -211,7 +211,6 @@ const resolvedIconColor = computed(() => props.content.iconColor || getIconColor
 const resolvedBackgroundColor = computed(() => props.content.backgroundColor || getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

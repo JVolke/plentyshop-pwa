@@ -188,7 +188,6 @@ const iconColor = computed(() => getIconColor());
 const headerBackgroundColor = computed(() => getHeaderBackgroundColor());
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { localeCodes } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

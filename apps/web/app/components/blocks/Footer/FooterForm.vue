@@ -39,7 +39,7 @@
           />
         </div>
       </div>
-      <div v-if="enableContractWithdrawalButton" class="py-2">
+      <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel class="mb-1">
             {{ getEditorTranslation('column-1-contract-withdrawal-button-label') }}
@@ -473,7 +473,6 @@ const thirdColumnOpen = ref(false);
 const fourthColumnOpen = ref(false);
 const footNoteOpen = ref(false);
 const footerColors = ref(false);
-const { enableContractWithdrawalButton } = useRuntimeConfig().public;
 
 const footerBlock = computed(() => footer.value as FooterBlock);
 const footerContent = computed(() => footerBlock.value?.content as FooterContent);
@@ -481,7 +480,7 @@ const footerContent = computed(() => footerBlock.value?.content as FooterContent
 const columnOneSwitches = FOOTER_SWITCH_DEFINITIONS.filter((config) => {
   if (config.columnGroup !== 'legal') return false;
 
-  if (enableContractWithdrawalButton && config.key === 'showCancellationForm') {
+  if (config.key === 'showCancellationForm') {
     return false;
   }
 
