@@ -1,4 +1,7 @@
 <template>
+  <client-only>
+    <ShopAuskunft />
+  </client-only>
   <footer
     data-testid="footer"
     class="pt-10"

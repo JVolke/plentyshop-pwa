@@ -141,7 +141,7 @@ table.table td:empty {
 }
 
 /* Stripe Effekt (Bootstrap-like) */
-[data-testid='item-text-block'] table-striped tbody tr:nth-child(odd) {
+[data-testid='item-text-block'] .table-striped tbody tr:nth-child(odd) {
     background-color: #f8f9fa;
 }
 
@@ -154,6 +154,10 @@ table.table td:empty {
 [data-testid='item-text-block'] table td:empty {
     background-color: transparent;
     border: none;
+}
+
+[data-testid^="text-html"] a {
+    color: theme('colors.primary.500') !important;
 }
 
 /*Farbfilter*/

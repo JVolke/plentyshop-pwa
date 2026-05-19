@@ -83,7 +83,7 @@
     </div>
 
     <div
-      class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto"
+      class="p-2 pt-1 border-neutral-200 typography-text-sm flex flex-col flex-auto"
       :class="{
         'items-center': configuration?.contentAlignment === 'center',
         'items-end': configuration?.contentAlignment === 'right',
