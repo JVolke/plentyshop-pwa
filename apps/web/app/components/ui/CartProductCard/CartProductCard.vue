@@ -142,7 +142,13 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
+import {
+  productGetters,
+  productBundleGetters,
+  cartGetters,
+  productImageGetters,
+  manufacturerGetters,
+} from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
