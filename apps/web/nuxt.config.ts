@@ -8,6 +8,7 @@ import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin } from './app/configuration/vite.config';
 import { resolve } from 'pathe';
+import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 
 export default defineNuxtConfig({
   srcDir: 'app/',
@@ -37,52 +38,7 @@ export default defineNuxtConfig({
     plugins: [FailOnLargeChunksPlugin],
 
     optimizeDeps: {
-      include: [
-        '@codemirror/lang-css',
-        '@codemirror/lang-javascript',
-        '@codemirror/state',
-        '@floating-ui/vue',
-        '@intlify/core-base',
-        '@intlify/shared',
-        '@paypal/paypal-js',
-        '@plentymarkets/shop-api',
-        '@plentymarkets/tailwind-colors',
-        '@storefront-ui/shared',
-        '@storefront-ui/vue',
-        '@tanstack/vue-virtual',
-        '@tiptap/core',
-        '@tiptap/extension-color',
-        '@tiptap/extension-emoji',
-        '@tiptap/extension-highlight',
-        '@tiptap/extension-link',
-        '@tiptap/extension-placeholder',
-        '@tiptap/extension-text-align',
-        '@tiptap/extension-text-style',
-        '@tiptap/extension-underline',
-        '@tiptap/starter-kit',
-        '@tiptap/vue-3',
-        '@vee-validate/yup',
-        '@vue/devtools-core',
-        '@vue/devtools-kit',
-        '@vueuse/core',
-        '@vueuse/shared',
-        'codemirror',
-        'cookie',
-        'country-flag-icons/string/3x2',
-        'dotenv',
-        'drift-zoom',
-        'js-beautify',
-        'js-sha256',
-        'swiper/modules',
-        'swiper/vue',
-        'uuid',
-        'vue-multiselect',
-        'vue3-lazy-hydration',
-        'vue-tel-input',
-        'vuedraggable/src/vuedraggable',
-        'yup',
-        'validator/es/lib/isURL',
-      ],
+      include: [...thirdPartyDeps, ...localPackageDeps],
     },
     build: {
       modulePreload: { polyfill: false },
@@ -138,7 +94,7 @@ export default defineNuxtConfig({
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
       ...settingsConfig,
-      ...featureFlagsConfig
+      ...featureFlagsConfig,
     },
   },
   modules: [

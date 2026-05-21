@@ -1,7 +1,7 @@
 <template>
-  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 pt-8 last:mb-0"  data-testid="cart-product-card">
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
+  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
+    <div class="relative overflow-hidden rounded-md w-[100px] @sm:w-[176px]">
+      <UiLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
         <NuxtImg
           v-if="cartItem.variation?.images?.all?.length"
           ref="img"
@@ -20,17 +20,17 @@
           class="w-full h-auto border rounded-md border-neutral-200"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
-      </SfLink>
+      </UiLink>
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
-      <SfLink
+      <UiLink
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="w-fit no-underline typography-text-sm sm:typography-text-lg break-word"
+        class="w-fit no-underline typography-text-sm @sm:typography-text-lg break-word"
       >
         {{ cartGetters.getItemName(cartItem) }}
-      </SfLink>
+      </UiLink>
 
       <div v-if="!cartItem.variation?.bundleComponents" data-testid="cart-item-price">
         {{ format(cartGetters.getCartItemPrice(cartItem)) }}
@@ -63,7 +63,7 @@
             </div>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+            class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
             <CartOrderProperty
@@ -75,7 +75,7 @@
           </div>
           <div
             v-if="cartGetters.getVariation(cartItem)"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
+            class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700 mt-3"
           >
             <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
@@ -102,7 +102,7 @@
         </div>
       </div -->
 
-      <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
+      <div class="items-start @sm:items-center @sm:mt-auto flex flex-col @sm:flex-row">
         <span
           v-if="currentFullPrice"
           class="text-neutral-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
@@ -116,7 +116,7 @@
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
-          class="mt-6 sm:mt-2"
+          class="mt-6 @sm:mt-2"
           @change-quantity="debounceQuantity"
         />
       </div>
@@ -142,8 +142,8 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, cartGetters, manufacturerGetters, Manufacturer, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters } from '@plentymarkets/shop-api';
+import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
 import { debounce } from '../../../utils/debounce';

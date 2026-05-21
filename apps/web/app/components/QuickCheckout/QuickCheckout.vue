@@ -3,12 +3,12 @@
     v-if="isOpen"
     v-model="isOpen"
     tag="section"
-    class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto"
+    class="h-full @md:h-fit m-0 p-0 @lg:w-[1000px] overflow-y-auto"
     aria-label="quick-checkout-modal"
     @mousemove="endTimer()"
   >
     <header>
-      <h2 class="font-bold text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 @md:text-2xl">
         <span>{{ t('quickCheckout.heading') }}</span>
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
@@ -25,8 +25,8 @@
       </div>
     </header>
 
-    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
-      <div class="lg:border-r-2 flex flex-col items-center px-8 py-6">
+    <div class="@lg:grid @lg:grid-cols-2 @lg:gap-4">
+      <div class="@lg:border-r-2 flex flex-col items-center px-8 py-6">
         <NuxtImg
           :src="addModernImageExtension(productGetters.getMiddleImage(props.product))"
           :alt="imageAlt"
@@ -84,13 +84,13 @@
             <span v-else>{{ t('product.priceInclVAT') }}</span>
             <i18n-t keypath="shipping.excludedLabel" scope="global">
               <template #shipping>
-                <SfLink
+                <UiLink
                   :href="localePath(paths.shipping)"
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
                   {{ t('common.labels.delivery') }}
-                </SfLink>
+                </UiLink>
               </template>
             </i18n-t>
           </div>
@@ -110,7 +110,6 @@
           <VariationProperties :product="lastUpdatedProduct" class="mt-3" />
         </div>
       </div>
-
       <div class="py-8 px-10">
         <div class="mb-8">
           <p class="font-medium text-base">{{ t('quickCheckout.cartContains', { count: cartItemsCount }) }}</p>
@@ -136,7 +135,7 @@
         <UiButton
           data-testid="quick-checkout-checkout-button"
           size="lg"
-          class="w-full mb-4 md:mb-0"
+          class="w-full mb-4 @md:mb-0"
           @click="goToCheckout()"
         >
           {{ t('common.actions.goToCheckout') }}
@@ -154,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfLink } from '@storefront-ui/vue';
+import { SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
 import type { Product } from '@plentymarkets/shop-api';
 import { manufacturerGetters, cartGetters, productGetters, productImageGetters } from '@plentymarkets/shop-api';
