@@ -6,7 +6,6 @@ import {
   usePlentyEvent
 } from '#imports'
 import { cartGetters, orderGetters, productGetters } from '@plentymarkets/shop-api'
-import matomoScriptContent from '#matomo/matomo.js?raw'
 
 declare global { interface Window { _paq: any[] } }
 
@@ -43,22 +42,33 @@ export default defineNuxtPlugin(() => {
     typeof window._paq.push === 'function' &&
     config?.matomoEnabled !== false
   // Track first pageview if there is no route change on initial load
+  let hasTrackedInitialPageView = false
+
+  const trackPageView = (url: string) => {
+    if (!canTrack() || !config.matomoTrackPageView) return
+
+    window._paq.push(['setCustomUrl', url])
+    window._paq.push(['setDocumentTitle', document.title])
+    setTimeout(()=> {
+      window._paq.push(['trackPageView'])
+    },1500)
+  }
+
   queueMicrotask(() => {
-    if (canTrack()) {
-      window._paq.push(['setCustomUrl', location.pathname + location.search + location.hash])
-      window._paq.push(['setDocumentTitle', document.title])
-      if (config.matomoTrackPageView) window._paq.push(['trackPageView'])
-    }
+    trackPageView(location.pathname + location.search + location.hash)
+    hasTrackedInitialPageView = true
   })
 
   // SPA route changes
-  router.afterEach((to) => {
-    if (canTrack()) {
-      window._paq.push(['setCustomUrl', to.fullPath])
-      document.title = (to.meta.title as string) || document.title
-      window._paq.push(['setDocumentTitle', document.title])
-      if (config.matomoTrackPageView) window._paq.push(['trackPageView'])
+  router.afterEach((to, from) => {
+    if (!hasTrackedInitialPageView) {
+      hasTrackedInitialPageView = true
+      return
     }
+
+    if (to.fullPath === from.fullPath) return
+
+    trackPageView(to.fullPath)
   })
 
   // Plenty events
@@ -91,7 +101,6 @@ export default defineNuxtPlugin(() => {
       order.totals.shippingNet,          // shipping
       totalVat                           // tax
     ])
-    window._paq.push(['trackPageView']);
   })
 
   on('frontend:addToCart', (data) => {
@@ -110,7 +119,6 @@ export default defineNuxtPlugin(() => {
     if (!canTrack()) return
     window._paq.push(['removeEcommerceItem', data.deleteItemParams.cartItemId])
     window._paq.push(['trackEcommerceCartUpdate', cartGetters.getTotals(data.cart)])
-    window._paq.push(['trackPageView'])
   })
 
   on('frontend:productLoaded', (data) => {
@@ -121,30 +129,26 @@ export default defineNuxtPlugin(() => {
       '',
       productGetters.getPrice(data.product)
     ])
-    window._paq.push(['trackPageView'])
+    //window._paq.push(['trackPageView'])
   })
 
   on('frontend:addToWishlist', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'Wishlist', 'Add To Wishlist', data.variationId])
-    window._paq.push(['trackPageView'])
   })
 
   on('frontend:signUp', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Sign Up', data.method])
-    window._paq.push(['trackPageView'])
   })
 
   on('frontend:login', (data) => {
     if (!canTrack()) return
     window._paq.push(['trackEvent', 'User', 'Login', data.method])
-    window._paq.push(['trackPageView'])
   })
 
   on('frontend:searchProduct', (data) => {
     if (!canTrack()) return
     if (config.matomoTrackSiteSearch) window._paq.push(['trackSiteSearch', data])
-    window._paq.push(['trackPageView'])
   })
 })
