@@ -44,18 +44,24 @@ export default defineNuxtPlugin(() => {
   // Track first pageview if there is no route change on initial load
   let hasTrackedInitialPageView = false
 
-  const trackPageView = (url: string) => {
-    if (!canTrack() || !config.matomoTrackPageView) return
+  let pageViewTimer: ReturnType<typeof setTimeout> | null = null
 
-    window._paq.push(['setCustomUrl', url])
-    window._paq.push(['setDocumentTitle', document.title])
-    setTimeout(()=> {
+  const trackPageView = () => {
+    if (pageViewTimer) clearTimeout(pageViewTimer)
+
+    pageViewTimer = setTimeout(() => {
+      if (!canTrack()) return
+
+      window._paq.push(['setCustomUrl', router.currentRoute.value.fullPath])
+      window._paq.push(['setDocumentTitle', document.title])
       window._paq.push(['trackPageView'])
-    },1500)
+
+      pageViewTimer = null
+    }, 1000)
   }
 
   queueMicrotask(() => {
-    trackPageView(location.pathname + location.search + location.hash)
+    trackPageView()
     hasTrackedInitialPageView = true
   })
 
@@ -68,7 +74,7 @@ export default defineNuxtPlugin(() => {
 
     if (to.fullPath === from.fullPath) return
 
-    trackPageView(to.fullPath)
+    trackPageView()
   })
 
   // Plenty events
