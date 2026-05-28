@@ -129,7 +129,6 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
-const itemSumNet = computed(() => cartGetters.getItemSumNet(cart.value));
 const { processingOrder } = useProcessingOrder();
 
 watch(cartIsEmpty, async () => {
@@ -137,9 +136,5 @@ watch(cartIsEmpty, async () => {
     send({ type: 'neutral', message: t('cart.emptyNotification') });
     await navigateTo(localePath(paths.cart));
   }
-});
-
-watch(itemSumNet, async () => {
-  await fetchPaymentMethods();
 });
 </script>
