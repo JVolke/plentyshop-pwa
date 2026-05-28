@@ -119,14 +119,25 @@ function aktualisiereCountdown() {
   }
 
   // Countdown korrekt berechnen
-  const bestellFrist = new Date(jetzt);
-  bestellFrist.setHours(zielBestellZeitStunde, zielBestellZeitMinute, 0, 0);
+  let bestellFrist = new Date(jetzt)
 
-  const verbleibendeZeit = bestellFrist.getTime() - jetzt.getTime();
-  const stunden = Math.floor(verbleibendeZeit / (1000 * 60 * 60));
-  const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60));
+  if (
+    jetzt.getHours() > zielBestellZeitStunde ||
+    (jetzt.getHours() === zielBestellZeitStunde && jetzt.getMinutes() >= zielBestellZeitMinute) ||
+    !istVersandTag(jetzt)
+  ) {
+    bestellFrist = berechneNaechstenVersandTag(
+      new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate() + 1)
+    )
+  }
 
-  countdownText.value = `${stunden} Stunden ${minuten < 10 ? '0' : ''}${minuten} Minuten`;
+  bestellFrist.setHours(zielBestellZeitStunde, zielBestellZeitMinute, 0, 0)
+
+  const verbleibendeZeit = Math.max(0, bestellFrist.getTime() - jetzt.getTime())
+  const stunden = Math.floor(verbleibendeZeit / (1000 * 60 * 60))
+  const minuten = Math.floor((verbleibendeZeit % (1000 * 60 * 60)) / (1000 * 60))
+
+  countdownText.value = `${stunden} Stunden ${minuten < 10 ? '0' : ''}${minuten} Minuten`
 }
 
 onMounted(() => {
