@@ -27,23 +27,22 @@
         </template>
       </SfInput>
     </form>
-
-    <section
+     <section
       v-if="isDropdownVisible"
       class="w-full grid @md:shadow @2xl:grid-cols-3 bg-white absolute px-4 pt-4 rounded-md border border-neutral-100 mt-[2px] gap-8 max-h-[calc(var(--viewport-height,100dvh)-120px)] overflow-y-auto"
       aria-live="polite"
       aria-relevant="all"
       :aria-label="t('searchBar.searchSuggestions')"
     >
-      <div class="w-full @2xl:col-span-1">
+       <div class="w-full @2xl:col-span-1">
+         <NuxtLink
+           v-if="isFeuerwerkQuery"
+           to="https://www.feuerwerk-onlineshop.de/?mtm_campaign=feuerwerksearch&mtm_source=krause-sohn"
+           class="block px-4 py-2 font-semibold text-primary"
+         >
+           Hier geht es zum Feuerwerk Shop
+         </NuxtLink>
         <div v-if="results?.suggestions?.length" class="mb-8">
-          <NuxtLink
-            v-if="isFeuerwerkQuery"
-            to="https://www.feuerwerk-onlineshop.de/?mtm_campaign=feuerwerksearch&mtm_source=krause-sohn"
-            class="block px-4 py-2 font-semibold text-primary"
-          >
-            Hier geht es zum Feuerwerk Shop
-          </NuxtLink>
           <h3 class="sr-only uppercase tracking-widest text-sm font-bold text-neutral-700">
             {{ t('searchBar.searchSuggestions') }}
           </h3>
@@ -142,9 +141,17 @@ const {
 const { emit } = usePlentyEvent();
 const { t } = useI18n();
 
-const isFeuerwerkQuery = computed(() =>
-  searchTerm.value.toLowerCase().includes('feuerwerk')
-);
+const isFeuerwerkQuery = computed(() => {
+  const keywords = [
+    'feuerwerk',
+    'lichterbilder',
+    'lichterbild',
+    'lichtbild',
+  ];
+  return keywords.some((keyword) =>
+    searchTerm.value.toLowerCase().includes(keyword)
+  );
+});
 
 const searchLinkParts = computed(() => {
   const translated = t('searchBar.showAllResults', {

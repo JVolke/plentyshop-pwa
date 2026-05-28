@@ -114,9 +114,17 @@ const viewport = useViewport();
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
-const isFeuerwerkQuery = computed(() =>
-  title.toLowerCase().includes('feuerwerk')
-);
+const isFeuerwerkQuery = computed(() => {
+  const keywords = [
+    'feuerwerk',
+    'lichterbilder',
+    'lichterbild',
+    'lichtbild',
+  ];
+  return keywords.some((keyword) =>
+    title.toLowerCase().includes(keyword)
+  );
+  });
 
 if (viewport.isLessThan('md')) close();
 </script>
