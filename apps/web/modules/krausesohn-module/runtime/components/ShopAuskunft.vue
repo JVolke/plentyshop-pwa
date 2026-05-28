@@ -1,7 +1,7 @@
 <template>
   <div v-if="showWidget"
        ref="widgetRef"
-       class="shopauskunft-widget"
+       class="shopauskunft-widget !z-0"
        data-widget-id="ffe45f3eaa94"
        data-widget-theme="light"
        data-retailer-id="krause-sohn"

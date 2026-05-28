@@ -221,6 +221,12 @@
               </li>
             </template>
           </ul>
+          <NuxtLink
+            to="https://www.feuerwerk-onlineshop.de/?mtm_campaign=feuerwerksearch&mtm_source=mobilemenu"
+            class="block px-4 py-2 font-semibold text-primary bottom-0.5"
+          >
+            Hier geht es zum Feuerwerk Shop
+          </NuxtLink>
         </nav>
       </SfDrawer>
     </template>

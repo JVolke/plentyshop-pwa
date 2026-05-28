@@ -40,6 +40,7 @@
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
+              <get-stock :variation-id="productGetters.getVariationId(product)" />
             </template>
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <hr class="mt-2" />
@@ -229,6 +230,7 @@ import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } 
 import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { paths } from '~/utils/paths';
+import GetStock from '#krause/components/GetStock/GetStock.vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({
