@@ -5,6 +5,10 @@
     :class="{ 'border border-neutral-200': configuration?.cardBorders }"
   >
     <div class="relative overflow-hidden">
+      <storeSpecial
+        :product="product"
+        :in-category="true"
+      />
       <UiBadges
         :use-tags="useTagsOnCategoryPage"
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
@@ -75,7 +79,7 @@
         <slot name="wishlistButton">
           <WishlistButton
             square
-            class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
+            class="absolute top-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
             :product="product"
           />
         </slot>
@@ -177,7 +181,7 @@
         </template-->
       </template>
       <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true"/>
-    </div>
+     </div>
   </div>
 </template>
 
