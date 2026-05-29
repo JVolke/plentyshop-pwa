@@ -101,18 +101,6 @@
           variant="tertiary"
           class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
           square
-          data-testid="open-languageselect-button"
-          :style="{ color: resolvedIconColor }"
-          :aria-label="t('common.navigation.languageSelector')"
-          :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
-          @click="toggleLanguageSelect()"
-        >
-          <SfIconLanguage />
-        </UiButton>
-        <UiButton
-          variant="tertiary"
-          class="relative text-white hover:text-white active:text-white hover:bg-header-400 active:bg-header-400 rounded-md @md:hidden"
-          square
           :style="{ color: resolvedIconColor }"
           :aria-label="t('common.navigation.openSearchModal')"
           @click="searchModalOpen"
@@ -121,7 +109,6 @@
         </UiButton>
       </div>
     </MegaMenu>
-    <LanguageSelector />
     <UiModal
       v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
       v-model="isAuthenticationOpen"
