@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-screen-3xl mt-2 px-4 md:px-6 lg:px-10">
+  <div class="mx-auto max-w-screen-3xl mt-2 px-4 @md:px-6 lg:px-10">
     <a :href="mainBanner.link" class="block w-full h-full relative">
     <div class="relative mb-3 overflow-hidden rounded-lg shadow-md bg-primary-500 hover:bg-primary-600">
         <img
@@ -15,19 +15,19 @@
         <div
           v-if="bannerLabelOverlay"
           class="absolute bottom-0 left-0 w-full p-2 bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
-          <h2 class="text-xl md:text-2xl font-bold">
+          <h2 class="text-xl @md:text-2xl font-bold">
             {{ mainBanner.title }}
           </h2>
         </div>
         <div v-else class="p-2">
-          <h2 class="text-base md:text-lg font-bold  text-white">
+          <h2 class="text-base @md:text-lg font-bold  text-white">
             {{ mainBanner.title }}
           </h2>
         </div>
     </div>
     </a>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
+    <div class="grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-3 gap-3 mb-3">
       <div
         v-for="(banner, index) in secondaryBanners"
         :key="index"
@@ -44,12 +44,12 @@
           <div
             v-if="bannerLabelOverlay"
             class="absolute bottom-0 left-0 w-full p-2  bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
-            <h2 class="text-base md:text-lg font-bold">
+            <h2 class="text-base @md:text-lg font-bold">
               {{ banner.title }}
             </h2>
           </div>
           <div v-else class="p-2">
-            <h2 class="text-base md:text-lg font-bold text-white">
+            <h2 class="text-base @md:text-lg font-bold text-white">
               {{ banner.title }}
             </h2>
           </div>

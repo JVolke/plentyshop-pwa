@@ -14,6 +14,8 @@
 
 <script setup lang="ts">
 import type { Locale } from '#i18n';
+import { categoryGetters } from '@plentymarkets/shop-api';
+import type { CategoryDetails } from '@plentymarkets/shop-api/server/types';
 
 defineI18nRoute({
   locales: process.env.LANGUAGELIST?.split(',') as Locale[],
@@ -37,7 +39,6 @@ const { isInEditor } = useEditorState();
 setBlocksListContext('content');
 
 const categoryId = computed(() => Number(getSetting()) || 0);
-
 const route = useRoute();
 route.meta.identifier = categoryId.value;
 route.meta.type = 'category';
@@ -49,7 +50,6 @@ if (categoryId.value > 0) {
 setPageMeta(t('orderConfirmation.shipping'), 'page');
 
 const hasEditorContent = computed(() => pageBlocks.value.length > 0);
-
 const templateText = computed(() => (!hasEditorContent.value ? (categoryTemplateData?.value?.data ?? null) : null));
 
 watch(categoryId, async (newCategoryId) => {

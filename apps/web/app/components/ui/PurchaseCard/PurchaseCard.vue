@@ -11,6 +11,7 @@
         <section class="@md:p-4">
           <template v-for="key in configuration?.fieldsOrder" :key="key">
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
+              <shariff :media-url="productGetters.getFullImage(product)" />
               <storeSpecial
                 :product="product"
                 :in-category="false"
@@ -18,7 +19,6 @@
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
                 {{ productGetters.getName(product) }}
               </h1>
-
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
               <div class="flex space-x-2">
@@ -236,6 +236,7 @@ import type { PriceCardPadding, PurchaseCardProps } from '~/components/ui/Purcha
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { paths } from '~/utils/paths';
 import GetStock from '#krause/components/GetStock/GetStock.vue';
+import Shariff from '#krause/components/Shariff/Shariff.vue';
 
 const props = withDefaults(defineProps<PurchaseCardProps>(), {
   configuration: () => ({

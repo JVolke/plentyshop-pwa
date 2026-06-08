@@ -118,6 +118,131 @@ table.table td:empty {
     font-weight: 600;
 }
 
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+/* Header */
+table.table thead th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* Cells */
+table.table td {
+    padding: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Stripe Effekt (Bootstrap-like) */
+table.table-striped tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Hover (optional, Bootstrap ähnlich) */
+table.table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Leere Zeilen etwas dezenter */
+table.table td:empty {
+    background-color: transparent;
+    border: none;
+}
+
+[data-testid="text-content"] {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Überschriften */
+[data-testid="text-content"] h1 {
+    font-size: 2rem;
+    margin: 1.5em 0 0.5em;
+    font-weight: 700;
+}
+
+[data-testid="text-content"] h2 {
+    font-size: 1.6rem;
+    margin: 1.4em 0 0.5em;
+    font-weight: 600;
+}
+
+[data-testid="text-content"] h3 {
+    font-size: 1.3rem;
+    margin: 1.3em 0 0.4em;
+    font-weight: 600;
+}
+
+[data-testid="text-content"] h4 {
+    font-size: 1.1rem;
+    margin: 1.2em 0 0.4em;
+    font-weight: 600;
+}
+
+/* Absätze */
+[data-testid="text-content"] p {
+    margin: 0 0 1em;
+}
+
+/* Listen */
+[data-testid="text-content"] ul,
+[data-testid="text-content"] ol {
+    margin: 0 0 1em 1.5em;
+}
+
+[data-testid="text-content"] li {
+    margin-bottom: 0.4em;
+}
+
+/* Links */
+[data-testid="text-content"] a {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+[data-testid="text-content"] a:hover {
+    text-decoration: none;
+}
+
+/* Bilder */
+[data-testid="text-content"] img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+/* Tabellen (gleich mit abgedeckt) */
+[data-testid="text-content"] table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+[data-testid="text-content"] th,
+[data-testid="text-content"] td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+[data-testid="text-content"] td:last-child {
+    text-align: right;
+}
+[data-testid="text-content"] td:first-child {
+    text-align: left;
+}
+
+[data-testid="text-content"] th {
+    background: #f5f5f5;
+    font-weight: 600;
+}
+
 [data-testid='item-text-block'] table {
     width: 100%;
     border-collapse: collapse;
