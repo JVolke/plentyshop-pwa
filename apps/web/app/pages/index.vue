@@ -18,6 +18,7 @@ definePageMeta({
   type: 'immutable',
   identifier: 'index',
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
+  cacheControl: getCacheControl(),
 });
 
 const { setPageMeta } = usePageMeta();
