@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto max-w-screen-3xl mt-2 px-4 @md:px-6 lg:px-10">
-    <a :href="mainBanner.link" class="block w-full h-full relative">
+    <a :href="mainBanner.link" class="block w-full h-full relative !no-underline">
     <div class="relative mb-3 overflow-hidden rounded-lg shadow-md bg-primary-500 hover:bg-primary-600">
         <img
           :src="mainBanner.desktopUrl"
@@ -33,7 +33,7 @@
         :key="index"
         class="relative overflow-hidden rounded-lg shadow-md bg-primary-500 text-center hover:bg-primary-600"
       >
-        <a :href="banner.link" class="block w-full h-full relative ">
+        <a :href="banner.link" class="block w-full h-full relative !no-underline">
         <img
             :src="banner.desktopUrl"
             width="383"

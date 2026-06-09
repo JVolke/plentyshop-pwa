@@ -1,4 +1,5 @@
 <template>
+
   <div :style="inlineStyle" data-testid="item-text-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
@@ -13,12 +14,14 @@
             {{ content.text.title }}
           </h2>
         </template>
+
         <div
           v-if="text"
           data-testid="item-text-innertext"
           class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0 description"
           v-html="text"
         />
+
       </UiAccordionItem>
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
@@ -44,7 +47,19 @@ const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollap
 const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const content = computed(() => props.content);
-const text = computed(() => productGetters.getDescription(currentProduct.value));
+
+const textStandard = computed(() => productGetters.getDescription(currentProduct.value));
+const variationHTML = computed(()=>{
+  return productGetters.getPropertyById(13, currentProduct.value) || ''
+})
+const text = computed(() => {
+  const html = variationHTML.value?.values?.value
+
+  return html?.trim()
+    ? html
+    : textStandard.value
+})
+
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
   return {

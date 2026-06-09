@@ -17,7 +17,7 @@
                 :in-category="false"
               />
               <h1 class="font-bold typography-headline-4 break-word" data-testid="product-name">
-                {{ productGetters.getName(product) }}
+                {{ productName }}
               </h1>
             </template>
             <template v-if="key === 'price' && configuration?.fields.price">
@@ -333,6 +333,8 @@ const inlineStyle = computed(() => {
   };
 });
 
+
+
 onMounted(() => {
   resetInvalidFields();
   resetAttributeFields();
@@ -457,4 +459,11 @@ const isT1 = computed(()=>{
   }
   return false;
 });
+
+const productName = computed(() => {
+  const propertyName = productGetters.getPropertyById(14, props?.product)?.values?.value
+  return propertyName?.trim()
+    ? propertyName
+    : productGetters.getName(props?.product)
+})
 </script>
