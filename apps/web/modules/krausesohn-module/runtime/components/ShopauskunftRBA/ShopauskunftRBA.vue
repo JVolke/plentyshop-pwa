@@ -13,6 +13,7 @@ declare global {
   interface Window {
     xc_label?: string
     fetched_data?: Record<string, unknown>
+    initWidget?: (data?: Record<string, unknown>) => void
   }
 }
 
