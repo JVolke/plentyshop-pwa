@@ -15,7 +15,7 @@ const props = defineProps<CategoryPageImageHeaderProps>()
  *  Muss angepasst werden für jeden Mandanten
  */
 const categoryImageGroups: Record<string, number[]> = {
-  'Fasching/Karneval-Banner-Desktop.webp': [85,275,278,687,304,309,310,561,678],
+  'Banner-Karneval-_-Fasching_2026.webp': [85,275,278,687,304,309,310,561,678],
   'Fasching/Laender-Banner-Desktop.webp': [276],
   'Fasching/Filme-Banner-Desktop.webp': [676,285],
   'Fasching/Antike-Banner-Desktop.webp': [277],
@@ -56,8 +56,8 @@ const categoryImageGroups: Record<string, number[]> = {
   'Partysets-Banner-Desktop.webp': [654],
   'Banner-Personalisiertes.webp': [696],
   'Spiele-Banner-Desktop.webp': [639,664,665,672,662,640,661],
-  'T-Shirts-Banner-Desktop.webp': [648,649,650,651,652,663],
-  'Fackeln-Banner-Desktop.webp': [65,66,274,314,251,675,686],
+  'Banner-T-Shirt-_-Mehr_2026.webp': [648,649,650,651,652,663],
+  'Banner-Fackeln___Partyfeuer_2026.webp': [65,66,274,314,251,675,686],
   'Angebote-Banner-Desktop.webp': [422,165],
   'Fasching/Halloween-Banner-Desktop.webp': [282]
   // Fügen Sie hier weitere Gruppen hinzu
