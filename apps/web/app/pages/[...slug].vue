@@ -1,5 +1,4 @@
 <template>
-
   <NuxtLayout
     name="default"
     :breadcrumbs="breadcrumbs"
@@ -14,7 +13,6 @@
       data-testid="category-page-content"
       :prevent-blocks-request="productsCatalog.category?.type === 'item'"
     />
-
   </NuxtLayout>
 </template>
 
@@ -30,12 +28,13 @@ defineI18nRoute({
 const { locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const { setItemListMetaData } = useStructuredData();
 const { setCategoriesPageMeta } = useUrlPageMeta();
 const { setBlocksListContext } = useBlocksList();
 const { getFacetsFromURL } = useCategoryFilter();
 const { data: productsCatalog, loading } = useProducts();
 const { buildCategoryLanguagePath } = useLocalization();
-const contentType = productsCatalog.value.category?.type;
+const isItemCategoryPage = computed(() => productsCatalog.value.category?.type === 'item');
 
 const identifier = computed(() =>
   productsCatalog.value.category?.type === 'content' ? productsCatalog.value.category?.id : 0,
@@ -70,7 +69,10 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate().then(() => {
   setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL(), canonicalDb);
-  setBlocksListContext(productsCatalog.value.category.type === 'item' ? 'productCategory' : 'content');
+  setBlocksListContext(isItemCategoryPage.value ? 'productCategory' : 'content');
+  if (isItemCategoryPage.value) {
+    setItemListMetaData(productsCatalog.value.products || []);
+  }
 });
 
 const { setPageMeta } = usePageMeta();
@@ -110,11 +112,15 @@ const robotsContent = computed((): string =>
   productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
 );
 
-
 watch(
   () => route.query,
   async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+    await handleQueryUpdate().then(() => {
+      setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
+      if (isItemCategoryPage.value) {
+        setItemListMetaData(productsCatalog.value.products || []);
+      }
+    });
   },
 );
 
