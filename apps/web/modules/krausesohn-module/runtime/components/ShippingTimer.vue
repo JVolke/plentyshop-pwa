@@ -13,8 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
-
 const { getSetting: getCutOff } = useSiteSettings('cutOff');
 const cutOff = computed(() => getCutOff() );
 const { getSetting: getDeliveryTime } = useSiteSettings('deliveryTime');
