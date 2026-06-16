@@ -20,6 +20,7 @@
       <UiBlockPlaceholder v-if="shouldDisplayPlaceholder(contentBlock.meta.uuid, 'bottom', drawerOpen, drawerView)" />
     </div>
   </footer>
+  <UiNavbar-Bottom />
 </template>
 
 <script setup lang="ts">
