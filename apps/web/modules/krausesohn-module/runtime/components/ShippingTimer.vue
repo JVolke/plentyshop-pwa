@@ -46,6 +46,7 @@ const feiertage = ref([
   new Date(2026, 10, 18), // Buß- und Bettag
   new Date(2026, 11, 25), // 1. Weihnachtstag
   new Date(2026, 11, 26), // 2. Weihnachtstag
+  new Date(2027, 0, 1), // Neujahr
 ]);
 
 function istFeiertag(datum: Date): boolean {
