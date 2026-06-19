@@ -46,7 +46,9 @@
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <CheckoutGeneralTerms />
             <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
-            <PaymentButtons />
+            <ClientOnly>
+              <PaymentButtons />
+            </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
@@ -96,6 +98,7 @@ useHead({
   title: "Kasse - Bestellung abschließen"
 })
 emit('frontend:beginCheckout', cart.value);
+if (import.meta.client) useLogEvent().logOpeningCheckout();
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
@@ -129,7 +132,7 @@ onNuxtReady(async () => {
 });
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
-const { processingOrder } = useProcessingOrder();
+const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
 
 watch(cartIsEmpty, async () => {
   if (!processingOrder.value) {

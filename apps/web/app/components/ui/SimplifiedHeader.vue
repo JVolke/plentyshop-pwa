@@ -30,5 +30,5 @@ const headerBackgroundColor = computed(() => {
   return utilityBar?.content?.color?.backgroundColor ?? getPrimaryColor();
 });
 
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 </script>

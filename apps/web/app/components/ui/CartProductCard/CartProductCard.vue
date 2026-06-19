@@ -161,7 +161,7 @@ const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { format } = usePriceFormatter();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const imageLoaded = ref(false);
 const img = ref();

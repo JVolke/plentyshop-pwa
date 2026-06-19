@@ -228,7 +228,6 @@ const product = computed(() => props.product);
 const configuration = computed(() => props.configuration || ({} as ItemGridContent));
 
 const { addModernImageExtension } = useModernImage();
-const localePath = useLocalePath();
 const { format } = usePriceFormatter();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
@@ -292,9 +291,11 @@ const isGlobalProductCategoryTemplate = computed(() => {
   return `/${slug}` === paths.globalItemCategory;
 });
 
+const localePath = useLocalizedPath();
+
 const productPath = computed(() => {
   if (isGlobalProductCategoryTemplate?.value) {
-    return paths.globalItemDetails;
+    return localePath(paths.globalItemDetails);
   }
   if (useCallisto().isEnabled) {
     return localePath(`/${productGetters.getUrlPath(product.value)}/a-${productGetters.getItemId(product.value)}`);
