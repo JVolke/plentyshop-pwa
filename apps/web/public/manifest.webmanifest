@@ -1,0 +1,28 @@
+{
+  "name": "Krause & Sohn Onlineshop",
+  "short_name": "Krause & Sohn Onlineshop",
+  "description": "Kostüme, Fackeln & Deko kaufen | Krause & Sohn",
+  "theme_color": "#066044",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/_nuxt-plenty/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/_nuxt-plenty/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/_nuxt-plenty/icons/icon-512x512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
