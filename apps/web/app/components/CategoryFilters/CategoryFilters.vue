@@ -9,7 +9,7 @@ import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
 
 const props = defineProps<CategoryFiltersProps>();
 
-const { data: productsCatalog } = useProducts();
+//const { data: productsCatalog } = useProducts();
 
-const facets = computed(() => productsCatalog.value.facets || props.facets || []);
+const facets = computed(() => props.facets || []);
 </script>

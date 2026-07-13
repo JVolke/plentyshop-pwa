@@ -10,36 +10,9 @@
           <SfIconChevronLeft :class="['text-white', open ? 'rotate-90' : '-rotate-90']" />
         </div>
       </template>
-      <div v-if="facetGetters.getType(facet) === 'feedback'">
-        <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
-          <div class="flex items-center space-x-2">
-            <span class="pt-1 flex items-center">
-              <SfCheckbox :id="filter.id" v-model="models[filter.id]" :value="filter" @change="facetChange" />
-            </span>
-            <span class="flex items-center pt-[2px]">
-              <SfRating :value="feedbackNumber(filter)" :max="5" />
-            </span>
-            <span
-              :class="[
-                'ml-2 pt-1 min-w-[10px] text-base text-center flex items-center justify-center',
-                { 'font-medium': feedbackNumber(filter) === 5 },
-              ]"
-            >
-              {{ feedbackNumber(filter) }}
-            </span>
-            <span v-if="feedbackNumber(filter) != 5" class="ml-1 pt-1 flex items-center">
-              <SfIconArrowUpward size="sm" />
-            </span>
-            <span>
-              <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
-                {{ filter.count }}
-              </SfCounter>
-            </span>
-          </div>
-        </SfListItem>
-      </div>
 
-      <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
+
+      <form v-if="facetGetters.getType(facet) === 'price'" class="mb-4 px-4" @submit.prevent="updatePriceFilter">
         <div class="mb-3">
           <label for="min">
             <UiFormLabel class="text-start">{{ t('common.labels.min') }}</UiFormLabel>

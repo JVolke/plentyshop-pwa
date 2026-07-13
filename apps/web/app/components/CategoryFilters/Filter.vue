@@ -1,15 +1,16 @@
 <template>
   <SfAccordionItem v-if="facet" v-model="open">
     <template #summary>
-      <div class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-500 text-white">
+      <div
+        v-if="facetGetters.getType(facet) !== 'feedback'"
+        class="flex justify-between py-1 px-4 mb-2 select-none bg-primary-500 text-white">
         <div class="py-1 rounded-none uppercase typography-headline-6 font-bold tracking-widest select-none">
           {{ facetGetters.getName(facet) }}
-          {{ facet.cssClass }}
         </div>
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
     </template>
-    <div v-if="facetGetters.getType(facet) === 'feedback'">
+    <div v-if="facetGetters.getType(facet) === 'feedback'" class="hidden">
       <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
         <div class="flex items-center space-x-2">
           <span class="pt-1 flex items-center">
