@@ -52,6 +52,10 @@ export default defineNuxtModule({
         path: '/checkout',
         name: 'checkout',
       },
+      'readonly-checkout.vue': {
+        path: '/readonly-checkout',
+        name: 'readonly-checkout',
+      },
     };
 
     nuxt.hook('pages:extend', (pages) => {
@@ -68,6 +72,10 @@ export default defineNuxtModule({
 
               if (matchedEntry[0] === 'checkout.vue') {
                 page.file = resolve('./runtime/pages/checkout.vue');
+              }
+
+              if (matchedEntry[0] === 'readonly-checkout.vue') {
+                page.file = resolve('./runtime/pages/readonly-checkout.vue');
               }
 
               if (override.name) {
