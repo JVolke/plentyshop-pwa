@@ -49,18 +49,24 @@
           />
         </div>
         <div class="my-2 text-neutral-700">
-            <div class="text-sm flex justify-between">
-              <span class="font-semibold mr-1">Artikelnummer:</span>
-              <span class="">{{ cartItem.variation!.variation!.number }}</span>
-            </div>
-            <div v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name" class="text-sm flex justify-between">
-              <span class="font-semibold mr-1">{{ attribute.label }}:</span>
-              <span class="font-medium">{{ attribute.value }}</span>
-            </div>
-            <div v-if="cartItem.variation" class="text-sm flex justify-between">
-              <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
-              <span>{{ manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation)) }}</span>
-            </div>
+          <div class="text-sm flex justify-between">
+            <span class="font-semibold mr-1">Artikelnummer:</span>
+            <span class="">{{ cartItem.variation!.variation!.number }}</span>
+          </div>
+          <div
+            v-for="attribute in cartGetters.getItemAttributes(cartItem)"
+            :key="attribute.name"
+            class="text-sm flex justify-between"
+          >
+            <span class="font-semibold mr-1">{{ attribute.label }}:</span>
+            <span class="font-medium">{{ attribute.value }}</span>
+          </div>
+          <div v-if="cartItem.variation" class="text-sm flex justify-between">
+            <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
+            <span>{{
+              manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation))
+            }}</span>
+          </div>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
             class="text-xs font-normal leading-5 @sm:typography-text-sm text-neutral-700"
@@ -149,7 +155,7 @@ import {
   productImageGetters,
   manufacturerGetters,
 } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
 import { debounce } from '../../../utils/debounce';
@@ -250,9 +256,11 @@ const debounceQuantity = debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-const manufacturerName = computed(
-  () => manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation ?? ({} as Product)))
-)
+const manufacturerName = computed(() =>
+  manufacturerGetters.getManufacturerExternalName(
+    productGetters.getManufacturer(cartItem.variation ?? ({} as Product)),
+  ),
+);
 
 const basePriceSingleValue = computed(
   () =>
