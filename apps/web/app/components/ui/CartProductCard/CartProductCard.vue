@@ -109,12 +109,15 @@
       </div -->
 
       <div class="items-start @sm:items-center @sm:mt-auto flex flex-col @sm:flex-row">
-        <span
+        <Price
           v-if="currentFullPrice"
-          class="text-neutral-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
-        >
-          {{ format(currentFullPrice || 0) }}
-        </span>
+          :price="currentFullPrice"
+          :crossed-price="null"
+          :display-vat-hint="false"
+          size="sm"
+          test-id="product-full-price"
+          class="@sm:order-1 @sm:ml-auto"
+        />
 
         <UiQuantitySelector
           ref="quantitySelectorReference"
@@ -148,14 +151,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  productGetters,
-  productBundleGetters,
-  cartGetters,
-  productImageGetters,
-  manufacturerGetters,
-} from '@plentymarkets/shop-api';
-import { SfIconClose, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { productGetters, productBundleGetters, cartGetters, productImageGetters, manufacturerGetters } from '@plentymarkets/shop-api';
+import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
 import { debounce } from '../../../utils/debounce';
