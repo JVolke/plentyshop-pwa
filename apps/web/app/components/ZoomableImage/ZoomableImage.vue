@@ -44,6 +44,7 @@
     />
 
     <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
+    <AiImageBadge :alt="imageAlt" />
   </div>
 </template>
 

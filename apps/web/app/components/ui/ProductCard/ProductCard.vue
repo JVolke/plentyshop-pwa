@@ -5,10 +5,7 @@
     :class="{ 'border border-neutral-200': configuration?.cardBorders }"
   >
     <div class="relative overflow-hidden">
-      <storeSpecial
-        :product="product"
-        :in-category="true"
-      />
+      <storeSpecial :product="product" :in-category="true" />
       <UiBadges
         :use-tags="useTagsOnCategoryPage"
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
@@ -73,6 +70,7 @@
             />
           </div>
         </UiLink>
+        <AiImageBadge :alt="imageAlt" position-class="bottom-2 left-2" />
       </div>
 
       <template v-if="configuration?.showWishlistButton">
@@ -180,8 +178,8 @@
           </UiButton>
         </template-->
       </template>
-      <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true"/>
-     </div>
+      <Badges :product="product" :use-availability="true" :use-tags="false" :in-category="true" />
+    </div>
   </div>
 </template>
 
