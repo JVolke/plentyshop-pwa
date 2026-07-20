@@ -106,6 +106,6 @@ const updateShippingMethod = (shippingId: string) => {
 };
 
 const getShippingAmount = (amount: string) => {
-  return amount === '0' ? t('shipping.method.free') : format(Number(amount));
+  return amount === '0' ? 'Kostenlos' : format(Number(amount));
 };
 </script>
