@@ -79,9 +79,36 @@ export default defineNuxtPlugin(() => {
 
   // Plenty events
   const { on } = usePlentyEvent()
+  const trackedEcommerceOrders = new Set<string>()
+
+  const markEcommerceOrderTracked = (orderId: string) => {
+    if (!orderId) return false
+
+    const storageKey = `matomo:ecommerce-order:${orderId}`
+
+    if (trackedEcommerceOrders.has(orderId)) return false
+
+    try {
+      if (window.sessionStorage.getItem(storageKey)) {
+        trackedEcommerceOrders.add(orderId)
+        return false
+      }
+
+      window.sessionStorage.setItem(storageKey, '1')
+    } catch {
+      // sessionStorage can be blocked; the in-memory guard still prevents same-page duplicates.
+    }
+
+    trackedEcommerceOrders.add(orderId)
+    return true
+  }
 
   on('frontend:orderCreated', (order) => {
     if (!canTrack() || !order?.order || !order?.totals) return
+
+    const orderId = String(orderGetters.getId(order) ?? '')
+    if (!markEcommerceOrderTracked(orderId)) return
+
     // Add each item first
     order.order.orderItems.forEach((item) => {
       window._paq.push(['addEcommerceItem',
@@ -101,11 +128,11 @@ export default defineNuxtPlugin(() => {
       .reduce((acc: number, vat: { value: number }) => acc + vat.value, 0)
 
     window._paq.push(['trackEcommerceOrder',
-      orderGetters.getId(order),         // orderId
+      orderId,                           // orderId
       order.totals.totalNet,             // revenue
       subtotal,                          // subtotal
-      order.totals.shippingNet,          // shipping
-      totalVat                           // tax
+      totalVat,                           // tax
+      order.totals.shippingNet          // shipping
     ])
   })
 
