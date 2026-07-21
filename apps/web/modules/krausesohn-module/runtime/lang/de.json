@@ -5,7 +5,19 @@
     "telefoneNumber": "Telefonnummer",
     "showOptions": "Zum Artikel",
     "search": "Produkte Suchen",
-    "saveAddress": "Adresse bestätigen"
+    "saveAddress": "Weiter",
+    "checkout": {
+      "addressStep": "E-Mail & Adresse",
+      "addressStepDescription": "Kontaktdaten und Adressen speichern",
+      "shippingPaymentStep": "Versand & Zahlung",
+      "shippingPaymentStepDescription": "Versandart und Zahlungsart wählen",
+      "reviewStep": "Prüfen & Kaufen",
+      "reviewStepDescription": "Bestellung prüfen und abschließen",
+      "products": "Artikel",
+      "continue": "Weiter",
+      "saveAndContinue": "Speichern und Weiter",
+      "missingShippingPayment": "Bitte wählen Sie Versandart und Zahlungsart aus."
+    }
   },
   "categories": {
     "legal": {

@@ -144,12 +144,10 @@
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
-
     <div
       v-if="!restrictedAddresses || showAddressSaveButton"
       class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
     >
-
       <label v-if="!restrictedAddresses" class="flex items-center gap-2">
         <SfCheckbox v-model="shippingAsBilling" data-testid="use-shipping-as-billing" />
         <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
@@ -159,28 +157,28 @@
       v-if="!restrictedAddresses || showAddressSaveButton"
       class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
     >
-    <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
-      <UiButton
-        :data-testid="`save-address-${AddressType.Shipping}`"
-        :disabled="formIsLoading"
-        variant="secondary"
-        type="submit"
-      >
-        {{ t('krausesohn.saveAddress') }}
-      </UiButton>
+      <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
+        <UiButton
+          :data-testid="`save-address-${AddressType.Shipping}`"
+          :disabled="formIsLoading"
+          variant="secondary"
+          type="submit"
+        >
+          {{ saveAddressButtonLabel }}
+        </UiButton>
 
-      <UiButton
-        v-if="hasShippingAddress"
-        :disabled="formIsLoading || disabled"
-        variant="secondary"
-        class="ml-2"
-        :data-testid="`close-address-${AddressType.Shipping}`"
-        :aria-label="t('common.navigation.closeAddressForm')"
-        @click="edit"
-      >
-        <SfIconClose />
-      </UiButton>
-    </div>
+        <UiButton
+          v-if="hasShippingAddress"
+          :disabled="formIsLoading || disabled"
+          variant="secondary"
+          class="ml-2"
+          :data-testid="`close-address-${AddressType.Shipping}`"
+          :aria-label="t('common.navigation.closeAddressForm')"
+          @click="edit"
+        >
+          <SfIconClose />
+        </UiButton>
+      </div>
     </div>
   </form>
 </template>
@@ -201,9 +199,10 @@ const { handleCartTotalChanges } = useCartTotalChange();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
-const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
+const { set: setBillingAddress, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { restrictedAddresses } = useRestrictedAddress();
+const { showBillingAddressSection } = useCheckout();
 const {
   isLoading: formIsLoading,
   add: showNewForm,
@@ -229,6 +228,12 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 const [phoneNumber, phoneNumberAttributes] = defineField('phoneNumber');
 
 const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
+const saveAddressButtonLabel = computed(() => {
+  if (editing.value) return t('common.actions.saveAddress');
+  if (isGuest.value && showNewForm.value && shippingAsBilling.value) return t('krausesohn.checkout.saveAndContinue');
+
+  return t('common.actions.save');
+});
 
 // Krause
 
@@ -332,4 +337,8 @@ const edit = (address: Address) => {
   editing.value = !(editing.value || showNewForm.value);
   showNewForm.value = false;
 };
+
+watch(shippingAsBilling, () => {
+  showBillingAddressSection.value = !shippingAsBilling.value || hasBillingAddress.value;
+});
 </script>
