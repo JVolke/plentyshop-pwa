@@ -7,7 +7,7 @@
       'group absolute z-raised rounded bg-neutral-200 px-2 py-0.5 text-xs font-bold leading-5 text-neutral-800 shadow-sm ring-1 ring-neutral-400/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700',
       positionClass,
     ]"
-    :aria-label="AI_IMAGE_NOTICE"
+    :aria-label="aiImageNotice"
     @blur="closeTooltip"
     @click.stop.prevent="toggleTooltip"
     @mouseenter="showHoverTooltip"
@@ -23,26 +23,26 @@
       class="pointer-events-none fixed z-max w-max max-w-[220px] rounded bg-neutral-800 px-2 py-1 text-left text-xs font-normal leading-4 text-white shadow-md"
       :style="tooltipStyle"
     >
-      {{ AI_IMAGE_NOTICE }}
+      {{ aiImageNotice }}
     </span>
   </Teleport>
 </template>
 
 <script setup lang="ts">
-const AI_IMAGE_NOTICE = 'Hinweis: KI generiertes Bild';
-
 const props = defineProps<{
   alt?: string | null;
   positionClass?: string;
 }>();
 
+const { t } = useI18n();
 const isOpen = ref(false);
 const isHovering = ref(false);
 const isFocused = ref(false);
 const badgeReference = ref<HTMLButtonElement | null>(null);
 const tooltipPosition = ref({ left: 0, top: 0 });
-const isAiGeneratedImage = computed(() => props.alt?.includes(AI_IMAGE_NOTICE) ?? false);
-const positionClass = computed(() => props.positionClass || 'right-10 top-2');
+const aiImageNotice = computed(() => t('krausesohn.aiImage.notice'));
+const isAiGeneratedImage = computed(() => props.alt?.includes(aiImageNotice.value) ?? false);
+const positionClass = computed(() => props.positionClass || 'bottom-2 left-10');
 const showTooltip = computed(() => isOpen.value || isHovering.value || isFocused.value);
 const tooltipStyle = computed(() => ({
   left: `${tooltipPosition.value.left}px`,
