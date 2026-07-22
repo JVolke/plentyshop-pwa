@@ -193,7 +193,9 @@
                 <CheckoutGeneralTerms />
                 <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
                 <ClientOnly>
-                  <PaymentButtons />
+                  <div @click.capture="trackPaymentInteraction">
+                    <PaymentButtons />
+                  </div>
                 </ClientOnly>
                 <ModuleComponentRendering area="checkout.afterBuyButton" />
               </div>
@@ -259,7 +261,9 @@
               <CheckoutGeneralTerms />
               <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
               <ClientOnly>
-                <PaymentButtons />
+                <div @click.capture="trackPaymentInteraction">
+                  <PaymentButtons />
+                </div>
               </ClientOnly>
               <ModuleComponentRendering area="checkout.afterBuyButton" />
             </OrderSummary>
@@ -275,6 +279,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
+import { useMatomo } from '#matomo/composables/useMatomo';
 
 type CheckoutStep = 1 | 2 | 3;
 
@@ -320,6 +325,7 @@ const {
   scrollToBillingAddress,
 } = useCheckout();
 const { preferredDeliveryAvailable } = usePreferredDelivery();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { fetchPaymentMethods } = usePaymentMethods();
 const { getScript } = usePayPal();
 const { selectedMethod } = useCartShippingMethods();
@@ -396,6 +402,14 @@ onNuxtReady(async () => {
 
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const { createOrderLoading: processingOrder } = useDynamicPaymentButtons();
+const { trackCheckoutStep, trackCheckoutBarrier } = useMatomo();
+const trackedCheckoutSteps = new Set<string>();
+
+const trackCheckoutStepOnce = (step: string) => {
+  if (trackedCheckoutSteps.has(step)) return;
+  trackedCheckoutSteps.add(step);
+  trackCheckoutStep(step);
+};
 
 const addressStepComplete = computed(
   () => hasShippingAddress.value && hasBillingAddress.value && !anyAddressFormIsOpen.value,
@@ -403,6 +417,12 @@ const addressStepComplete = computed(
 const shippingPaymentStepComplete = computed(
   () => Boolean(selectedMethod.value) && Boolean(selectedPaymentId.value) && !disableShippingPayment.value,
 );
+const shippingAndPaymentReady = computed(() => addressStepComplete.value && shippingPaymentStepComplete.value);
+
+watch(addressStepComplete, (ready) => ready && trackCheckoutStepOnce('02 Address ready'), { immediate: true });
+watch(shippingAndPaymentReady, (ready) => ready && trackCheckoutStepOnce('03 Shipping and payment ready'), {
+  immediate: true,
+});
 const selectedPaymentName = computed(
   () => paymentMethods.value?.list?.find((payment) => payment.id === selectedPaymentId.value)?.name || '',
 );
@@ -449,17 +469,20 @@ const stepIndicatorClass = (step: CheckoutStep) => {
 
 const validateAddressStep = () => {
   if (anyAddressFormIsOpen.value) {
+    trackCheckoutBarrier('Unsaved address');
     send({ type: 'secondary', message: t('address.unsavedWarning') });
     return backToFormEditing();
   }
 
   if (!hasShippingAddress.value) {
+    trackCheckoutBarrier('Missing shipping address');
     send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToShippingAddress();
     return false;
   }
 
   if (!hasBillingAddress.value) {
+    trackCheckoutBarrier('Missing billing address');
     send({ type: 'secondary', message: t('error.checkout.missingAddress') });
     scrollToBillingAddress();
     return false;
@@ -480,6 +503,7 @@ const continueFromShippingPayment = () => {
   }
 
   if (!shippingPaymentStepComplete.value) {
+    trackCheckoutBarrier('Missing shipping or payment method');
     send({ type: 'secondary', message: t('krausesohn.checkout.missingShippingPayment') });
     return;
   }
@@ -496,6 +520,31 @@ const continueFromCurrentStep = () => {
   if (currentStep.value === 2) {
     continueFromShippingPayment();
   }
+};
+
+const trackPaymentInteraction = () => {
+  if (anyAddressFormIsOpen.value) {
+    trackCheckoutBarrier('Unsaved address');
+    return;
+  }
+
+  if (!hasShippingAddress.value || !hasBillingAddress.value) {
+    trackCheckoutBarrier('Missing address');
+    return;
+  }
+
+  if (!selectedMethod.value || !selectedPaymentId.value) {
+    trackCheckoutBarrier('Missing shipping or payment method');
+    return;
+  }
+
+  const shippingTermsRequired = shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value);
+  if (shippingTermsRequired && !shippingPrivacyAgreement.value) {
+    trackCheckoutBarrier('Shipping terms missing');
+    return;
+  }
+
+  trackCheckoutStep('04 Order attempted', selectedPaymentName.value || undefined);
 };
 
 watch([addressStepComplete, anyAddressFormIsOpen, checkoutReady], ([complete, formIsOpen, ready]) => {

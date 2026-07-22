@@ -9,7 +9,7 @@ export const useMatomo = () => {
   const canTrack = () =>
     import.meta.client &&
     typeof window !== 'undefined' &&
-    Array.isArray(window._paq) &&
+    typeof window._paq?.push === 'function' &&
     config?.matomoEnabled !== false;
 
   const trackPageView = (documentTitle?: string, customUrl?: string) => {
@@ -33,9 +33,26 @@ export const useMatomo = () => {
     window._paq.push(['trackSiteSearch', keyword, category]);
   };
 
+  const trackEvent = (category: string, action: string, name?: string, value?: number) => {
+    if (!canTrack()) return;
+
+    window._paq.push(['trackEvent', category, action, name, value]);
+  };
+
+  const trackCheckoutStep = (step: string, name?: string) => {
+    trackEvent('Checkout Funnel', step, name);
+  };
+
+  const trackCheckoutBarrier = (barrier: string, name?: string) => {
+    trackEvent('Checkout Barrier', barrier, name);
+  };
+
   return {
     trackPageView,
     trackSearch,
+    trackEvent,
+    trackCheckoutStep,
+    trackCheckoutBarrier,
   };
 };
 
@@ -63,7 +80,15 @@ export const useMatomoEcommerce = () => {
     trackCartUpdate: (grandTotal: number) => {
       window._paq.push(['trackEcommerceCartUpdate', grandTotal]);
     },
-    trackEcommerceOrder: (orderId: string, grandTotal: number, subTotal?: number, tax?: number, shipping?: number, discount?: number, items?: [string, string, string | undefined, number, number][]) => {
+    trackEcommerceOrder: (
+      orderId: string,
+      grandTotal: number,
+      subTotal?: number,
+      tax?: number,
+      shipping?: number,
+      discount?: number,
+      items?: [string, string, string | undefined, number, number][],
+    ) => {
       window._paq.push(['trackEcommerceOrder', orderId, grandTotal, subTotal, tax, shipping, discount, items]);
     },
     trackAddToCart: () => {
