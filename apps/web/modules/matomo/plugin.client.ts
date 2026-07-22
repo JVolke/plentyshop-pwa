@@ -23,7 +23,27 @@ export default defineNuxtPlugin(() => {
     window._paq.push(['disableCookies']);
     window._paq.push(['setTrackerUrl', `${config.matomoUrl}/matomo.php`]);
     window._paq.push(['setSiteId', config.matomoId]);
-    window._paq.push(['setExcludedQueryParams', ['ReferrerID']]);
+    window._paq.push([
+      'setExcludedQueryParams',
+      [
+        'ReferrerID',
+        'gad_source',
+        'gad_campaignid',
+        'gclid',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_id',
+        'utm_term',
+        'utm_content',
+        'mtm_source',
+        'mtm_medium',
+        'mtm_campaign',
+        'mtm_cid',
+        'mtm_keyword',
+        'mtm_content',
+      ],
+    ]);
     window._paq.push(['enableLinkTracking']);
 
     const script = document.createElement('script');
