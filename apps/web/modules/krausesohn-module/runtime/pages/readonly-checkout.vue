@@ -353,6 +353,8 @@ const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('ch
 const { paymentLoading, shippingLoading, selectedPaymentId } = useCheckoutPagePaymentAndShipping();
 const { selectedMethod } = useCartShippingMethods();
 const { unreserve, loading: unreserveLoading } = useCartStockReservation();
+const { trackCheckoutStep } = useMatomo();
+const paypalExpressStepTracked = ref(false);
 
 const { checkoutAddress: billingAddress, set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { checkoutAddress: shippingAddress, set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
@@ -494,6 +496,11 @@ const handle = async () => {
   await setInitialCartTotal();
 
   loading.value = false;
+
+  if (!paypalExpressStepTracked.value) {
+    paypalExpressStepTracked.value = true;
+    trackCheckoutStep('04 PayPal Express checkout entered', 'PayPal Express');
+  }
 };
 
 const validateAddressStep = () => {
