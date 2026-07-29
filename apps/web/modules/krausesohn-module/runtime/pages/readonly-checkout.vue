@@ -315,6 +315,7 @@
 import { AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfIconWarning, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PayPalAddToCartCallback } from '#paypal/types';
+import { useMatomo } from '#matomo/composables/useMatomo';
 import type { Locale } from '#i18n';
 
 type ReadonlyCheckoutStep = 1 | 2;
