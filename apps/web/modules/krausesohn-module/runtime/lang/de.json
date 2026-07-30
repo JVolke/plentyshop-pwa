@@ -6,6 +6,9 @@
     "showOptions": "Zum Artikel",
     "search": "Produkte Suchen",
     "saveAddress": "Weiter",
+    "aiImage": {
+      "notice": "Hinweis: KI generiertes Bild"
+    },
     "checkout": {
       "addressStep": "E-Mail & Adresse",
       "addressStepDescription": "Kontaktdaten und Adressen speichern",
