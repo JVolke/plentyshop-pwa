@@ -40,8 +40,9 @@ const isHovering = ref(false);
 const isFocused = ref(false);
 const badgeReference = ref<HTMLButtonElement | null>(null);
 const tooltipPosition = ref({ left: 0, top: 0 });
+const aiImageAltMarker = computed(() => t('krausesohn.aiImage.altMarker'));
 const aiImageNotice = computed(() => t('krausesohn.aiImage.notice'));
-const isAiGeneratedImage = computed(() => props.alt?.includes(aiImageNotice.value) ?? false);
+const isAiGeneratedImage = computed(() => props.alt?.includes(aiImageAltMarker.value) ?? false);
 const positionClass = computed(() => props.positionClass || 'bottom-2 left-10');
 const showTooltip = computed(() => isOpen.value || isHovering.value || isFocused.value);
 const tooltipStyle = computed(() => ({

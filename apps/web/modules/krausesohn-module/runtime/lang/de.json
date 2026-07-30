@@ -7,6 +7,7 @@
     "search": "Produkte Suchen",
     "saveAddress": "Weiter",
     "aiImage": {
+      "altMarker": "Hinweis: KI generiertes Bild",
       "notice": "Hinweis: Bild wurde mit KI-Unterstützung erstellt"
     },
     "checkout": {
