@@ -53,7 +53,7 @@
             </template>
             <template v-if="key === 'availability' && configuration?.fields.availability">
               <UiBadges class="mb-2" :product="product" :use-availability="true" :use-tags="false" />
-              <get-stock :variation-id="productGetters.getVariationId(product)" />
+              <get-stock v-if="showStockHint" :variation-id="productGetters.getVariationId(product)" />
             </template>
             <template v-if="key === 'variationProperties' && configuration?.fields.variationProperties">
               <hr class="mt-2" />
@@ -334,6 +334,7 @@ const { crossedPrice } = useProductPrice(props?.product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(props?.product)));
 const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
 const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
+const showStockHint = computed(() => [1, 2].includes(productGetters.getAvailabilityId(props.product)));
 const localePath = useLocalePath();
 
 const inlineStyle = computed(() => {
