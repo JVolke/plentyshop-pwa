@@ -15,7 +15,7 @@
                 :class="{ 'ring-2 ring-blue-500 ring-offset-1 rounded': highlightedUuid === key.uuid }"
                 :data-uuid="key.uuid"
                 class="mb-2 font-normal typography-text-sm break-words no-preflight rte-prose rte-prose--render transition-all duration-300"
-                v-html="replacePropertyPlaceholdersInHtml(key.content, props.product)"
+                v-html="renderTextBlock(key.content)"
               />
             </template>
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
@@ -336,6 +336,14 @@ const { getSetting: getNotifyMeSetting } = useSiteSettings('showNotifyMe');
 const showNotifyMe = computed(() => getNotifyMeSetting().toString() === 'true');
 const showStockHint = computed(() => [1, 2].includes(productGetters.getAvailabilityId(props.product)));
 const localePath = useLocalePath();
+const router = useRouter();
+const { resolvePathTrailingSlash } = useUrlTrailingSlash();
+
+const renderTextBlock = (html: string): string =>
+  replacePropertyPlaceholdersInHtml(
+    localizeHtmlLinks(html, router, localePath, resolvePathTrailingSlash),
+    props.product,
+  );
 
 const inlineStyle = computed(() => {
   const layout = props?.configuration?.layout || ({} as PriceCardPadding);

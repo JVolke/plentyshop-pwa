@@ -30,7 +30,7 @@ definePageMeta({
 });
 
 const { setPageMeta } = usePageMeta();
-const { getSetting } = useSiteSettings('shippingTextCategoryId');
+const { getNumberSetting } = useSiteSettings('shippingTextCategoryId');
 const { categoryTemplateData, fetchCategoryTemplate, clearCategoryTemplate } = useBlockTemplates();
 const { fetchBlocks, pageBlocks, updateBlocks } = useBlocks();
 const { setBlocksListContext } = useBlocksList();
@@ -39,6 +39,8 @@ const { isInEditor } = useEditorState();
 setBlocksListContext('content');
 
 const categoryId = computed(() => Number(getSetting()) || 0);
+const categoryId = computed(() => getNumberSetting());
+
 const route = useRoute();
 route.meta.identifier = categoryId.value;
 route.meta.type = 'category';
@@ -50,6 +52,7 @@ if (categoryId.value > 0) {
 setPageMeta(t('orderConfirmation.shipping'), 'page');
 
 const hasEditorContent = computed(() => pageBlocks.value.length > 0);
+
 const templateText = computed(() => (!hasEditorContent.value ? (categoryTemplateData?.value?.data ?? null) : null));
 
 watch(categoryId, async (newCategoryId) => {
