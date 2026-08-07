@@ -38,7 +38,6 @@ const { isInEditor } = useEditorState();
 
 setBlocksListContext('content');
 
-const categoryId = computed(() => Number(getSetting()) || 0);
 const categoryId = computed(() => getNumberSetting());
 
 const route = useRoute();
