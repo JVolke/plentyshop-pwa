@@ -1,5 +1,4 @@
 <template>
-
   <div :style="inlineStyle" data-testid="item-text-block">
     <div v-if="displayAsCollapsable">
       <UiAccordionItem
@@ -11,7 +10,7 @@
       >
         <template #summary>
           <h2 class="font-bold text-lg leading-6 @md:text-2xl">
-            {{ content.text.title }}
+            {{ title }}
           </h2>
         </template>
 
@@ -21,17 +20,13 @@
           class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0 description"
           v-html="text"
         />
-
       </UiAccordionItem>
       <UiDivider v-if="initiallyCollapsed && text?.length" class="mb-2 mt-2" />
     </div>
     <div v-else>
-      <YoutubeVideo
-        v-if="videoUrl"
-        :video-url="videoUrl.values.value"
-      />
-      <h2 class="font-bold text-lg leading-6 @md:text-2xl">
-        {{ content.text.title }}
+      <YoutubeVideo v-if="videoUrl" :video-url="videoUrl.values.value" />
+      <h2 v-if="hasTitle" class="font-bold text-lg leading-6 @md:text-2xl">
+        {{ title }}
       </h2>
       <div v-if="text" class="no-preflight [&>p:first-child]:mt-0 [&>p:last-child]:mb-0" v-html="text" />
     </div>
@@ -44,21 +39,21 @@ import type { ItemTextProps } from './types';
 
 const props = defineProps<ItemTextProps>();
 const initiallyCollapsed = computed(() => !props.content?.layout.initiallyCollapsed);
-const displayAsCollapsable = computed(() => props.content?.layout.displayAsCollapsable);
 const { currentProduct } = useProducts();
 const content = computed(() => props.content);
+const title = computed(() => content.value.text?.title ?? '');
+const hasTitle = computed(() => title.value.trim().length > 0);
+const displayAsCollapsable = computed(() => hasTitle.value && props.content?.layout.displayAsCollapsable);
 
 const textStandard = computed(() => productGetters.getDescription(currentProduct.value));
-const variationHTML = computed(()=>{
-  return productGetters.getPropertyById(13, currentProduct.value) || ''
-})
+const variationHTML = computed(() => {
+  return productGetters.getPropertyById(13, currentProduct.value) || '';
+});
 const text = computed(() => {
-  const html = variationHTML.value?.values?.value
+  const html = variationHTML.value?.values?.value;
 
-  return html?.trim()
-    ? html
-    : textStandard.value
-})
+  return html?.trim() ? html : textStandard.value;
+});
 
 const inlineStyle = computed(() => {
   const layout = props.content?.layout || {};
@@ -72,9 +67,11 @@ const inlineStyle = computed(() => {
 
 const { registerBlockVisibility } = useBlocksVisibility();
 
-const videoUrl = computed(()=>{
-  return productGetters.getPropertyById(2,currentProduct.value) ? productGetters.getPropertyById(2,currentProduct.value) : 0;
-})
+const videoUrl = computed(() => {
+  return productGetters.getPropertyById(2, currentProduct.value)
+    ? productGetters.getPropertyById(2, currentProduct.value)
+    : 0;
+});
 
 watch(
   text,
