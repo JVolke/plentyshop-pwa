@@ -19,6 +19,7 @@ export const createSiteSettingsLogic = (
   deps: UseSiteSettingsDeps,
 ) => {
   const { sdk, runtimeConfigPublic } = deps;
+  const { send } = useNotification();
 
   const updateSetting: UpdateSetting = (value) => {
     if (setting) {
@@ -32,7 +33,10 @@ export const createSiteSettingsLogic = (
     return value === undefined || value === null ? '' : String(value);
   };
 
-  const getBooleanSetting: GetBooleanSetting = () => getSetting() === 'true';
+  const getBooleanSetting: GetBooleanSetting = (fallback = false) => {
+    const value = getSetting();
+    return value === '' ? fallback : value === 'true';
+  };
 
   const getNumberSetting: GetNumberSetting = (fallback = 0) => {
     const value = getSetting();
@@ -101,12 +105,19 @@ export const createSiteSettingsLogic = (
       await sdk.plentysystems.setConfiguration({ settings });
 
       state.value.initialData = { ...state.value.initialData, ...state.value.data };
-    } catch (error) {
+      return true;
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : typeof error === 'string' ? error : 'Failed to save settings';
+      send({
+        message,
+        type: 'negative',
+      });
       console.error('Error saving settings:', error);
+      return false;
     } finally {
       state.value.loading = false;
     }
-    return true;
   };
 
   return {
