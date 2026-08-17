@@ -36,10 +36,10 @@
         {{ format(cartGetters.getCartItemPrice(cartItem)) }}
       </div>
 
-      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
+      <UiLink :tag="NuxtLink" :to="path" class="flex items-center justify-center" data-testid="cart-product-card-link">
         <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
-      </SfLink>
-      <div v-if="!cartItem.variation?.bundleComponents && showBundleComponents">
+      </UiLink>
+      <div v-if="!cartItem.variation?.bundleComponents">
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
             v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -61,11 +61,9 @@
             <span class="font-semibold mr-1">{{ attribute.label }}:</span>
             <span class="font-medium">{{ attribute.value }}</span>
           </div>
-          <div v-if="cartItem.variation" class="text-sm flex justify-between">
+          <div v-if="manufacturerName" class="text-sm flex justify-between">
             <span class="font-semibold mr-1">Hersteller / Hergestellt für:</span>
-            <span>{{
-              manufacturerGetters.getManufacturerExternalName(productGetters.getManufacturer(cartItem.variation))
-            }}</span>
+            <span>{{ manufacturerName }}</span>
           </div>
           <div
             v-if="cartItem.basketItemOrderParams.length > 0"
@@ -151,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters, productImageGetters, manufacturerGetters } from '@plentymarkets/shop-api';
+import { productGetters, cartGetters, productImageGetters, manufacturerGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
@@ -174,11 +172,6 @@ const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const itemQuantity = computed(() => cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
-const { getSetting } = useSiteSettings('dontSplitItemBundle');
-const showBundleComponents = computed(() => {
-  return getSetting() !== '1';
-});
-
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
 
