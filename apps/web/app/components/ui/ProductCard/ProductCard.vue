@@ -187,7 +187,6 @@
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
-import { defaults } from '~/composables';
 import type { ItemGridContent } from '~/components/blocks/ItemGrid/types';
 import Badges from '~/components/ui/Badges/Badges.vue';
 import type { BasketItemOrderParamsProperty, Product, DoAddItemParams } from '@plentymarkets/shop-api';

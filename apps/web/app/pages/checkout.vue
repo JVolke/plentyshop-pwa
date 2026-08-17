@@ -50,6 +50,7 @@
               <PaymentButtons />
             </ClientOnly>
             <ModuleComponentRendering area="checkout.afterBuyButton" />
+            <GuaranteeNotice v-if="showGuaranteeNotice" />
           </OrderSummary>
         </div>
       </div>
@@ -99,6 +100,9 @@ useHead({
 })
 emit('frontend:beginCheckout', cart.value);
 if (import.meta.client) useLogEvent().logOpeningCheckout();
+
+const isGuaranteeNoticeEnabled = useFeatureFlag('shopPwaEnableEu2025-1960', false);
+const showGuaranteeNotice = computed(() => isGuaranteeNoticeEnabled.value);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
