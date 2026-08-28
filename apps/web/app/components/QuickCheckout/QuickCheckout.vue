@@ -147,6 +147,7 @@
           type="CartPreview"
           @on-approved="isOpen = false"
         />
+        <GuaranteeBlock :product="product" class="mt-4" />
       </div>
     </div>
   </UiModal>
@@ -171,7 +172,7 @@ const props = defineProps<QuickCheckoutProps>();
 
 const { format } = usePriceFormatter();
 const { showNetPrices } = useCart();
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 const { data: cart, lastUpdatedCartItem } = useCart();
 const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();

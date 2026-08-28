@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { SfCheckbox } from '@storefront-ui/vue';
-const localePath = useLocalePath();
+const localePath = useLocalizedPath();
 
 const props = defineProps({
   isCheckboxRequired: {

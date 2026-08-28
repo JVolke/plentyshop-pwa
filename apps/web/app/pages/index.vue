@@ -1,7 +1,7 @@
 <template>
   <div>
     <KrauseSohnBanner />
-    <EditableBlocks :identifier="'index'" :type="'immutable'" />
+    <EditableBlocks :identifier="HOMEPAGE_IDENTIFIER" :type="'immutable'" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@ definePageMeta({
   pageType: 'static',
   isBlockified: true,
   type: 'immutable',
-  identifier: 'index',
+  identifier: HOMEPAGE_IDENTIFIER,
   middleware: ['newsletter-confirmation-client', 'notifyme-interactions-client'],
   cacheControl: getCacheControl(),
 });

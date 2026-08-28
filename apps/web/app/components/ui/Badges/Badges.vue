@@ -60,6 +60,7 @@ const route = useRoute();
 const isItem = computed(() => {
   return typeof route.params.itemId === 'string';
 });
+
 const toProduct = "Zum Artikel";
 
 const localePath = useLocalePath();
