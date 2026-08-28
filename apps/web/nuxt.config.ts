@@ -9,7 +9,6 @@ import settingsConfig from './app/configuration/settings.config';
 import featureFlagsConfig from './app/configuration/feature-flags.config';
 import { FailOnLargeChunksPlugin, FailOnForbiddenDataInPublicFolderPlugin } from './app/configuration/vite.config';
 import { FailOnUnmarkedBlockOverridesPlugin } from './app/configuration/vite.block-overrides';
-import { resolve } from 'pathe';
 import { thirdPartyDeps, localPackageDeps } from './app/configuration/optimize-deps.config';
 
 export default defineNuxtConfig({
