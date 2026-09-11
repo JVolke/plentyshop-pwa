@@ -337,12 +337,12 @@
     "googlePay": {
       "paymentInProgress": "Zahlung in Bearbeitung..."
     },
-    "guaranteeNotice": "Ihre gesetzlichen Garantieansprüche"
+    "guaranteeNotice": "Ihre gesetzlichen Gewährleistungsrechte"
   },
   "guaranteeLabels": {
     "area": {
-      "close": "Garantie Details schließen",
-      "open": "Garantie Details öffnen"
+      "close": "Details zur Haltbarkeitsgarantie schließen",
+      "open": "Details zur Haltbarkeitsgarantie öffnen"
     }
   },
   "customAssets": {
@@ -904,7 +904,8 @@
     "successHeader": "Vielen Dank für Ihre Bestellung!",
     "successImageAlt": "Bild, das erklärt das die Bestellung erfolgreich war",
     "successMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
-    "successReturnHeader": "Vielen Dank für Ihre Retoure!"
+    "successReturnHeader": "Vielen Dank für Ihre Retoure!",
+    "rebate": "Rabatt"
   },
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
