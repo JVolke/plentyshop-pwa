@@ -341,8 +341,8 @@
   },
   "guaranteeLabels": {
     "area": {
-      "close": "Close guarantee details",
-      "open": "Open guarantee details"
+      "close": "Close guarantee of durability details",
+      "open": "Open guarantee of durability details"
     }
   },
   "customAssets": {
@@ -904,7 +904,8 @@
     "successHeader": "Thank you for your order!",
     "successImageAlt": "order successful image",
     "successMessage": "Your order was completed successfully.",
-    "successReturnHeader": "Thank you for your return!"
+    "successReturnHeader": "Thank you for your return!",
+    "rebate": "Rebate"
   },
   "orderConfirmation": {
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
