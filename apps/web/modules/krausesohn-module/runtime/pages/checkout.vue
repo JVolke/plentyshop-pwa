@@ -156,6 +156,9 @@
               </div>
               <Coupon />
               <CustomerWish />
+              <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+                <GuaranteeNoticeBanner />
+              </div>
             </div>
             <div class="flex flex-col-reverse gap-3 p-4 @sm:flex-row @sm:justify-between">
               <UiButton type="button" variant="secondary" @click="goToStep(2)">
@@ -257,6 +260,9 @@
             />
             <Coupon />
             <CustomerWish />
+            <div v-if="showGuaranteeNotice" class="mb-4 w-full overflow-x-auto">
+              <GuaranteeNoticeBanner />
+            </div>
             <OrderSummary v-if="cart" :cart="cart" class="mt-4">
               <CheckoutGeneralTerms />
               <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
@@ -337,6 +343,10 @@ const {
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
+
+const isGuaranteeNoticeFeatureEnabled = useFeatureFlag('shopPwaEnableEu2025-1960', true);
+const { getBooleanSetting: getGuaranteeNoticeSetting } = useSiteSettings('showGuaranteeNotice');
+const showGuaranteeNotice = computed(() => isGuaranteeNoticeFeatureEnabled.value && getGuaranteeNoticeSetting(true));
 
 const steps = [
   {

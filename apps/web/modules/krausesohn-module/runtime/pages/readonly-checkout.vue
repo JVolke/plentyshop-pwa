@@ -106,6 +106,9 @@
               <CustomerReference />
               <CustomerWish />
               <UiDivider :class="`${dividerClass} my-6`" />
+              <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+                <GuaranteeNoticeBanner />
+              </div>
               <div class="text-sm">
                 <CheckoutGeneralTerms />
               </div>
@@ -229,6 +232,9 @@
           <CustomerReference />
           <CustomerWish />
           <UiDivider :class="`${dividerClass} mb-10`" />
+          <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+            <GuaranteeNoticeBanner />
+          </div>
           <div class="text-sm mx-4 @md:pb-0">
             <CheckoutGeneralTerms />
           </div>
@@ -382,6 +388,9 @@ const {
 const paypalOrderId = route?.query?.orderId?.toString() || '';
 const dividerClass = 'w-screen @md:w-auto -mx-4 @md:mx-0';
 const stepCheckoutEnabled = computed(() => String(getStepCheckoutSetting()) !== 'false');
+const isGuaranteeNoticeFeatureEnabled = useFeatureFlag('shopPwaEnableEu2025-1960', true);
+const { getBooleanSetting: getGuaranteeNoticeSetting } = useSiteSettings('showGuaranteeNotice');
+const showGuaranteeNotice = computed(() => isGuaranteeNoticeFeatureEnabled.value && getGuaranteeNoticeSetting(true));
 const disableShippingPayment = computed(() => shippingLoading.value || paymentLoading.value);
 const interactionDisabled = computed(
   () =>
