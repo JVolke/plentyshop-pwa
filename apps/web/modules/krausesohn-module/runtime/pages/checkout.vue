@@ -465,6 +465,14 @@ const goToStep = (step: CheckoutStep) => {
   currentStep.value = step;
 };
 
+const scrollToCheckoutTop = () => {
+  if (!import.meta.client) return;
+
+  nextTick(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+};
+
 const stepButtonClass = (step: CheckoutStep) => {
   if (currentStep.value === step) return 'bg-primary-50 text-primary-700';
   if (canOpenStep(step)) return 'text-neutral-900 hover:bg-neutral-50';
@@ -504,11 +512,13 @@ const validateAddressStep = () => {
 const continueFromAddress = () => {
   if (!validateAddressStep()) return;
   currentStep.value = 2;
+  scrollToCheckoutTop();
 };
 
 const continueFromShippingPayment = () => {
   if (!validateAddressStep()) {
     currentStep.value = 1;
+    scrollToCheckoutTop();
     return;
   }
 
@@ -519,6 +529,7 @@ const continueFromShippingPayment = () => {
   }
 
   currentStep.value = 3;
+  scrollToCheckoutTop();
 };
 
 const continueFromCurrentStep = () => {
