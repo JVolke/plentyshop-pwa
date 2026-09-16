@@ -1,5 +1,6 @@
 <template>
   <img v-if="guaranteeNoticeSrc" :src="guaranteeNoticeSrc" :alt="t('checkout.guaranteeNotice')" class="h-auto w-full" />
+  <a href="https://europa.eu/youreurope/garantien" target="_blank">Mehr zu Ihren gesetzlichen Rechten auf dem EU-Verbraucherportal Your Europe.</a>
 </template>
 
 <script setup lang="ts">
