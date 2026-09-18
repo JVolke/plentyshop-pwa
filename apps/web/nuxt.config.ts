@@ -162,20 +162,6 @@ export default defineNuxtConfig({
     './modules/matomo',
     './modules/krausesohn-module'
   ],
-  vuetify: {
-    moduleOptions: {
-      prefixComposables: true,
-      disableVuetifyStyles: true,
-    },
-    vuetifyOptions: {
-      icons: {
-        defaultSet: 'mdi-svg',
-      },
-      theme: {
-        defaultTheme: 'light',
-      }
-    },
-  },
   plentySitemap: {
     locales: (process.env.LANGUAGELIST || 'en,de').split(','),
     defaultLocale: nuxtI18nOptions.defaultLocale,
