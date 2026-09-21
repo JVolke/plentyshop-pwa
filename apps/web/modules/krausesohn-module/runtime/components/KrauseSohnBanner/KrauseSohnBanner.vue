@@ -12,14 +12,7 @@
           style="max-height: 480px"
           :alt="mainBanner.alt"
         />
-        <div
-          v-if="bannerLabelOverlay"
-          class="absolute bottom-0 left-0 w-full p-2 bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
-          <h2 class="text-xl @md:text-2xl font-bold">
-            {{ mainBanner.title }}
-          </h2>
-        </div>
-        <div v-else class="p-2">
+        <div class="p-2">
           <h2 class="text-base @md:text-lg font-bold  text-white">
             {{ mainBanner.title }}
           </h2>
@@ -41,14 +34,7 @@
             class="w-full h-auto object-cover rounded-lg"
             :alt="banner.alt"
           />
-          <div
-            v-if="bannerLabelOverlay"
-            class="absolute bottom-0 left-0 w-full p-2  bg-primary-500 bg-opacity-85 text-white hover:bg-opacity-100 transition-colors duration-300">
-            <h2 class="text-base @md:text-lg font-bold">
-              {{ banner.title }}
-            </h2>
-          </div>
-          <div v-else class="p-2">
+          <div class="p-2">
             <h2 class="text-base @md:text-lg font-bold text-white">
               {{ banner.title }}
             </h2>
