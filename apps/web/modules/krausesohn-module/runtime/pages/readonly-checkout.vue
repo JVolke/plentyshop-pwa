@@ -7,8 +7,8 @@
     :heading="t('common.labels.checkout')"
   >
     <template v-if="stepCheckoutEnabled">
-      <div v-if="cart" class="@lg:grid @lg:grid-cols-12 @lg:gap-x-6">
-        <div class="col-span-6 @xl:col-span-7 mb-10 @lg:mb-0">
+      <div v-if="cart" class="w-full">
+        <div class="mb-10">
           <nav class="mb-6 border border-neutral-200 rounded-md bg-white" aria-label="Checkout steps">
             <ol class="grid grid-cols-1 @md:grid-cols-2">
               <li
@@ -56,7 +56,16 @@
             </div>
           </section>
 
-          <section v-show="currentStep === 2" class="border border-neutral-200 rounded-md bg-white">
+          <section
+            v-show="currentStep === 2"
+            class="relative border border-neutral-200 rounded-md bg-white"
+            :class="{ 'pointer-events-none opacity-50': cartLoading }"
+          >
+            <SfLoaderCircular
+              v-if="cartLoading"
+              class="absolute top-[130px] right-0 left-0 m-auto z-loader"
+              size="2xl"
+            />
             <div class="px-4 pt-4">
               <h2 class="text-neutral-900 text-lg font-bold">{{ t('krausesohn.checkout.reviewStep') }}</h2>
             </div>
@@ -96,62 +105,28 @@
                 </section>
               </div>
 
-              <div class="mb-6 @lg:hidden">
-                <h3 class="font-bold mb-3">{{ t('krausesohn.checkout.products') }}</h3>
-                <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
-                  <UiCartProductCard disabled :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
-                </div>
-              </div>
-
               <CustomerReference />
               <CustomerWish />
               <UiDivider :class="`${dividerClass} my-6`" />
-              <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+
+              <div v-if="showGuaranteeNotice" class="mx-auto mb-6 w-full overflow-x-auto @md:max-w-4xl">
                 <GuaranteeNoticeBanner />
               </div>
-              <div class="text-sm">
-                <CheckoutGeneralTerms />
-              </div>
-            </div>
-          </section>
-        </div>
 
-        <div class="col-span-6 @xl:col-span-5">
-          <div
-            class="relative @lg:sticky @lg:top-20 @lg:max-h-[calc(100vh-6rem)] @lg:flex @lg:flex-col"
-            :class="{ 'pointer-events-none opacity-50': cartLoading }"
-          >
-            <SfLoaderCircular
-              v-if="cartLoading"
-              class="absolute top-[130px] right-0 left-0 m-auto z-loader"
-              size="2xl"
-            />
-            <div
-              class="hidden @lg:flex @lg:min-h-0 @lg:flex-1 flex-col mb-4 border border-neutral-200 rounded-md bg-white"
-            >
-              <h2 class="px-4 py-3 font-bold">
-                {{ t('krausesohn.checkout.products') }}
-                <span v-if="cartItemsCount > 1" class="font-normal text-neutral-500">({{ cartItemsCount }})</span>
-              </h2>
-              <div class="@lg:min-h-0 @lg:overflow-y-auto">
+              <div class="mb-6">
+                <h3 class="font-bold mb-3">
+                  {{ t('krausesohn.checkout.products') }}
+                  <span v-if="cartItemsCount > 1" class="font-normal text-neutral-500">({{ cartItemsCount }})</span>
+                </h3>
                 <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
                   <UiCartProductCard disabled :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
                 </div>
               </div>
-            </div>
 
-            <OrderSummary v-if="cart" :cart="cart" class="@lg:shrink-0">
-              <template v-if="currentStep === 1">
-                <UiButton
-                  class="w-full"
-                  :disabled="!addressStepComplete || interactionDisabled"
-                  @click="continueFromAddress"
-                >
-                  {{ t('krausesohn.checkout.continue') }}
-                </UiButton>
-              </template>
-
-              <template v-else>
+              <OrderSummary v-if="cart" :cart="cart" class="mt-6">
+                <div class="text-sm">
+                  <CheckoutGeneralTerms />
+                </div>
                 <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
                 <div v-if="loading">
                   <UiButton class="w-full py-3" :disabled="true">
@@ -208,9 +183,9 @@
                   <SfLoaderCircular v-if="unreserveLoading" class="flex justify-center items-center" size="sm" />
                   <template v-else>{{ t('common.actions.cancelOrder') }}</template>
                 </UiButton>
-              </template>
-            </OrderSummary>
-          </div>
+              </OrderSummary>
+            </div>
+          </section>
         </div>
       </div>
     </template>
@@ -232,7 +207,7 @@
           <CustomerReference />
           <CustomerWish />
           <UiDivider :class="`${dividerClass} mb-10`" />
-          <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+          <div v-if="showGuaranteeNotice" class="mx-auto mb-6 w-full overflow-x-auto @md:max-w-4xl">
             <GuaranteeNoticeBanner />
           </div>
           <div class="text-sm mx-4 @md:pb-0">

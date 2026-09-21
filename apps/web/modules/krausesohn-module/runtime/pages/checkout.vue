@@ -6,8 +6,8 @@
     :heading="t('common.labels.checkout')"
   >
     <template v-if="stepCheckoutEnabled">
-      <div v-if="cart" class="@lg:grid @lg:grid-cols-12 @lg:gap-x-6">
-        <div class="col-span-6 @xl:col-span-7 mb-10 @lg:mb-0">
+      <div v-if="cart" class="w-full">
+        <div class="mb-10">
           <nav class="mb-6 border border-neutral-200 rounded-md bg-white" aria-label="Checkout steps">
             <ol class="grid grid-cols-1 @md:grid-cols-3">
               <li
@@ -94,7 +94,16 @@
             </div>
           </section>
 
-          <section v-show="currentStep === 3" class="border border-neutral-200 rounded-md bg-white">
+          <section
+            v-show="currentStep === 3"
+            class="relative border border-neutral-200 rounded-md bg-white"
+            :class="{ 'pointer-events-none opacity-50': cartLoading }"
+          >
+            <SfLoaderCircular
+              v-if="cartLoading"
+              class="absolute top-[130px] right-0 left-0 m-auto z-loader"
+              size="2xl"
+            />
             <div class="px-4 pt-4">
               <h2 class="text-neutral-900 text-lg font-bold">{{ t('krausesohn.checkout.reviewStep') }}</h2>
             </div>
@@ -148,51 +157,30 @@
                 </section>
               </div>
 
-              <div class="mb-6 @lg:hidden">
-                <h3 class="font-bold mb-3">{{ t('krausesohn.checkout.products') }}</h3>
-                <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
-                  <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
-                </div>
-              </div>
               <Coupon />
               <CustomerWish />
-              <div v-if="showGuaranteeNotice" class="mb-6 w-full overflow-x-auto">
+
+              <div class="flex justify-start py-4">
+                <UiButton type="button" variant="secondary" @click="goToStep(2)">
+                  {{ t('common.actions.back') }}
+                </UiButton>
+              </div>
+
+              <div v-if="showGuaranteeNotice" class="mx-auto mb-6 w-full overflow-x-auto @md:max-w-4xl">
                 <GuaranteeNoticeBanner />
               </div>
-            </div>
-            <div class="flex flex-col-reverse gap-3 p-4 @sm:flex-row @sm:justify-between">
-              <UiButton type="button" variant="secondary" @click="goToStep(2)">
-                {{ t('common.actions.back') }}
-              </UiButton>
-            </div>
-          </section>
-        </div>
 
-        <div class="col-span-6 @xl:col-span-5">
-          <div
-            class="relative @lg:sticky @lg:top-20 @lg:max-h-[calc(100vh-6rem)] @lg:flex @lg:flex-col"
-            :class="{ 'pointer-events-none opacity-50': cartLoading }"
-          >
-            <SfLoaderCircular
-              v-if="cartLoading"
-              class="absolute top-[130px] right-0 left-0 m-auto z-loader"
-              size="2xl"
-            />
-            <div
-              class="hidden @lg:flex @lg:min-h-0 @lg:flex-1 flex-col mb-4 border border-neutral-200 rounded-md bg-white"
-            >
-              <h2 class="px-4 py-3 font-bold">
-                {{ t('krausesohn.checkout.products') }}
-                <span v-if="cartItemsCount > 1" class="font-normal text-neutral-500">({{ cartItemsCount }})</span>
-              </h2>
-              <div class="@lg:min-h-0 @lg:overflow-y-auto">
+              <div class="mb-6">
+                <h3 class="font-bold mb-3">
+                  {{ t('krausesohn.checkout.products') }}
+                  <span v-if="cartItemsCount > 1" class="font-normal text-neutral-500">({{ cartItemsCount }})</span>
+                </h3>
                 <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
                   <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
                 </div>
               </div>
-            </div>
-            <OrderSummary v-if="cart" :cart="cart" class="@lg:shrink-0">
-              <div v-show="currentStep === 3">
+
+              <OrderSummary v-if="cart" :cart="cart" class="mt-2">
                 <CheckoutGeneralTerms />
                 <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
                 <ClientOnly>
@@ -201,18 +189,9 @@
                   </div>
                 </ClientOnly>
                 <ModuleComponentRendering area="checkout.afterBuyButton" />
-              </div>
-              <UiButton
-                v-show="currentStep === 2"
-                type="button"
-                class="w-full"
-                :disabled="nextStepDisabled"
-                @click="continueFromCurrentStep"
-              >
-                {{ t('krausesohn.checkout.continue') }}
-              </UiButton>
-            </OrderSummary>
-          </div>
+              </OrderSummary>
+            </div>
+          </section>
         </div>
       </div>
     </template>
@@ -258,11 +237,12 @@
               class="absolute top-[130px] right-0 left-0 m-auto z-loader"
               size="2xl"
             />
-            <Coupon />
-            <CustomerWish />
-            <div v-if="showGuaranteeNotice" class="mb-4 w-full overflow-x-auto">
+            <div v-if="showGuaranteeNotice" class="mx-auto mb-4 w-full overflow-x-auto @md:max-w-4xl">
               <GuaranteeNoticeBanner />
             </div>
+            <Coupon />
+            <CustomerWish />
+
             <OrderSummary v-if="cart" :cart="cart" class="mt-4">
               <CheckoutGeneralTerms />
               <CheckoutExportDeliveryHint v-if="cart.isExportDelivery" />
@@ -447,11 +427,6 @@ const selectedShippingAmountLabel = computed(() => {
   return amount === '0' ? t('shipping.method.free') : format(Number(amount));
 });
 const cartItemsCount = computed(() => cart.value?.items?.reduce((count, { quantity }) => count + quantity, 0) ?? 0);
-const nextStepDisabled = computed(() => {
-  if (currentStep.value === 1) return !addressStepComplete.value || !checkoutReady.value;
-  if (currentStep.value === 2) return !shippingPaymentStepComplete.value || !checkoutReady.value;
-  return false;
-});
 
 const canOpenStep = (step: CheckoutStep) => {
   if (step === 3 && shouldStartInReviewStep.value) return true;
@@ -530,17 +505,6 @@ const continueFromShippingPayment = () => {
 
   currentStep.value = 3;
   scrollToCheckoutTop();
-};
-
-const continueFromCurrentStep = () => {
-  if (currentStep.value === 1) {
-    continueFromAddress();
-    return;
-  }
-
-  if (currentStep.value === 2) {
-    continueFromShippingPayment();
-  }
 };
 
 const trackPaymentInteraction = () => {
