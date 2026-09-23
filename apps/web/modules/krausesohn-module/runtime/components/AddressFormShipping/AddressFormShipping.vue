@@ -155,7 +155,7 @@
     </div>
     <div
       v-if="!restrictedAddresses || showAddressSaveButton"
-      class="md:col-span-3 flex flex-col sm:flex-row sm:justify-between sm:items-center"
+      class="md:col-span-3 flex items-center justify-end"
     >
       <div v-if="showAddressSaveButton" :class="{ 'mt-3 sm:mt-0': !restrictedAddresses }" class="flex items-center">
         <UiButton

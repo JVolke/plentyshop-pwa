@@ -20,6 +20,7 @@
       "products": "Artikel",
       "continue": "Weiter",
       "saveAndContinue": "Speichern und Weiter",
+      "reviewFlowHint": "Im Anschluss sehen Sie zunächst die Gewährleistungshinweise, danach Ihre Artikel, die Bestellübersicht und die Schaltfläche zum Kaufabschluss.",
       "missingShippingPayment": "Bitte wählen Sie Versandart und Zahlungsart aus."
     }
   },

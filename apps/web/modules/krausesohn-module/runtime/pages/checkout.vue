@@ -159,12 +159,9 @@
 
               <Coupon />
               <CustomerWish />
-
-              <div class="flex justify-start py-4">
-                <UiButton type="button" variant="secondary" @click="goToStep(2)">
-                  {{ t('common.actions.back') }}
-                </UiButton>
-              </div>
+              <p class="-mt-4 mb-6 text-center text-sm text-neutral-600 @md:px-4">
+                {{ t('krausesohn.checkout.reviewFlowHint') }}
+              </p>
 
               <div v-if="showGuaranteeNotice" class="mx-auto mb-6 w-full overflow-x-auto @md:max-w-4xl">
                 <GuaranteeNoticeBanner />
@@ -541,6 +538,7 @@ watch([addressStepComplete, anyAddressFormIsOpen, checkoutReady], ([complete, fo
   if (stepCheckoutEnabled.value && currentStep.value === 1 && ready && complete && addressFormWasOpen.value) {
     addressFormWasOpen.value = false;
     currentStep.value = 2;
+    scrollToCheckoutTop();
   }
 });
 
