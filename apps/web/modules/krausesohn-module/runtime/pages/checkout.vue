@@ -79,7 +79,10 @@
             <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
             <PreferredDelivery v-if="countryHasDelivery" />
             <UiDivider v-if="preferredDeliveryAvailable" class="w-screen @md:w-auto -mx-4 @md:mx-0" />
-            <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
+            <CheckoutPaymentOverride
+              :disabled="disableShippingPayment"
+              @update:active-payment="handlePaymentMethodUpdate"
+            />
             <div class="flex flex-col-reverse gap-3 p-4 @sm:flex-row @sm:justify-between">
               <UiButton type="button" variant="secondary" @click="goToStep(1)">
                 {{ t('common.actions.back') }}
@@ -220,7 +223,10 @@
             <PreferredDeliveryPackstationFinder v-if="countryHasDelivery" />
             <PreferredDelivery v-if="countryHasDelivery" />
             <UiDivider v-if="preferredDeliveryAvailable" class="w-screen @md:w-auto -mx-4 @md:mx-0" />
-            <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
+            <CheckoutPaymentOverride
+              :disabled="disableShippingPayment"
+              @update:active-payment="handlePaymentMethodUpdate"
+            />
           </div>
           <UiDivider class="w-screen @md:w-auto -mx-4 @md:mx-0 mb-10" />
         </div>
@@ -263,6 +269,8 @@ import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import type { Locale } from '#i18n';
 import { useMatomo } from '#matomo/composables/useMatomo';
+import CheckoutPaymentOverride from '../components/CheckoutPayment/CheckoutPayment.vue';
+import { getPaymentMethodDisplayName } from '../utils/paymentMethodName';
 
 type CheckoutStep = 1 | 2 | 3;
 
@@ -410,8 +418,10 @@ watch(addressStepComplete, (ready) => ready && trackCheckoutStepOnce('02 Address
 watch(shippingAndPaymentReady, (ready) => ready && trackCheckoutStepOnce('03 Shipping and payment ready'), {
   immediate: true,
 });
-const selectedPaymentName = computed(
-  () => paymentMethods.value?.list?.find((payment) => payment.id === selectedPaymentId.value)?.name || '',
+const selectedPaymentName = computed(() =>
+  getPaymentMethodDisplayName(
+    paymentMethods.value?.list?.find((payment) => payment.id === selectedPaymentId.value),
+  ),
 );
 const selectedShippingMethodName = computed(() =>
   selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '',

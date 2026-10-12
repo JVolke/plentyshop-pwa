@@ -301,6 +301,7 @@ import { SfIconWarning, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PayPalAddToCartCallback } from '#paypal/types';
 import { useMatomo } from '#matomo/composables/useMatomo';
 import type { Locale } from '#i18n';
+import { getPaymentMethodDisplayName } from '../utils/paymentMethodName';
 
 type ReadonlyCheckoutStep = 1 | 2;
 
@@ -385,12 +386,11 @@ const addressStepComplete = computed(
 const payPalAvailable = computed(() =>
   paymentMethodData?.value?.list?.find((method) => method.paymentKey === 'PAYPAL' && method.key === 'plentyPayPal'),
 );
-const selectedPaymentName = computed(
-  () =>
-    paymentMethodData.value?.list?.find((payment) => payment.id === selectedPaymentId.value)?.name ||
-    payPalAvailable.value?.name ||
-    'PayPal',
-);
+const selectedPaymentName = computed(() => {
+  const selectedPayment = paymentMethodData.value?.list?.find((payment) => payment.id === selectedPaymentId.value);
+
+  return getPaymentMethodDisplayName(selectedPayment) || payPalAvailable.value?.name || 'PayPal';
+});
 const selectedShippingMethodName = computed(() =>
   selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '',
 );
