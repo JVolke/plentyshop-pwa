@@ -38,6 +38,9 @@ export default defineNuxtConfig({
   },
   alias: {
     '@workspace': resolve(__dirname, '..', '..'),
+    // Aliases für direkten Zugriff auf die Runtime-Dateien der lokalen Module
+    '#krause': resolve(__dirname, 'modules/krausesohn-module/runtime'),
+    '#matomo': resolve(__dirname, 'modules/matomo/runtime'),
   },
   vite: {
     server: {
@@ -317,9 +320,4 @@ export default defineNuxtConfig({
     },
     registerWebManifestInRouteRules: true,
   },
-  alias: {
-    // Alias für direkten Zugriff auf alle runtime-Dateien des Moduls
-    '#krause': resolve('./modules/krausesohn-module/runtime'),
-    '#matomo': resolve('./modules/matomo/runtime'),
-  }
 });
