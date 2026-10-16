@@ -3,7 +3,7 @@ const customerBlocksRoot = import.meta.glob('/node_modules/*/runtime/components/
   import: 'default',
 });
 const customerBlocksWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/*.vue',
+  '../../../../../node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/*.vue',
   { import: 'default' },
 );
 const customerBlocks = { ...customerBlocksRoot, ...customerBlocksWorkspace } as Record<string, BlockLoader>;
@@ -21,7 +21,7 @@ const coreBlockListLoaders = import.meta.glob('@/components/**/blocks/**/default
 
 const customerBlockListLoadersRoot = import.meta.glob('/node_modules/*/runtime/components/blocks/**/defaults.ts');
 const customerBlockListLoadersWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/defaults.ts',
+  '../../../../../node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/defaults.ts',
 );
 const customerBlockListLoaders = { ...customerBlockListLoadersRoot, ...customerBlockListLoadersWorkspace };
 

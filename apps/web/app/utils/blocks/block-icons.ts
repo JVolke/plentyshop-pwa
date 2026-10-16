@@ -13,7 +13,7 @@ const customerBlockIconLoadersRoot = import.meta.glob('/node_modules/*/runtime/c
   import: 'default',
 });
 const customerBlockIconLoadersWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/icon.svg',
+  '../../../../../node_modules/{*,@*/*}/{,*/}runtime/components/blocks/**/icon.svg',
   { query: '?raw', import: 'default' },
 );
 const customerBlockIconLoaders = { ...customerBlockIconLoadersRoot, ...customerBlockIconLoadersWorkspace } as Record<

@@ -5,7 +5,7 @@ const localeFilesCustomerRoot = import.meta.glob('/node_modules/*/runtime/compon
   import: 'default',
 });
 const localeFilesCustomerWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/lang.json',
+  '../../../../node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/lang.json',
   { eager: true, import: 'default' },
 );
 const localeFilesCustomer = { ...localeFilesCustomerRoot, ...localeFilesCustomerWorkspace } as Messages;

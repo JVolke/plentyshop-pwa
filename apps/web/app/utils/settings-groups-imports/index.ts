@@ -5,7 +5,7 @@ import type { SettingsGroupLoader } from './types';
 const customerRoot = import.meta.glob('/node_modules/*/runtime/components/settings/**/*.vue', { import: 'default' });
 
 const customerWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/*.vue',
+  '../../../../../node_modules/{*,@*/*}/{,*/}runtime/components/settings/**/*.vue',
   { import: 'default' },
 );
 

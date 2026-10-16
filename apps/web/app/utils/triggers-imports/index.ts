@@ -4,7 +4,7 @@ const customerTriggersRoot = import.meta.glob('/node_modules/*/runtime/component
   import: 'default',
 });
 const customerTriggersWorkspace = import.meta.glob(
-  '@workspace/node_modules/{*,@*/*}/{,*/}runtime/components/**/settings/*/*ToolbarTrigger.vue',
+  '../../../../../node_modules/{*,@*/*}/{,*/}runtime/components/**/settings/*/*ToolbarTrigger.vue',
   { import: 'default' },
 );
 const customerTriggers = { ...customerTriggersRoot, ...customerTriggersWorkspace } as Record<string, TriggerLoader>;
