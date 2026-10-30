@@ -218,6 +218,11 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
     exposeConfig: true,
   },
+  postcss: {
+    plugins: {
+      'tailwindcss/nesting': false,
+    },
+  },
   viewport: {
     breakpoints: {
       xs: 380,
