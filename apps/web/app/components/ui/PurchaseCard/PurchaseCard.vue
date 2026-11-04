@@ -19,7 +19,10 @@
               />
             </template>
             <template v-if="key === 'itemName' && configuration?.fields.itemName">
-              <shariff :media-url="productGetters.getFullImage(product)" />
+              <shariff
+                :media-url="productGetters.getFullImage(product)"
+                :description="productGetters.getMetaDescription(product)"
+              />
               <storeSpecial
                 :product="product"
                 :in-category="false"

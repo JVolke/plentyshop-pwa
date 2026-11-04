@@ -7,6 +7,8 @@
       data-orientation="horizontal"
       data-services='["facebook","pinterest","whatsapp"]'
       :data-media-url="mediaUrl"
+      :data-title="description"
+
     />
   </ClientOnly>
 </template>
@@ -14,6 +16,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   mediaUrl: string;
+  description: string;
 }>();
 
 declare global {
