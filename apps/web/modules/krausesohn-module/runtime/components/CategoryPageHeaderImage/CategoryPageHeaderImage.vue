@@ -38,7 +38,7 @@ const categoryImageGroups: Record<string, number[]> = {
   'Fasching/Steinzeit-Banner-Desktop.webp': [293],
   'Fasching/Tiere-Banner-Desktop.webp': [294],
   'Fasching/Ostern-s.webp': [267],
-  'Weihnachten-Banner-Desktop.webp': [299,653],
+  'Weihnachten-Banner-Desktop.webp': [299,653,706],
   'Fasching/20er-Banner-Desktop.webp': [295],
   'Fasching/60er-Banner-Desktop.webp': [296],
   'Fasching/70er-Banner-Desktop.webp': [297],
