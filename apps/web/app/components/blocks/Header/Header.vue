@@ -1,4 +1,5 @@
 <template>
+  <KrauseSohnNotifyMessage />
   <div>
     <MegaMenu :categories="categoryTree">
       <template v-if="viewport.isGreaterOrEquals('md')">
@@ -188,6 +189,7 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import type { HeaderProps } from './types';
+import KrauseSohnNotifyMessage from '#krause/components/KrauseSohnNotifiyMessage/KrauseSohnNotifyMessage.vue';
 
 const props = defineProps<HeaderProps>();
 

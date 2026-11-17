@@ -83,3 +83,4 @@ apps/web/reference/
 .github/skills
 /AGENTS.md
 /GEMINI.md
+apps/web/public/llms.txt
